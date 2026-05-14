@@ -1,0 +1,6 @@
+benchmark:
+  manifest: datasets/manifests/example.csv
+  models:
+    - tiny
+  output_json: results/baseline_v0.json
+  output_markdown: results/baseline_v0.md

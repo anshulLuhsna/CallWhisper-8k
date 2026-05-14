@@ -1,0 +1,38 @@
+[build-system]
+requires = ["hatchling>=1.24"]
+build-backend = "hatchling.build"
+
+[project]
+name = "callwhisper-8k"
+version = "0.1.0"
+description = "Reproducible benchmark and inference pipeline for 8 kHz telephony-style ASR."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { file = "LICENSE" }
+authors = [
+  { name = "Anshul" }
+]
+dependencies = [
+  "jiwer>=3.0.4",
+  "openai-whisper>=20231117",
+  "pandas>=2.0",
+  "pyyaml>=6.0",
+  "soundfile>=0.12",
+  "tqdm>=4.66"
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.0",
+  "ruff>=0.4"
+]
+
+[project.scripts]
+callwhisper = "callwhisper.eval.runner:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/callwhisper"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"

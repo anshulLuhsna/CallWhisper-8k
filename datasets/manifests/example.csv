@@ -1,0 +1,2 @@
+audio_path,reference_text,slice,condition,language
+data/example.wav,नमस्ते दुनिया,example,raw_8khz,hi

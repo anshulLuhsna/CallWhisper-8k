@@ -1,0 +1,19 @@
+.DS_Store
+.env
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Local datasets and generated audio are intentionally not committed.
+data/
+*.wav
+*.flac
+*.mp3
+*.m4a
+
+# Benchmark outputs can be regenerated, but curated result summaries are kept.
+results/*.tmp.*
+results/raw/
