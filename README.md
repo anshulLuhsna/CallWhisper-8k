@@ -10,6 +10,7 @@ First smoke-test benchmark on 10 Gramvaani GV Dev files. This is not a final res
 |---|---|---|---:|---:|
 | Whisper tiny | gramvaani_dev_10 | telephone_mp3 | 1.5256 | 1.5637 |
 | Whisper base | gramvaani_dev_10 | telephone_mp3 | 0.9981 | 0.9250 |
+| Whisper small | gramvaani_dev_10 | telephone_mp3 | 0.8109 | 0.4963 |
 
 ## Problem
 
