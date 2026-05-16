@@ -4,13 +4,14 @@ Reproducible benchmark and inference pipeline for 8 kHz telephony-style ASR, foc
 
 ## Results Snapshot
 
-First smoke-test benchmark on 10 Gramvaani GV Dev files. This is not a final result yet.
+First baseline benchmarks on Gramvaani GV Dev telephone-style Hindi speech. These are early results, not final claims.
 
 | Model | Dataset Slice | Condition | WER | CER |
 |---|---|---|---:|---:|
 | Whisper tiny | gramvaani_dev_10 | telephone_mp3 | 1.5256 | 1.5637 |
 | Whisper base | gramvaani_dev_10 | telephone_mp3 | 0.9981 | 0.9250 |
 | Whisper small | gramvaani_dev_10 | telephone_mp3 | 0.8109 | 0.4963 |
+| Whisper small | gramvaani_dev_50 | telephone_mp3 | 0.8434 | 0.5598 |
 
 ## Problem
 
