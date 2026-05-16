@@ -1,0 +1,119 @@
+{
+  "summary": {
+    "num_files": 10,
+    "wer": 0.9981283422459893,
+    "cer": 0.9250255827168574
+  },
+  "samples": [
+    {
+      "model": "base",
+      "audio_path": "/Users/froncort.ai/Desktop/8khz/datasets/GV_Dev_5h/Audio/13-00374-01.mp3",
+      "reference_text": "को लागू कराने में सरकार कमजोर पड़ जाती हैं मेरे विचार से यातायात नियमों के प्रति लोगों को जागरूक करने के लिए",
+      "hypothesis_text": "तानों राभु कराने ने निचरतार घमदुपर रहादी है. पेर पतरते जाथा नियमो बिवमो के परती वोमो को जाँ लुप करने के प्रे है.",
+      "slice": "gramvaani_dev_10",
+      "condition": "telephone_mp3",
+      "language": "hi",
+      "wer": 0.8636363636363636,
+      "cer": 0.5462962962962963
+    },
+    {
+      "model": "base",
+      "audio_path": "/Users/froncort.ai/Desktop/8khz/datasets/GV_Dev_5h/Audio/01-02011-03.mp3",
+      "reference_text": "मैं विजय कुमार न्यूज़ एक्सप्रेस मंझोस प्रखंड के मंझोस पंचायत के मंझोस गाँव में एक मात्र राजकीय मध्य विद्यालय है जिसमे लगभग छह सौ छात्र छात्राओं का नामांकन है किन्तु शिक्षा के गिरते स्तर के कारण प्रतिदिन विद्यालय जाने वाले छात्र छात्राओं की संख्या पच्चास से ज्यादा नहीं",
+      "hypothesis_text": "",
+      "slice": "gramvaani_dev_10",
+      "condition": "telephone_mp3",
+      "language": "hi",
+      "wer": 1.0,
+      "cer": 1.0
+    },
+    {
+      "model": "base",
+      "audio_path": "/Users/froncort.ai/Desktop/8khz/datasets/GV_Dev_5h/Audio/01-08820-03.mp3",
+      "reference_text": "आप पुलिस ऐ चलाना नही भरने वाली जुर्माना राशी वसूलने और वाहन जब्ती जो बार बार ट्रैफिक इस सम्बन्ध में ऐड जी शर्मा ने रविवार को बैठ ट्रैफिक पुलिस के अधि",
+      "hypothesis_text": "",
+      "slice": "gramvaani_dev_10",
+      "condition": "telephone_mp3",
+      "language": "hi",
+      "wer": 1.0,
+      "cer": 1.0
+    },
+    {
+      "model": "base",
+      "audio_path": "/Users/froncort.ai/Desktop/8khz/datasets/GV_Dev_5h/Audio/01-11414-01.mp3",
+      "reference_text": "बढ़ाये जायेंगे ऊर्जा नीति ने दो हज़ार अठारह में उपभोक्ताओं का खासतौर पर ध्यान रखा गया है नीति की श्री कुलकर्णी प्रोजेक्ट भवन में सभागार में ऊर्जा नीति के ड्राफ्ट पर विभिन्न",
+      "hypothesis_text": "produit bu dej A M Sug krnitit",
+      "slice": "gramvaani_dev_10",
+      "condition": "telephone_mp3",
+      "language": "hi",
+      "wer": 1.0,
+      "cer": 0.9651162790697675
+    },
+    {
+      "model": "base",
+      "audio_path": "/Users/froncort.ai/Desktop/8khz/datasets/GV_Dev_5h/Audio/13-00240-05.mp3",
+      "reference_text": "<incomplete> और सिर्फ बच्चे ही नहीं बल्कि कई बार बरसात के दिनों में पूरा का पूरा गाँव ही बिमारियों की चपेट में आ जाता है ऐसे में गाँव में बीमारियाँ न फैले इस के लिए स्थानीय स्तर पर किस तरह की व्यवस्था की जाती है दोस्तों आपको पता",
+      "hypothesis_text": "اور صرف بچے ہی نہیں بلکی کئی بار برسات کے دینوں میں پورا کا پورا گاہوں ہی بیماریوں کے چپیٹ میں آجاتا ہے ایسے میں گاہوں میں بیماریہ نہ فیلے اس کے لیے استانی استر پر کی طرح کی بیوستہ کی جاتی ہے دوستوں آپ کو پتا...",
+      "slice": "gramvaani_dev_10",
+      "condition": "telephone_mp3",
+      "language": "hi",
+      "wer": 1.0,
+      "cer": 0.827433628318584
+    },
+    {
+      "model": "base",
+      "audio_path": "/Users/froncort.ai/Desktop/8khz/datasets/GV_Dev_5h/Audio/02-19849-01.mp3",
+      "reference_text": "नमस्कार मित्रों में रंजन स्वजना से",
+      "hypothesis_text": "911 pray",
+      "slice": "gramvaani_dev_10",
+      "condition": "telephone_mp3",
+      "language": "hi",
+      "wer": 1.0,
+      "cer": 0.9705882352941176
+    },
+    {
+      "model": "base",
+      "audio_path": "/Users/froncort.ai/Desktop/8khz/datasets/GV_Dev_5h/Audio/02-20385-01.mp3",
+      "reference_text": "है स्थानीय लोगों के मुताबिक बस मानव रहित फाटक पार कर जबकि छोटी लाइन से झंझारपुर के लौकहा की ओर सवारी ट्रेन जा रही थी उसी वक्त अचानक बस फाटक पार नहीं कर पायी",
+      "hypothesis_text": "اسthani people ke mutabik bus bus Mano rahid fatak par kar Jai ki choti lain se janzharpur ke Lakhha ki aur sabaritrawaritrin Jai rahid hi hi hi hi Usi vakta chana tana Bus fatak par nahi kar par",
+      "slice": "gramvaani_dev_10",
+      "condition": "telephone_mp3",
+      "language": "hi",
+      "wer": 1.1176470588235294,
+      "cer": 1.064102564102564
+    },
+    {
+      "model": "base",
+      "audio_path": "/Users/froncort.ai/Desktop/8khz/datasets/GV_Dev_5h/Audio/02-12557-02.mp3",
+      "reference_text": "शीशे की बोतल यूज़ करिये और थर्मस यूज़ करिये दोस्तों ऐसे में यह होगा कि हमारा जो वायु प्रदूषित है हमारे पर्यावरण",
+      "hypothesis_text": "sisi ki bhothali hoos kareye aur pharma siyos kareye dosa itingia hoo ga hamaara jo waayu ko rdushit hai hamaare kareya bharad",
+      "slice": "gramvaani_dev_10",
+      "condition": "telephone_mp3",
+      "language": "hi",
+      "wer": 1.0,
+      "cer": 0.9819819819819819
+    },
+    {
+      "model": "base",
+      "audio_path": "/Users/froncort.ai/Desktop/8khz/datasets/GV_Dev_5h/Audio/01-06773-03.mp3",
+      "reference_text": "झारखण्ड मोबाइल वाणी",
+      "hypothesis_text": "Dharkar Mobile one",
+      "slice": "gramvaani_dev_10",
+      "condition": "telephone_mp3",
+      "language": "hi",
+      "wer": 1.0,
+      "cer": 0.8947368421052632
+    },
+    {
+      "model": "base",
+      "audio_path": "/Users/froncort.ai/Desktop/8khz/datasets/GV_Dev_5h/Audio/01-01598-02.mp3",
+      "reference_text": "कूड़े कचड़े को फेंकते हैं उनको बुला कर उसको फेंकवाया गया और फिर से हमारी बाजार को स्वच्छ बनाया गया मैं रंजन गिरी युवा वाणी क्लब से धन्यवाद",
+      "hypothesis_text": "",
+      "slice": "gramvaani_dev_10",
+      "condition": "telephone_mp3",
+      "language": "hi",
+      "wer": 1.0,
+      "cer": 1.0
+    }
+  ]
+}

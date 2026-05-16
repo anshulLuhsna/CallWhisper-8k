@@ -9,6 +9,8 @@ __pycache__/
 
 # Local datasets and generated audio are intentionally not committed.
 data/
+datasets/GV_Dev_5h/
+datasets/Metadata/
 *.wav
 *.flac
 *.mp3

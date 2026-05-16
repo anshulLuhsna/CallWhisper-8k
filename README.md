@@ -4,11 +4,12 @@ Reproducible benchmark and inference pipeline for 8 kHz telephony-style ASR, foc
 
 ## Results Snapshot
 
-No benchmark has been run yet. The first Week 1 target is a 10-file WER/CER baseline using Whisper `tiny`.
+First smoke-test benchmark on 10 Gramvaani GV Dev files. This is not a final result yet.
 
 | Model | Dataset Slice | Condition | WER | CER |
 |---|---|---|---:|---:|
-| TBD | TBD | TBD | TBD | TBD |
+| Whisper tiny | gramvaani_dev_10 | telephone_mp3 | 1.5256 | 1.5637 |
+| Whisper base | gramvaani_dev_10 | telephone_mp3 | 0.9981 | 0.9250 |
 
 ## Problem
 
@@ -40,6 +41,7 @@ python -m callwhisper.eval --manifest datasets/manifests/example.csv --model tin
 Raw audio is not committed to this repository. Dataset download scripts and manifests should reproduce slices locally.
 
 - OpenSLR SLR103 / MUCS Hindi: real 8 kHz Hindi speech anchor. Use for the first narrowband benchmark if it downloads cleanly.
+- Gramvaani GV Dev 5h: real spontaneous telephone-style Hindi speech used for the first smoke-test baseline. Academic use is free; commercial use requires permission from Gram Vaani.
 - Mozilla Common Voice Hindi: clean Hindi speech candidate for synthetic telephony degradation.
 - MUSAN: optional noise source for Week 2 SNR-controlled overlays.
 

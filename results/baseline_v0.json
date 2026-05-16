@@ -1,0 +1,119 @@
+{
+  "summary": {
+    "num_files": 10,
+    "wer": 1.525635026737968,
+    "cer": 1.5637283346008428
+  },
+  "samples": [
+    {
+      "model": "tiny",
+      "audio_path": "/Users/froncort.ai/Desktop/8khz/datasets/GV_Dev_5h/Audio/13-00374-01.mp3",
+      "reference_text": "को लागू कराने में सरकार कमजोर पड़ जाती हैं मेरे विचार से यातायात नियमों के प्रति लोगों को जागरूक करने के लिए",
+      "hypothesis_text": "profits inици river nd we don't want pay any nd we don't want knowledge… its not a 저는 letter of standar wars",
+      "slice": "gramvaani_dev_10",
+      "condition": "telephone_mp3",
+      "language": "hi",
+      "wer": 1.0909090909090908,
+      "cer": 0.9074074074074074
+    },
+    {
+      "model": "tiny",
+      "audio_path": "/Users/froncort.ai/Desktop/8khz/datasets/GV_Dev_5h/Audio/01-02011-03.mp3",
+      "reference_text": "मैं विजय कुमार न्यूज़ एक्सप्रेस मंझोस प्रखंड के मंझोस पंचायत के मंझोस गाँव में एक मात्र राजकीय मध्य विद्यालय है जिसमे लगभग छह सौ छात्र छात्राओं का नामांकन है किन्तु शिक्षा के गिरते स्तर के कारण प्रतिदिन विद्यालय जाने वाले छात्र छात्राओं की संख्या पच्चास से ज्यादा नहीं",
+      "hypothesis_text": "mungkin dieseminkle Secretaryล總admar 6 Kinchi, Narayali gunasi scol IV aur tandshnaak你hysuspensefula sahuna",
+      "slice": "gramvaani_dev_10",
+      "condition": "telephone_mp3",
+      "language": "hi",
+      "wer": 1.0,
+      "cer": 0.9589552238805971
+    },
+    {
+      "model": "tiny",
+      "audio_path": "/Users/froncort.ai/Desktop/8khz/datasets/GV_Dev_5h/Audio/01-08820-03.mp3",
+      "reference_text": "आप पुलिस ऐ चलाना नही भरने वाली जुर्माना राशी वसूलने और वाहन जब्ती जो बार बार ट्रैफिक इस सम्बन्ध में ऐड जी शर्मा ने रविवार को बैठ ट्रैफिक पुलिस के अधि",
+      "hypothesis_text": "ag police箱 nahi bare پrit Mhandashvi yudusi varunne arwaan jaktic jobaar tv PHOO 8 Dji Adharma nah Ms jovear kopa trapi police",
+      "slice": "gramvaani_dev_10",
+      "condition": "telephone_mp3",
+      "language": "hi",
+      "wer": 1.0,
+      "cer": 0.8657718120805369
+    },
+    {
+      "model": "tiny",
+      "audio_path": "/Users/froncort.ai/Desktop/8khz/datasets/GV_Dev_5h/Audio/01-11414-01.mp3",
+      "reference_text": "बढ़ाये जायेंगे ऊर्जा नीति ने दो हज़ार अठारह में उपभोक्ताओं का खासतौर पर ध्यान रखा गया है नीति की श्री कुलकर्णी प्रोजेक्ट भवन में सभागार में ऊर्जा नीति के ड्राफ्ट पर विभिन्न",
+      "hypothesis_text": "There they go. police ważne. behavior of police officials is absolutely there. Police have played in India. valley. ان dal�� hockey board strange There are also. bhai. potentially they are separated from thieves involved. Inspector Jayate rainfall. C mile. This said. Shut. This breathing from trees. The mountain fish. Parked. This is the case regarding this incident. But the field has been escaped from the front. It will practically repeat flood felony. thin cancer. The phoenix has been from hillside. Onth, she is the substitute of Delhi. Police have underway.",
+      "slice": "gramvaani_dev_10",
+      "condition": "telephone_mp3",
+      "language": "hi",
+      "wer": 2.8125,
+      "cer": 2.9767441860465116
+    },
+    {
+      "model": "tiny",
+      "audio_path": "/Users/froncort.ai/Desktop/8khz/datasets/GV_Dev_5h/Audio/13-00240-05.mp3",
+      "reference_text": "<incomplete> और सिर्फ बच्चे ही नहीं बल्कि कई बार बरसात के दिनों में पूरा का पूरा गाँव ही बिमारियों की चपेट में आ जाता है ऐसे में गाँव में बीमारियाँ न फैले इस के लिए स्थानीय स्तर पर किस तरह की व्यवस्था की जाती है दोस्तों आपको पता",
+      "hypothesis_text": "说zoいantu 씨가 Filanda Ultraיסth로 hype które mening説於 音ィ웍 Queste Rahm ki beywa's cosa ki jaiteh hai",
+      "slice": "gramvaani_dev_10",
+      "condition": "telephone_mp3",
+      "language": "hi",
+      "wer": 1.0,
+      "cer": 0.9203539823008849
+    },
+    {
+      "model": "tiny",
+      "audio_path": "/Users/froncort.ai/Desktop/8khz/datasets/GV_Dev_5h/Audio/02-19849-01.mp3",
+      "reference_text": "नमस्कार मित्रों में रंजन स्वजना से",
+      "hypothesis_text": "Namotz kravichubh matris given soyaaghana進",
+      "slice": "gramvaani_dev_10",
+      "condition": "telephone_mp3",
+      "language": "hi",
+      "wer": 1.0,
+      "cer": 1.1470588235294117
+    },
+    {
+      "model": "tiny",
+      "audio_path": "/Users/froncort.ai/Desktop/8khz/datasets/GV_Dev_5h/Audio/02-20385-01.mp3",
+      "reference_text": "है स्थानीय लोगों के मुताबिक बस मानव रहित फाटक पार कर जबकि छोटी लाइन से झंझारपुर के लौकहा की ओर सवारी ट्रेन जा रही थी उसी वक्त अचानक बस फाटक पार नहीं कर पायी",
+      "hypothesis_text": "Only LWh 100 ek anda is�� India has to be a part of India. When the Chinese government had gone to India, India had to go to India. India has to go to India. India has to go to India. India has to go to India.",
+      "slice": "gramvaani_dev_10",
+      "condition": "telephone_mp3",
+      "language": "hi",
+      "wer": 1.3529411764705883,
+      "cer": 1.0961538461538463
+    },
+    {
+      "model": "tiny",
+      "audio_path": "/Users/froncort.ai/Desktop/8khz/datasets/GV_Dev_5h/Audio/02-12557-02.mp3",
+      "reference_text": "शीशे की बोतल यूज़ करिये और थर्मस यूज़ करिये दोस्तों ऐसे में यह होगा कि हमारा जो वायु प्रदूषित है हमारे पर्यावरण",
+      "hypothesis_text": "InstbijIee kebhi settaliyosed keguyai每 Computer Farmstory beacon sala Taaamya e Chanel superst sonsaad ku. Akswar kiwartin. Okswar kiwartin. Oraswa Effect 걏�안. Vin sila adh Vietnamese din dalaryra jaamise kствиебаay. Akswar ar Yupavdush Kad bhuclear instiase sau contin na Aloha. J котор shun. Akswar ahas rashta dawикуor st pity. Saave this was hjite Rajaj steel Vej Institute,みna praindestang artisti導 used omraj moon sriva dáas mercuryu del peroksaatуєx Hissh, impegid dish. Kش spiritual drama has the only company he started, he started aus the life of Prime Minister Couple,",
+      "slice": "gramvaani_dev_10",
+      "condition": "telephone_mp3",
+      "language": "hi",
+      "wer": 4.0,
+      "cer": 4.918918918918919
+    },
+    {
+      "model": "tiny",
+      "audio_path": "/Users/froncort.ai/Desktop/8khz/datasets/GV_Dev_5h/Audio/01-06773-03.mp3",
+      "reference_text": "झारखण्ड मोबाइल वाणी",
+      "hypothesis_text": "Kerala, Gangavaloi",
+      "slice": "gramvaani_dev_10",
+      "condition": "telephone_mp3",
+      "language": "hi",
+      "wer": 1.0,
+      "cer": 0.9473684210526315
+    },
+    {
+      "model": "tiny",
+      "audio_path": "/Users/froncort.ai/Desktop/8khz/datasets/GV_Dev_5h/Audio/01-01598-02.mp3",
+      "reference_text": "कूड़े कचड़े को फेंकते हैं उनको बुला कर उसको फेंकवाया गया और फिर से हमारी बाजार को स्वच्छ बनाया गया मैं रंजन गिरी युवा वाणी क्लब से धन्यवाद",
+      "hypothesis_text": "profess Stay your country doing blessings and blessings. May다가 Mayab. Thank you very much. Farewell.",
+      "slice": "gramvaani_dev_10",
+      "condition": "telephone_mp3",
+      "language": "hi",
+      "wer": 1.0,
+      "cer": 0.8985507246376812
+    }
+  ]
+}
