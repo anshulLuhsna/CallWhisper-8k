@@ -18,9 +18,9 @@ This week's non-negotiable deliverable: first WER/CER benchmark on a small real 
 ### 2026-05-16
 
 - Planned: Run first tiny benchmark on Gramvaani GV Dev 5h.
-- Done: Created 10-file and 50-file Gramvaani manifests, ran Whisper `tiny`, `base`, and `small`, and saved baseline result files.
+- Done: Created 10-file and 50-file Gramvaani manifests, ran Whisper `tiny`, `base`, and `small`, saved baseline/preprocessing result files, and wrote first error analysis.
 - Blocked: None.
-- Next action: Start Week 2 preprocessing ablations using `gramvaani_dev_50` and Whisper `small` as the local reference model.
+- Next action: Manually listen to flagged files and prepare a clean Hindi control slice.
 
 ## Scoreboard
 

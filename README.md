@@ -67,6 +67,8 @@ data/slr103/hindi/test/audio.wav,नमस्ते दुनिया,slr103_hi
 ## Limitations
 
 - SLR103 is real 8 kHz Hindi speech, but it is not the same as natural call-center dialogue.
+- Gramvaani GV Dev is real telephone-style Hindi, but the current slice mixes 8 kHz, 44.1 kHz, and 48 kHz source files.
+- Some Gramvaani references contain transcript-quality markers such as `<incomplete>`.
 - Common Voice synthetic telephony experiments are useful controls, not evidence of real telephone performance.
 - This project reports slice-specific WER/CER deltas. It does not claim to fix Whisper for telephony.
 
