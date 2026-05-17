@@ -15,6 +15,7 @@ First baseline benchmarks on Gramvaani GV Dev telephone-style Hindi speech. Thes
 | Whisper small | gramvaani_dev_50 | mono_16khz_wav | 0.8327 | 0.5240 |
 | Whisper small | gramvaani_dev_50 | volume_normalized_wav | 0.8223 | 0.5087 |
 | Whisper small | gramvaani_dev_50 | telephone_bandpass_wav | 0.8452 | 0.5709 |
+| Whisper small | gramvaani_dev_50 | roundtrip_8k_wav | 0.8468 | 0.5457 |
 
 ## Problem
 
