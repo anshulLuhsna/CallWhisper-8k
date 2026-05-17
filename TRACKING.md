@@ -26,7 +26,7 @@ This week's non-negotiable deliverable: first WER/CER benchmark on a small real 
 
 - Day-2 WER number shipped: yes
 - Baseline table shipped: yes
-- Preprocessing ablation shipped: no
+- Preprocessing ablation shipped: partial
 - LoRA smoke test run: no
 - Week-3 kill gate obeyed: no
 - v1.0 shipped: no
