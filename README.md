@@ -16,6 +16,9 @@ First baseline benchmarks on Gramvaani GV Dev telephone-style Hindi speech. Thes
 | Whisper small | gramvaani_dev_50 | volume_normalized_wav | 0.8223 | 0.5087 |
 | Whisper small | gramvaani_dev_50 | telephone_bandpass_wav | 0.8452 | 0.5709 |
 | Whisper small | gramvaani_dev_50 | roundtrip_8k_wav | 0.8468 | 0.5457 |
+| Whisper medium | gramvaani_dev_50 | telephone_mp3 | 0.7683 | 0.4860 |
+| Whisper large-v3 | gramvaani_dev_50 | telephone_mp3 | 0.5616 | 0.3057 |
+| ARTPARK-IISc/whisper-medium-vaani-hindi | gramvaani_dev_50 | telephone_mp3 | 0.2597 | 0.1298 |
 
 Sample-rate split for the same Whisper `small` raw MP3 run:
 
@@ -25,6 +28,16 @@ Sample-rate split for the same Whisper `small` raw MP3 run:
 | gramvaani_dev_50_highrate | 18 | 44.1/48 kHz | 0.7003 | 0.3946 |
 
 This split is a benchmark quality check, not a final causal claim. The 8 kHz subset is harder on this slice, but transcript quality, speakers, topics, and noise may also differ.
+
+Colab/GPU model comparison:
+
+| Model | Mixed 50 WER | 8 kHz WER | High-rate WER |
+|---|---:|---:|---:|
+| Whisper medium | 0.7683 | 0.8108 | 0.6584 |
+| Whisper large-v3 | 0.5616 | 0.6511 | 0.3984 |
+| ARTPARK-IISc/whisper-medium-vaani-hindi | 0.2597 | 0.2900 | 0.2057 |
+
+See [results/model_comparison_v1.md](results/model_comparison_v1.md). These are fixed-slice benchmark results, not global ASR model rankings.
 
 ## Problem
 

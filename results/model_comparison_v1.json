@@ -1,0 +1,81 @@
+{
+  "source_dir": "results/results",
+  "results": [
+    {
+      "model": "Whisper small",
+      "slice": "gramvaani_dev_50",
+      "files": 50,
+      "wer": 0.8697,
+      "cer": 0.554
+    },
+    {
+      "model": "Whisper medium",
+      "slice": "gramvaani_dev_50",
+      "files": 50,
+      "wer": 0.7683,
+      "cer": 0.486
+    },
+    {
+      "model": "Whisper medium",
+      "slice": "gramvaani_dev_50_8khz",
+      "files": 32,
+      "wer": 0.8108,
+      "cer": 0.506
+    },
+    {
+      "model": "Whisper medium",
+      "slice": "gramvaani_dev_50_highrate",
+      "files": 18,
+      "wer": 0.6584,
+      "cer": 0.3858
+    },
+    {
+      "model": "Whisper large-v3",
+      "slice": "gramvaani_dev_50",
+      "files": 50,
+      "wer": 0.5616,
+      "cer": 0.3057
+    },
+    {
+      "model": "Whisper large-v3",
+      "slice": "gramvaani_dev_50_8khz",
+      "files": 32,
+      "wer": 0.6511,
+      "cer": 0.3798
+    },
+    {
+      "model": "Whisper large-v3",
+      "slice": "gramvaani_dev_50_highrate",
+      "files": 18,
+      "wer": 0.3984,
+      "cer": 0.1665
+    },
+    {
+      "model": "ARTPARK-IISc/whisper-medium-vaani-hindi",
+      "slice": "gramvaani_dev_50",
+      "files": 50,
+      "wer": 0.2597,
+      "cer": 0.1298
+    },
+    {
+      "model": "ARTPARK-IISc/whisper-medium-vaani-hindi",
+      "slice": "gramvaani_dev_50_8khz",
+      "files": 32,
+      "wer": 0.29,
+      "cer": 0.1581
+    },
+    {
+      "model": "ARTPARK-IISc/whisper-medium-vaani-hindi",
+      "slice": "gramvaani_dev_50_highrate",
+      "files": 18,
+      "wer": 0.2057,
+      "cer": 0.0794
+    }
+  ],
+  "interpretation": [
+    "Whisper large-v3 improved substantially over Whisper medium on the fixed GramVaani 50-file slice.",
+    "ARTPARK-IISc/whisper-medium-vaani-hindi substantially outperformed vanilla Whisper large-v3 on this fixed slice.",
+    "The true 8 kHz subset remained harder than the high-rate subset across models.",
+    "These are fixed-manifest benchmark results, not global model quality claims."
+  ]
+}
