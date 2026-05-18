@@ -8,6 +8,24 @@ Operating budget: **5 evenings/week x 2.5 hours = ~12.5 hours/week**. Keep two e
 
 Non-negotiable: if something is not in this roadmap, it goes into `FUTURE_WORK.md`, not into v1.0.
 
+Current positioning after prior-art review: **do not claim novelty as the first Whisper/GramVaani Hindi telephony evaluation**. Prior work already covers GramVaani, IndicWhisper, Hindi Whisper fine-tunes, and call-center Whisper systems. The stronger contribution is a **neutral, reproducible telephony benchmark harness** with fixed manifests, preprocessing ablations, clean-vs-telephone comparisons, error analysis, and later multi-model/adaptation experiments.
+
+Current completed evidence:
+
+- GramVaani 10-file and 50-file manifests.
+- Whisper `tiny`, `base`, and `small` baselines.
+- 50-file Whisper `small` raw baseline: WER 0.8434, CER 0.5598.
+- Preprocessing ablation table: best result is volume normalization, WER 0.8223, CER 0.5087.
+- Blind-spot analysis: current 50-file slice mixes 8 kHz, 44.1 kHz, and 48 kHz source files; some references contain `<incomplete>`.
+- Eval runner now supports `--language-mode` and `--seed`.
+
+Immediate next milestone before Week 3 adaptation:
+
+- Manual listening review of flagged files.
+- Clean Hindi control slice.
+- Split GramVaani results by source sample rate.
+- Then run cheap adaptation experiments before considering LoRA.
+
 ---
 
 ## The 4-Week Shape
@@ -16,7 +34,7 @@ Non-negotiable: if something is not in this roadmap, it goes into `FUTURE_WORK.m
 |---|---|---|---|
 | Week 1 | Baseline + eval harness | First WER/CER benchmark on real audio | `v0.1-baseline` |
 | Week 2 | Telephony preprocessing | Ablation table for codec/noise/VAD/preprocessing | `v0.2-preprocessing` |
-| Week 3 | Adaptation experiments | LoRA if gated; otherwise decoding/prompt/chunking adaptation | `v0.3-adapted` |
+| Week 3 | Adaptation experiments | Decoding/prompt/chunking first; LoRA only as final gated stretch | `v0.3-adapted` |
 | Week 4 | Productize + polish | CLI, FastAPI, Docker, demo, final README | `v1.0` |
 
 ---

@@ -2,9 +2,9 @@
 
 ## Current Week
 
-Week: 1
-Tag target: v0.1-baseline
-This week's non-negotiable deliverable: first WER/CER benchmark on a small real or fallback synthetic audio slice.
+Week: 2 complete / Week 3 prep
+Tag target: v0.2-preprocessing, then v0.3-adapted
+This week's non-negotiable deliverable: validate benchmark quality with manual listening, add clean Hindi control, then begin cheap adaptation experiments.
 
 ## Daily Log
 
@@ -22,6 +22,13 @@ This week's non-negotiable deliverable: first WER/CER benchmark on a small real 
 - Blocked: None.
 - Next action: Manually listen to flagged files and prepare a clean Hindi control slice.
 
+### 2026-05-18
+
+- Planned: Reposition project after prior-art review and prepare next-session handoff.
+- Done: Confirmed prior work partially overlaps; updated project direction toward a reproducible telephony ASR benchmark with preprocessing, clean controls, model comparisons, and optional LoRA as final stretch.
+- Blocked: Clean Hindi control data is not downloaded/prepared yet; manual listening review still needs human judgement.
+- Next action: Write `results/manual_audio_review_v1.md` by listening to flagged files from `results/error_analysis_v1.md`.
+
 ## Scoreboard
 
 - Day-2 WER number shipped: yes
@@ -34,3 +41,5 @@ This week's non-negotiable deliverable: first WER/CER benchmark on a small real 
 ## Cut List Temptations
 
 - Custom dashboard -> moved to FUTURE_WORK.md? yes
+- Full Whisper fine-tuning before benchmark quality checks -> moved to final stretch only? yes
+- Claiming novelty as first Whisper-on-GramVaani project -> forbidden after prior-art review? yes
