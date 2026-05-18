@@ -6,6 +6,14 @@ This plan keeps the MacBook as the development machine and uses Colab/GPU for sl
 
 Verify local Whisper `small` findings on stronger models before making final claims.
 
+Runnable notebooks are available in:
+
+```text
+notebooks/01_openai_whisper_gpu_benchmark.ipynb
+notebooks/02_hindi_tuned_hf_models.ipynb
+notebooks/03_decoding_adaptation_sweeps.ipynb
+```
+
 Minimum Colab table:
 
 | Family | Model | Why |

@@ -51,6 +51,8 @@ The Week 1 target command is:
 python -m callwhisper.eval --manifest datasets/manifests/example.csv --model tiny
 ```
 
+For GPU model comparison, use the Colab notebooks in [notebooks](notebooks/README.md).
+
 ## Datasets And Licenses
 
 Raw audio is not committed to this repository. Dataset download scripts and manifests should reproduce slices locally.

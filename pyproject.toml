@@ -18,6 +18,7 @@ dependencies = [
   "pandas>=2.0",
   "pyyaml>=6.0",
   "soundfile>=0.12",
+  "tabulate>=0.9",
   "tqdm>=4.66"
 ]
 

@@ -38,6 +38,10 @@ def transcribe_rows(
     model_name: str,
     language_mode: str,
     seed: int,
+    initial_prompt: str | None = None,
+    beam_size: int | None = None,
+    temperature: float | None = None,
+    condition_on_previous_text: bool | None = None,
 ) -> list[dict[str, Any]]:
     try:
         import whisper
@@ -52,9 +56,20 @@ def transcribe_rows(
     for row in tqdm(rows, desc=f"whisper-{model_name}"):
         if not row.audio_path.exists():
             raise FileNotFoundError(f"Audio file not found: {row.audio_path}")
+        transcribe_options: dict[str, Any] = {
+            "language": get_transcribe_language(row, language_mode),
+        }
+        if initial_prompt:
+            transcribe_options["initial_prompt"] = initial_prompt
+        if beam_size is not None:
+            transcribe_options["beam_size"] = beam_size
+        if temperature is not None:
+            transcribe_options["temperature"] = temperature
+        if condition_on_previous_text is not None:
+            transcribe_options["condition_on_previous_text"] = condition_on_previous_text
         result = model.transcribe(
             str(row.audio_path),
-            language=get_transcribe_language(row, language_mode),
+            **transcribe_options,
         )
         hypothesis = str(result.get("text", "")).strip()
         outputs.append(score_row(row, hypothesis, model_name, language_mode))
@@ -110,6 +125,15 @@ def build_parser() -> argparse.ArgumentParser:
         help="Use manifest language hints, auto-detect language, or force Hindi",
     )
     parser.add_argument("--seed", type=int, default=0, help="Random seed for reproducible decoding")
+    parser.add_argument("--initial-prompt", default=None, help="Optional Whisper initial prompt")
+    parser.add_argument("--beam-size", type=int, default=None, help="Optional Whisper beam size")
+    parser.add_argument("--temperature", type=float, default=None, help="Optional Whisper temperature")
+    parser.add_argument(
+        "--condition-on-previous-text",
+        choices=("true", "false"),
+        default=None,
+        help="Override Whisper condition_on_previous_text",
+    )
     parser.add_argument("--output-json", default=None, help="Optional path for JSON results")
     return parser
 
@@ -117,7 +141,19 @@ def build_parser() -> argparse.ArgumentParser:
 def main() -> None:
     args = build_parser().parse_args()
     rows = load_manifest(args.manifest)
-    results = transcribe_rows(rows, args.model, args.language_mode, args.seed)
+    condition_on_previous_text = None
+    if args.condition_on_previous_text is not None:
+        condition_on_previous_text = args.condition_on_previous_text == "true"
+    results = transcribe_rows(
+        rows,
+        args.model,
+        args.language_mode,
+        args.seed,
+        initial_prompt=args.initial_prompt,
+        beam_size=args.beam_size,
+        temperature=args.temperature,
+        condition_on_previous_text=condition_on_previous_text,
+    )
     summary = summarize(results)
     write_outputs(results, Path(args.output_json) if args.output_json else None)
     print(
