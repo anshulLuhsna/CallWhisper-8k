@@ -107,6 +107,28 @@ Language-mode check on 10 files with Whisper `small`, seed `0`:
 
 Interpretation: auto language detection slightly improves WER but worsens CER. Keep `manifest` as default for now.
 
+## Compute Policy
+
+Do not optimize the project around the MacBook.
+
+Use the MacBook for:
+
+- code edits,
+- manifest building,
+- quick 10/50-file smoke tests,
+- debugging,
+- result/documentation updates.
+
+Use Colab/GPU for:
+
+- Whisper `medium`, and possibly controlled `large-v3` checks,
+- Hindi-tuned Whisper models,
+- IndicWhisper / ARTPARK / Vasista / Collabora comparisons,
+- larger fixed slices,
+- LoRA or other domain-adaptation experiments.
+
+Whisper `small` is the fast local reference model only. It is not the final target. Any preprocessing/adaptation finding discovered on `small` should later be verified on stronger or Hindi-tuned models before final claims.
+
 ## Known Blind Spots
 
 These are important. Do not hide them.
@@ -203,6 +225,8 @@ After clean control and sample-rate split, compare against at least one Hindi-tu
 - IndicWhisper, if easy.
 
 Do not spend more than one evening fighting model installation. If it is messy, document it as blocked and move on.
+
+Because Colab/GPU is available, do not reject larger models just because the local MacBook is slow. Instead, prepare reproducible Colab commands/scripts and keep local runs for smoke tests.
 
 ### Priority 5: Week 3 Adaptation
 

@@ -4,7 +4,7 @@
 
 Week: 2 complete / Week 3 prep
 Tag target: v0.2-preprocessing, then v0.3-adapted
-This week's non-negotiable deliverable: validate benchmark quality with manual listening, add clean Hindi control, then begin cheap adaptation experiments.
+This week's non-negotiable deliverable: validate benchmark quality with manual listening, add clean Hindi control, then prepare Colab/GPU benchmark runs for stronger models.
 
 ## Daily Log
 
@@ -25,9 +25,9 @@ This week's non-negotiable deliverable: validate benchmark quality with manual l
 ### 2026-05-18
 
 - Planned: Reposition project after prior-art review and prepare next-session handoff.
-- Done: Confirmed prior work partially overlaps; updated project direction toward a reproducible telephony ASR benchmark with preprocessing, clean controls, model comparisons, and optional LoRA as final stretch.
+- Done: Confirmed prior work partially overlaps; updated project direction toward a reproducible telephony ASR benchmark with preprocessing, clean controls, model comparisons, and optional LoRA as final stretch. Clarified that MacBook is for local iteration only and Colab/GPU should be used for stronger models and adaptation.
 - Blocked: Clean Hindi control data is not downloaded/prepared yet; manual listening review still needs human judgement.
-- Next action: Write `results/manual_audio_review_v1.md` by listening to flagged files from `results/error_analysis_v1.md`.
+- Next action: Write `results/manual_audio_review_v1.md`, then prepare a Colab/GPU benchmark plan for Whisper medium and one Hindi-tuned model.
 
 ## Scoreboard
 
@@ -43,3 +43,4 @@ This week's non-negotiable deliverable: validate benchmark quality with manual l
 - Custom dashboard -> moved to FUTURE_WORK.md? yes
 - Full Whisper fine-tuning before benchmark quality checks -> moved to final stretch only? yes
 - Claiming novelty as first Whisper-on-GramVaani project -> forbidden after prior-art review? yes
+- Optimizing only for Whisper small because it runs locally -> forbidden after Colab/GPU access confirmed? yes

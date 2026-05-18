@@ -19,12 +19,21 @@ Current completed evidence:
 - Blind-spot analysis: current 50-file slice mixes 8 kHz, 44.1 kHz, and 48 kHz source files; some references contain `<incomplete>`.
 - Eval runner now supports `--language-mode` and `--seed`.
 
+Compute policy after hardware discussion: **do not limit the project to the MacBook**. The MacBook is the development/debugging machine. Colab/GPU should be used for final benchmark-scale runs, larger Whisper models, Hindi-tuned models, Indic baselines, and LoRA/adaptation experiments. Whisper `small` is only the fast local iteration model, not the final optimization target.
+
+Model policy:
+
+- Use Whisper `small` locally for quick preprocessing/debugging experiments.
+- Re-test promising findings on Colab/GPU with stronger models.
+- Final tables should include at least one larger or Hindi-tuned model if setup is feasible.
+- Do not make final claims from Whisper `small` alone.
+
 Immediate next milestone before Week 3 adaptation:
 
 - Manual listening review of flagged files.
 - Clean Hindi control slice.
 - Split GramVaani results by source sample rate.
-- Then run cheap adaptation experiments before considering LoRA.
+- Then run cheap adaptation experiments locally and stronger model/adaptation experiments on Colab/GPU.
 
 ---
 
@@ -34,7 +43,7 @@ Immediate next milestone before Week 3 adaptation:
 |---|---|---|---|
 | Week 1 | Baseline + eval harness | First WER/CER benchmark on real audio | `v0.1-baseline` |
 | Week 2 | Telephony preprocessing | Ablation table for codec/noise/VAD/preprocessing | `v0.2-preprocessing` |
-| Week 3 | Adaptation experiments | Decoding/prompt/chunking first; LoRA only as final gated stretch | `v0.3-adapted` |
+| Week 3 | Adaptation experiments | Decoding/prompt/chunking locally, stronger model comparison and optional LoRA on Colab/GPU | `v0.3-adapted` |
 | Week 4 | Productize + polish | CLI, FastAPI, Docker, demo, final README | `v1.0` |
 
 ---
