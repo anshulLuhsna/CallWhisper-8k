@@ -26,6 +26,12 @@ dev = [
   "pytest>=8.0",
   "ruff>=0.4"
 ]
+colab = [
+  "accelerate>=0.30",
+  "datasets>=2.19",
+  "evaluate>=0.4",
+  "transformers>=4.41"
+]
 
 [project.scripts]
 callwhisper = "callwhisper.eval.runner:main"

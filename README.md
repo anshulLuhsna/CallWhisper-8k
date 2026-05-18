@@ -17,6 +17,15 @@ First baseline benchmarks on Gramvaani GV Dev telephone-style Hindi speech. Thes
 | Whisper small | gramvaani_dev_50 | telephone_bandpass_wav | 0.8452 | 0.5709 |
 | Whisper small | gramvaani_dev_50 | roundtrip_8k_wav | 0.8468 | 0.5457 |
 
+Sample-rate split for the same Whisper `small` raw MP3 run:
+
+| Dataset Slice | Files | Source Sample Rate | WER | CER |
+|---|---:|---|---:|---:|
+| gramvaani_dev_50_8khz | 32 | 8 kHz | 0.9239 | 0.6528 |
+| gramvaani_dev_50_highrate | 18 | 44.1/48 kHz | 0.7003 | 0.3946 |
+
+This split is a benchmark quality check, not a final causal claim. The 8 kHz subset is harder on this slice, but transcript quality, speakers, topics, and noise may also differ.
+
 ## Problem
 
 Whisper expects 16 kHz audio, while telephone audio is commonly narrowband 8 kHz. Feeding telephony audio incorrectly or assuming preprocessing helps can produce misleading results. This project measures Whisper behavior on real 8 kHz Hindi audio where possible, then compares it with synthetic telephony degradation on cleaner speech.
@@ -68,6 +77,7 @@ data/slr103/hindi/test/audio.wav,नमस्ते दुनिया,slr103_hi
 
 - SLR103 is real 8 kHz Hindi speech, but it is not the same as natural call-center dialogue.
 - Gramvaani GV Dev is real telephone-style Hindi, but the current slice mixes 8 kHz, 44.1 kHz, and 48 kHz source files.
+- The initial sample-rate split shows higher error on the 8 kHz subset, but this should not be attributed to sample rate alone without manual audio review and a clean Hindi control.
 - Some Gramvaani references contain transcript-quality markers such as `<incomplete>`.
 - Common Voice synthetic telephony experiments are useful controls, not evidence of real telephone performance.
 - This project reports slice-specific WER/CER deltas. It does not claim to fix Whisper for telephony.

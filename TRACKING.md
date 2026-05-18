@@ -29,6 +29,13 @@ This week's non-negotiable deliverable: validate benchmark quality with manual l
 - Blocked: Clean Hindi control data is not downloaded/prepared yet; manual listening review still needs human judgement.
 - Next action: Write `results/manual_audio_review_v1.md`, then prepare a Colab/GPU benchmark plan for Whisper medium and one Hindi-tuned model.
 
+### 2026-05-18 follow-up
+
+- Planned: Fix the mixed-source-rate blind spot in the current 50-file GramVaani slice.
+- Done: Added a reproducible sample-rate split tool, generated `gramvaani_dev_50_8khz.csv` and `gramvaani_dev_50_highrate.csv`, and wrote `results/sample_rate_split_v1.md`. Current raw Whisper `small` result splits into 32 true 8 kHz files at WER 0.9239 / CER 0.6528 and 18 high-rate files at WER 0.7003 / CER 0.3946. Also added `COLAB_BENCHMARK_PLAN.md` and a Hugging Face ASR runner for GPU comparison with Hindi-tuned models.
+- Blocked: Manual listening still requires human audio review; clean Hindi control data still not prepared.
+- Next action: Complete human listening notes in `results/manual_audio_review_v1.md`, then add a clean Hindi control slice.
+
 ## Scoreboard
 
 - Day-2 WER number shipped: yes

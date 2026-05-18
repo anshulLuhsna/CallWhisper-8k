@@ -1,0 +1,43 @@
+{
+  "source_manifest": "datasets/manifests/gramvaani_dev_50.csv",
+  "source_result": "results/baseline_small_50_v0.json",
+  "generated_manifests": {
+    "8khz": "datasets/manifests/gramvaani_dev_50_8khz.csv",
+    "highrate": "datasets/manifests/gramvaani_dev_50_highrate.csv"
+  },
+  "sample_rate_counts": {
+    "8000": 32,
+    "44100": 16,
+    "48000": 2
+  },
+  "results": [
+    {
+      "model": "small",
+      "slice": "gramvaani_dev_50",
+      "condition": "telephone_mp3_mixed",
+      "num_files": 50,
+      "wer": 0.8434,
+      "cer": 0.5598
+    },
+    {
+      "model": "small",
+      "slice": "gramvaani_dev_50_8khz",
+      "condition": "telephone_mp3_source_8khz",
+      "num_files": 32,
+      "wer": 0.9239,
+      "cer": 0.6528
+    },
+    {
+      "model": "small",
+      "slice": "gramvaani_dev_50_highrate",
+      "condition": "telephone_mp3_source_44_1_or_48khz",
+      "num_files": 18,
+      "wer": 0.7003,
+      "cer": 0.3946
+    }
+  ],
+  "notes": [
+    "Split result is computed from existing raw Whisper small output, not a new decoding run.",
+    "Higher WER/CER on the 8 kHz subset should not be attributed to sample rate alone without manual review and controlled clean-speech comparison."
+  ]
+}

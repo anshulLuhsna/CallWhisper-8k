@@ -107,6 +107,15 @@ Language-mode check on 10 files with Whisper `small`, seed `0`:
 
 Interpretation: auto language detection slightly improves WER but worsens CER. Keep `manifest` as default for now.
 
+Sample-rate split on the same 50-file raw MP3 Whisper `small` result:
+
+| Slice | Files | Source Sample Rate | WER | CER |
+|---|---:|---|---:|---:|
+| gramvaani_dev_50_8khz | 32 | 8 kHz | 0.9239 | 0.6528 |
+| gramvaani_dev_50_highrate | 18 | 44.1/48 kHz | 0.7003 | 0.3946 |
+
+Interpretation: the true 8 kHz subset is harder on this slice, but do not attribute the gap to sample rate alone without manual listening and clean-control comparison.
+
 ## Compute Policy
 
 Do not optimize the project around the MacBook.
@@ -215,6 +224,8 @@ datasets/manifests/gramvaani_dev_50_highrate.csv
 ```
 
 Then evaluate Whisper `small` on both. This fixes the current sample-rate blind spot.
+
+Status: manifests now exist, and `results/sample_rate_split_v1.md` summarizes the existing raw Whisper `small` result by split. A fresh rerun is optional for verification because the split summary was computed from `results/baseline_small_50_v0.json`.
 
 ### Priority 4: Add One Strong Hindi-Tuned Model
 
