@@ -8,9 +8,35 @@ Run order:
 2. `02_hindi_tuned_hf_models.ipynb`
 3. `03_decoding_adaptation_sweeps.ipynb`
 
-Before running, put the GramVaani audio somewhere Colab can access. The notebooks expect either:
+Before running, put the GramVaani audio somewhere Colab can access. The notebooks now expect this Google Drive layout:
 
-- `datasets/GV_Dev_5h/Audio/` already exists inside the cloned repo, or
-- Google Drive contains `MyDrive/callwhisper-8k/datasets/GV_Dev_5h/Audio/`
+```text
+MyDrive/call-whisper/
+  GV_Dev_5h/
+  Metadata/
+  manifests/
+  notebooks/
+```
+
+In Colab this becomes:
+
+```text
+/content/drive/MyDrive/call-whisper/
+```
+
+The notebooks clone:
+
+```text
+https://github.com/anshulLuhsna/CallWhisper-8k.git
+```
+
+Then they symlink:
+
+```text
+/content/drive/MyDrive/call-whisper/GV_Dev_5h -> /content/CallWhisper-8k/datasets/GV_Dev_5h
+/content/drive/MyDrive/call-whisper/Metadata -> /content/CallWhisper-8k/datasets/Metadata
+```
+
+They also copy CSV files from `MyDrive/call-whisper/manifests/` into `datasets/manifests/` inside the cloned repo.
 
 The notebooks do not commit or redistribute raw audio.

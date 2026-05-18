@@ -34,6 +34,18 @@ Useful verified model pages:
 
 Commit manifests only. Upload or mount raw audio separately.
 
+Current Google Drive layout:
+
+```text
+/content/drive/MyDrive/call-whisper/
+  GV_Dev_5h/
+  Metadata/
+  manifests/
+  notebooks/
+```
+
+The Colab notebooks clone `https://github.com/anshulLuhsna/CallWhisper-8k.git`, then symlink Drive data into the cloned repo so existing manifests resolve correctly.
+
 Required manifests:
 
 ```text
@@ -48,16 +60,13 @@ Later, add:
 datasets/manifests/common_voice_hi_clean_10.csv
 ```
 
-Do not upload raw audio to GitHub. In Colab, either:
-
-- mount Google Drive containing `datasets/GV_Dev_5h/Audio/`, or
-- upload the ignored local dataset directory directly to the Colab runtime.
+Do not upload raw audio to GitHub. Keep raw audio in Google Drive under `MyDrive/call-whisper/GV_Dev_5h/`.
 
 ## Colab Setup
 
 ```bash
-git clone https://github.com/<owner>/callwhisper-8k.git
-cd callwhisper-8k
+git clone https://github.com/anshulLuhsna/CallWhisper-8k.git
+cd CallWhisper-8k
 python -m pip install -U pip
 python -m pip install -e ".[dev]"
 python -m pip install transformers accelerate datasets evaluate soundfile
@@ -70,13 +79,7 @@ Set paths so manifests resolve:
 export PYTHONPATH=src
 ```
 
-If audio is mounted elsewhere, either mirror the repo-relative path:
-
-```text
-callwhisper-8k/datasets/GV_Dev_5h/Audio/
-```
-
-or rebuild manifests to point at the mounted audio path.
+The notebooks handle Drive mounting and symlinking automatically.
 
 ## OpenAI Whisper Runs
 
