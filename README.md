@@ -39,6 +39,16 @@ Colab/GPU model comparison:
 
 See [results/model_comparison_v1.md](results/model_comparison_v1.md). These are fixed-slice benchmark results, not global ASR model rankings.
 
+Decoding adaptation on Whisper `large-v3`:
+
+| Experiment | Slice | WER | CER |
+|---|---|---:|---:|
+| baseline manifest hint | gramvaani_dev_50 | 0.5616 | 0.3057 |
+| beam size 5 | gramvaani_dev_50 | 0.5248 | 0.2861 |
+| auto language detection | gramvaani_dev_50 | 0.6685 | 0.4654 |
+
+See [results/adaptation_v1.md](results/adaptation_v1.md). On this slice, beam search helped, while prompt biasing and auto language detection hurt.
+
 ## Problem
 
 Whisper expects 16 kHz audio, while telephone audio is commonly narrowband 8 kHz. Feeding telephony audio incorrectly or assuming preprocessing helps can produce misleading results. This project measures Whisper behavior on real 8 kHz Hindi audio where possible, then compares it with synthetic telephony degradation on cleaner speech.

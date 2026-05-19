@@ -1,0 +1,76 @@
+{
+  "model": "large-v3",
+  "slice": "gramvaani_dev_50",
+  "condition": "telephone_mp3",
+  "source_dir": "results/results/results",
+  "results": [
+    {
+      "experiment": "baseline_manifest_seed0",
+      "files": 50,
+      "wer": 0.5616,
+      "cer": 0.3057,
+      "delta_wer": 0.0
+    },
+    {
+      "experiment": "beam_5_seed0",
+      "files": 50,
+      "wer": 0.5248,
+      "cer": 0.2861,
+      "delta_wer": -0.0368
+    },
+    {
+      "experiment": "beam_1_seed0",
+      "files": 50,
+      "wer": 0.5594,
+      "cer": 0.3065,
+      "delta_wer": -0.0022
+    },
+    {
+      "experiment": "language_hi_seed0",
+      "files": 50,
+      "wer": 0.5616,
+      "cer": 0.3057,
+      "delta_wer": 0.0
+    },
+    {
+      "experiment": "no_previous_text_seed0",
+      "files": 50,
+      "wer": 0.5616,
+      "cer": 0.3057,
+      "delta_wer": 0.0
+    },
+    {
+      "experiment": "temperature_0_seed0",
+      "files": 50,
+      "wer": 0.5982,
+      "cer": 0.3272,
+      "delta_wer": 0.0366
+    },
+    {
+      "experiment": "hindi_prompt_seed0",
+      "files": 50,
+      "wer": 0.6493,
+      "cer": 0.3967,
+      "delta_wer": 0.0877
+    },
+    {
+      "experiment": "temperature_02_seed0",
+      "files": 50,
+      "wer": 0.6586,
+      "cer": 0.3855,
+      "delta_wer": 0.097
+    },
+    {
+      "experiment": "language_auto_seed0",
+      "files": 50,
+      "wer": 0.6685,
+      "cer": 0.4654,
+      "delta_wer": 0.1069
+    }
+  ],
+  "interpretation": [
+    "Beam size 5 improved Whisper large-v3 on the fixed GramVaani 50-file slice.",
+    "Prompt biasing and auto language detection hurt on this slice.",
+    "These are fixed-slice decoding results, not general ASR claims."
+  ]
+}

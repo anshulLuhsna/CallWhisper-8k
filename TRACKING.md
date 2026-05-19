@@ -2,9 +2,9 @@
 
 ## Current Week
 
-Week: 2 complete / Week 3 prep
+Week: 3 adaptation
 Tag target: v0.2-preprocessing, then v0.3-adapted
-This week's non-negotiable deliverable: validate benchmark quality with manual listening, add clean Hindi control, then prepare Colab/GPU benchmark runs for stronger models.
+This week's non-negotiable deliverable: complete model comparison and non-training adaptation results, then add clean Hindi control.
 
 ## Daily Log
 
@@ -36,13 +36,20 @@ This week's non-negotiable deliverable: validate benchmark quality with manual l
 - Blocked: Manual listening still requires human audio review; clean Hindi control data still not prepared.
 - Next action: Complete human listening notes in `results/manual_audio_review_v1.md`, then add a clean Hindi control slice.
 
+### 2026-05-19
+
+- Planned: Bring Colab/GPU model comparison and cheap adaptation results back into the repo.
+- Done: Added `results/model_comparison_v1.md` showing Whisper `medium`, Whisper `large-v3`, and `ARTPARK-IISc/whisper-medium-vaani-hindi` on the fixed GramVaani 50-file slice and sample-rate splits. Added `results/adaptation_v1.md` showing Whisper `large-v3` decoding sweeps; `beam_size=5` improved WER from 0.5616 to 0.5248, while prompt biasing and auto language detection hurt.
+- Blocked: Clean Hindi control slice still missing.
+- Next action: Add 10-50 clean Hindi clips from FLEURS, Common Voice Hindi, or Kathbath and run the same baseline table.
+
 ## Scoreboard
 
 - Day-2 WER number shipped: yes
 - Baseline table shipped: yes
 - Preprocessing ablation shipped: yes
 - LoRA smoke test run: no
-- Week-3 kill gate obeyed: no
+- Week-3 kill gate obeyed: yes, non-training adaptation was run before LoRA
 - v1.0 shipped: no
 
 ## Cut List Temptations
