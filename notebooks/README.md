@@ -51,7 +51,7 @@ MyDrive/call-whisper/clean_control/fleurs_hi_50/fleurs_hi_clean_50.csv
 
 `05_whisper_small_lora_edge_smoke.ipynb` is the first compact fine-tuning notebook. It can run a smoke test from `GV_Dev_5h` while excluding frozen benchmark IDs, but any serious result should use a separate training split such as `GV_Train_100h`.
 
-For Kaggle, create a Kaggle Dataset and attach it with **Add Input**. The notebook can also download GramVaani directly from OpenSLR if Kaggle internet is enabled, but uploading once as a Kaggle Dataset is more repeatable.
+For Kaggle, create a Kaggle Dataset and attach it with **Add Input**. Notebook 05 can also download both labelled GramVaani splits directly from OpenSLR if Kaggle internet is enabled, then save the original tarballs under `/kaggle/working/saved_datasets/` so they can become a reusable Kaggle Dataset after the run. Extracted working copies are placed under `/kaggle/temp/data/` to avoid saving duplicate MP3 folders in the notebook output.
 
 Minimum attached dataset layout:
 
@@ -75,6 +75,12 @@ GV_Train_100h/
   utt2labels
 ```
 
-Kaggle outputs are written to `/kaggle/working/checkpoints/` and `/kaggle/working/results/`.
+Kaggle outputs are written to `/kaggle/working/checkpoints/`, `/kaggle/working/results/`, and `/kaggle/working/saved_datasets/`.
 
-If no `GV_Train_100h` input is attached, notebook 05 can download `GV_Train_100h.tar.gz` from OpenSLR into `/kaggle/working/data`. This is about 2 GB before extraction.
+Notebook 05 saves these dataset archives when downloads are enabled:
+
+```text
+/kaggle/working/saved_datasets/GV_Dev_5h.tar.gz
+/kaggle/working/saved_datasets/GV_Train_100h.tar.gz
+/kaggle/working/saved_datasets/gramvaani_saved_datasets.json
+```
