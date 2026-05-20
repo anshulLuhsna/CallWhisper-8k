@@ -97,6 +97,8 @@ Kaggle upload layout:
 
 `notebooks/05_whisper_small_lora_edge_smoke.ipynb` is Kaggle-first. It symlinks uploaded data into the cloned repo, excludes frozen benchmark IDs from training, saves adapters under `/kaggle/working/checkpoints/`, and writes frozen-manifest JSON/Markdown results under `/kaggle/working/results/`.
 
+If `GV_Train_100h` is not uploaded as a Kaggle input, the notebook can download `GV_Train_100h.tar.gz` directly from OpenSLR into `/kaggle/working/data` when Kaggle internet is enabled. Uploading it once as a Kaggle Dataset is still preferable for repeat runs.
+
 ## Comparison Table To Produce
 
 | Model | Size Class | GramVaani Mixed WER | GramVaani 8 kHz WER | FLEURS WER | Notes |
