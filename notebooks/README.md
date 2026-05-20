@@ -7,6 +7,7 @@ Run order:
 1. `01_openai_whisper_gpu_benchmark.ipynb`
 2. `02_hindi_tuned_hf_models.ipynb`
 3. `03_decoding_adaptation_sweeps.ipynb`
+4. `04_fleurs_clean_control.ipynb`
 
 Before running, put the GramVaani audio somewhere Colab can access. The notebooks now expect this Google Drive layout:
 
@@ -40,3 +41,9 @@ Then they symlink:
 They also copy CSV files from `MyDrive/call-whisper/manifests/` into `datasets/manifests/` inside the cloned repo.
 
 The notebooks do not commit or redistribute raw audio.
+
+`04_fleurs_clean_control.ipynb` expects the clean-control manifest created from FLEURS Hindi at:
+
+```text
+MyDrive/call-whisper/clean_control/fleurs_hi_50/fleurs_hi_clean_50.csv
+```
