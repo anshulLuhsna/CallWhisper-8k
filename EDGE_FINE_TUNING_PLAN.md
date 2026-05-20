@@ -75,7 +75,27 @@ Recommended first run:
 | Train data | GramVaani train subset, 1-5 hours first |
 | Eval data | frozen fixed manifests |
 | Metric | WER/CER |
-| Save path | `MyDrive/call-whisper/checkpoints/whisper-small-lora-gramvaani-*` |
+| Kaggle save path | `/kaggle/working/checkpoints/whisper-small-lora-gramvaani-*` |
+
+Kaggle upload layout:
+
+```text
+/kaggle/input/<dataset-name>/
+  GV_Dev_5h/
+    Audio/*.mp3
+    text
+    mp3.scp
+    uttids
+    utt2labels
+  GV_Train_100h/        # recommended for serious training
+    Audio/*.mp3
+    text
+    mp3.scp
+    uttids
+    utt2labels
+```
+
+`notebooks/05_whisper_small_lora_edge_smoke.ipynb` is Kaggle-first. It symlinks uploaded data into the cloned repo, excludes frozen benchmark IDs from training, saves adapters under `/kaggle/working/checkpoints/`, and writes frozen-manifest JSON/Markdown results under `/kaggle/working/results/`.
 
 ## Comparison Table To Produce
 

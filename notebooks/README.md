@@ -1,6 +1,6 @@
-# Colab Notebooks
+# GPU Notebooks
 
-These notebooks are designed for Google Colab/GPU runs. The MacBook remains the development and quick-test machine; Colab is for slower model comparison and adaptation sweeps.
+These notebooks are designed for hosted GPU runs. The MacBook remains the development and quick-test machine; Colab/Kaggle is for slower model comparison and adaptation sweeps.
 
 Run order:
 
@@ -8,7 +8,7 @@ Run order:
 2. `02_hindi_tuned_hf_models.ipynb`
 3. `03_decoding_adaptation_sweeps.ipynb`
 4. `04_fleurs_clean_control.ipynb`
-5. `05_whisper_small_lora_edge_smoke.ipynb`
+5. `05_whisper_small_lora_edge_smoke.ipynb` - Kaggle-first LoRA smoke notebook
 
 Before running, put the GramVaani audio somewhere Colab can access. The notebooks now expect this Google Drive layout:
 
@@ -50,3 +50,27 @@ MyDrive/call-whisper/clean_control/fleurs_hi_50/fleurs_hi_clean_50.csv
 ```
 
 `05_whisper_small_lora_edge_smoke.ipynb` is the first compact fine-tuning notebook. It can run a smoke test from `GV_Dev_5h` while excluding frozen benchmark IDs, but any serious result should use a separate training split such as `GV_Train_100h`.
+
+For Kaggle, create a Kaggle Dataset and attach it with **Add Input**. The notebook expects one of these folders under `/kaggle/input/<dataset-name>/`:
+
+```text
+GV_Dev_5h/
+  Audio/*.mp3
+  text
+  mp3.scp
+  uttids
+  utt2labels
+```
+
+For a serious run, also upload a separate training split:
+
+```text
+GV_Train_100h/
+  Audio/*.mp3
+  text
+  mp3.scp
+  uttids
+  utt2labels
+```
+
+Kaggle outputs are written to `/kaggle/working/checkpoints/` and `/kaggle/working/results/`.
