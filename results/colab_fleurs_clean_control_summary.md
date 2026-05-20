@@ -1,0 +1,5 @@
+| file                                                                                   | model                                   | slice              | condition         |   files |    wer |    cer |
+|:---------------------------------------------------------------------------------------|:----------------------------------------|:-------------------|:------------------|--------:|-------:|-------:|
+| results/colab_hf_artpark_iisc_whisper_medium_vaani_hindi_fleurs_hi_clean_50_seed0.json | ARTPARK-IISc/whisper-medium-vaani-hindi | fleurs_hi_clean_50 | clean_read_speech |      50 | 0.1326 | 0.0475 |
+| results/colab_whisper_large_v3_fleurs_hi_clean_50_seed0.json                           | large-v3                                | fleurs_hi_clean_50 | clean_read_speech |      50 | 0.3112 | 0.1201 |
+| results/colab_whisper_medium_fleurs_hi_clean_50_seed0.json                             | medium                                  | fleurs_hi_clean_50 | clean_read_speech |      50 | 0.4363 | 0.183  |

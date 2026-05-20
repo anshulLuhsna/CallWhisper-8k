@@ -47,3 +47,12 @@ Avoid:
 > Telephone audio doubles WER in general.
 
 The clean and telephone slices differ in more than channel alone.
+
+## Source Files
+
+```text
+results/colab_fleurs_clean_control_summary.md
+results/colab_whisper_medium_fleurs_hi_clean_50_seed0.json
+results/colab_whisper_large_v3_fleurs_hi_clean_50_seed0.json
+results/colab_hf_artpark_iisc_whisper_medium_vaani_hindi_fleurs_hi_clean_50_seed0.json
+```

@@ -3,6 +3,12 @@
   "clean_slice": "fleurs_hi_clean_50",
   "clean_condition": "clean_read_speech",
   "clean_manifest_colab": "/content/drive/MyDrive/call-whisper/clean_control/fleurs_hi_50/fleurs_hi_clean_50.csv",
+  "source_files": [
+    "results/colab_fleurs_clean_control_summary.md",
+    "results/colab_whisper_medium_fleurs_hi_clean_50_seed0.json",
+    "results/colab_whisper_large_v3_fleurs_hi_clean_50_seed0.json",
+    "results/colab_hf_artpark_iisc_whisper_medium_vaani_hindi_fleurs_hi_clean_50_seed0.json"
+  ],
   "results": [
     {
       "model": "Whisper medium",
