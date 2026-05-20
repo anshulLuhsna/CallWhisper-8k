@@ -1,0 +1,40 @@
+{
+  "clean_dataset": "FLEURS Hindi",
+  "clean_slice": "fleurs_hi_clean_50",
+  "clean_condition": "clean_read_speech",
+  "clean_manifest_colab": "/content/drive/MyDrive/call-whisper/clean_control/fleurs_hi_50/fleurs_hi_clean_50.csv",
+  "results": [
+    {
+      "model": "Whisper medium",
+      "clean_wer": 0.4363,
+      "clean_cer": 0.183,
+      "gramvaani_mixed_wer": 0.7683,
+      "gramvaani_mixed_cer": 0.486,
+      "gramvaani_8khz_wer": 0.8108,
+      "gramvaani_8khz_cer": 0.506
+    },
+    {
+      "model": "Whisper large-v3",
+      "clean_wer": 0.3112,
+      "clean_cer": 0.1201,
+      "gramvaani_mixed_wer": 0.5616,
+      "gramvaani_mixed_cer": 0.3057,
+      "gramvaani_8khz_wer": 0.6511,
+      "gramvaani_8khz_cer": 0.3798
+    },
+    {
+      "model": "ARTPARK-IISc/whisper-medium-vaani-hindi",
+      "clean_wer": 0.1326,
+      "clean_cer": 0.0475,
+      "gramvaani_mixed_wer": 0.2597,
+      "gramvaani_mixed_cer": 0.1298,
+      "gramvaani_8khz_wer": 0.29,
+      "gramvaani_8khz_cer": 0.1581
+    }
+  ],
+  "interpretation": [
+    "All tested models perform better on clean FLEURS Hindi than on GramVaani telephone-style Hindi.",
+    "The clean-to-telephone gap remains visible even for the Hindi-tuned ARTPARK model.",
+    "FLEURS and GramVaani differ in domain, channel, transcript style, and speaker conditions, so this is a practical control rather than a perfectly isolated causal test."
+  ]
+}

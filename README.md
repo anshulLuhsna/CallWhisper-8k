@@ -49,6 +49,16 @@ Decoding adaptation on Whisper `large-v3`:
 
 See [results/adaptation_v1.md](results/adaptation_v1.md). On this slice, beam search helped, while prompt biasing and auto language detection hurt.
 
+Clean Hindi control:
+
+| Model | FLEURS Clean WER | GramVaani Mixed WER | GramVaani 8 kHz WER |
+|---|---:|---:|---:|
+| Whisper medium | 0.4363 | 0.7683 | 0.8108 |
+| Whisper large-v3 | 0.3112 | 0.5616 | 0.6511 |
+| ARTPARK-IISc/whisper-medium-vaani-hindi | 0.1326 | 0.2597 | 0.2900 |
+
+See [results/clean_control_v1.md](results/clean_control_v1.md). FLEURS and GramVaani differ in channel and domain, so this is a practical clean-control comparison rather than a claim about channel alone.
+
 ## Problem
 
 Whisper expects 16 kHz audio, while telephone audio is commonly narrowband 8 kHz. Feeding telephony audio incorrectly or assuming preprocessing helps can produce misleading results. This project measures Whisper behavior on real 8 kHz Hindi audio where possible, then compares it with synthetic telephony degradation on cleaner speech.
@@ -105,6 +115,7 @@ data/slr103/hindi/test/audio.wav,नमस्ते दुनिया,slr103_hi
 - The initial sample-rate split shows higher error on the 8 kHz subset, but this should not be attributed to sample rate alone without manual audio review and a clean Hindi control.
 - Some Gramvaani references contain transcript-quality markers such as `<incomplete>`.
 - Common Voice synthetic telephony experiments are useful controls, not evidence of real telephone performance.
+- FLEURS Hindi is clean read speech, while GramVaani is spontaneous telephone-style speech. The clean-control comparison should not be treated as a pure channel-only ablation.
 - This project reports slice-specific WER/CER deltas. It does not claim to fix Whisper for telephony.
 
 ## Future Work

@@ -43,6 +43,13 @@ This week's non-negotiable deliverable: complete model comparison and non-traini
 - Blocked: Clean Hindi control slice still missing.
 - Next action: Add 10-50 clean Hindi clips from FLEURS, Common Voice Hindi, or Kathbath and run the same baseline table.
 
+### 2026-05-20
+
+- Planned: Add a clean Hindi control slice.
+- Done: Created and evaluated a 50-file FLEURS Hindi clean-control slice. Added `results/clean_control_v1.md`: Whisper `large-v3` WER is 0.3112 on FLEURS clean Hindi versus 0.5616 on GramVaani mixed and 0.6511 on GramVaani 8 kHz; ARTPARK WER is 0.1326 on FLEURS versus 0.2597 on GramVaani mixed and 0.2900 on GramVaani 8 kHz.
+- Blocked: Raw FLEURS clean-control JSON outputs are not yet copied into the local repo; current clean-control summary is based on the Colab table.
+- Next action: Copy FLEURS JSON outputs into `results/results/` or `results/results/results/`, then begin Week 4 packaging: CLI polish, FastAPI, Docker, and final README.
+
 ## Scoreboard
 
 - Day-2 WER number shipped: yes
