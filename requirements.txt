@@ -8,3 +8,6 @@ tqdm>=4.66
 
 # Optional for Colab/GPU Hindi-tuned model comparison:
 # pip install -e ".[colab]"
+
+# Optional for compact LoRA fine-tuning:
+# pip install -e ".[finetune]"

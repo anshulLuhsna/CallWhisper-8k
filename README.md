@@ -69,6 +69,7 @@ Whisper expects 16 kHz audio, while telephone audio is commonly narrowband 8 kHz
 - Whether simple telephony preprocessing changes WER/CER on the chosen slice.
 - Controlled adaptation experiments, only after a working baseline exists.
 - A reproducible CLI/API artifact rather than a fine-tuning-first claim.
+- An ambitious compact-model adaptation track for edge Hindi telephony ASR, kept separate from the benchmark results until it is evaluated honestly.
 
 ## Quickstart
 
@@ -85,6 +86,8 @@ python -m callwhisper.eval --manifest datasets/manifests/example.csv --model tin
 ```
 
 For GPU model comparison, use the Colab notebooks in [notebooks](notebooks/README.md).
+
+For the compact fine-tuning direction, see [EDGE_FINE_TUNING_PLAN.md](EDGE_FINE_TUNING_PLAN.md).
 
 ## Datasets And Licenses
 

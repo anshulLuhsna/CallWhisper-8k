@@ -10,4 +10,4 @@ Ideas that are useful but outside the locked v1.0 roadmap.
 - Additional languages beyond Hindi and Hindi-English code-switching.
 - Full Whisper fine-tuning from scratch.
 - Production call-center benchmarking on private/commercial datasets.
-- Large-scale LoRA runs beyond a small controlled adaptation experiment.
+- Large-scale LoRA runs beyond the compact edge-adaptation track documented in `EDGE_FINE_TUNING_PLAN.md`.

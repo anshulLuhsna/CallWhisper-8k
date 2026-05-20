@@ -8,6 +8,7 @@ Run order:
 2. `02_hindi_tuned_hf_models.ipynb`
 3. `03_decoding_adaptation_sweeps.ipynb`
 4. `04_fleurs_clean_control.ipynb`
+5. `05_whisper_small_lora_edge_smoke.ipynb`
 
 Before running, put the GramVaani audio somewhere Colab can access. The notebooks now expect this Google Drive layout:
 
@@ -47,3 +48,5 @@ The notebooks do not commit or redistribute raw audio.
 ```text
 MyDrive/call-whisper/clean_control/fleurs_hi_50/fleurs_hi_clean_50.csv
 ```
+
+`05_whisper_small_lora_edge_smoke.ipynb` is the first compact fine-tuning notebook. It can run a smoke test from `GV_Dev_5h` while excluding frozen benchmark IDs, but any serious result should use a separate training split such as `GV_Train_100h`.

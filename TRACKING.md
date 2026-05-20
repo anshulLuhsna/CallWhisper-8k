@@ -50,6 +50,13 @@ This week's non-negotiable deliverable: complete model comparison and non-traini
 - Blocked: Raw FLEURS clean-control JSON outputs are not yet copied into the local repo; current clean-control summary is based on the Colab table.
 - Next action: Copy FLEURS JSON outputs into `results/results/` or `results/results/results/`, then begin Week 4 packaging: CLI polish, FastAPI, Docker, and final README.
 
+### 2026-05-20 edge fine-tuning direction
+
+- Planned: Capture the new ambition to fine-tune compact Whisper models for edge Hindi telephony ASR.
+- Done: Added `EDGE_FINE_TUNING_PLAN.md` to define the compact adaptation track, success levels, leakage rules, and comparison targets. Added `notebooks/05_whisper_small_lora_edge_smoke.ipynb` as the first Whisper-small LoRA smoke-test notebook.
+- Blocked: Full GramVaani training audio is not confirmed locally; serious fine-tuning should use `GV_Train_100h` or another train split, not the frozen held-out 50-file benchmark slice.
+- Next action: Run the LoRA smoke notebook on Colab, confirm one adapter checkpoint can be saved to Drive, then switch the training source to real GramVaani train data.
+
 ## Scoreboard
 
 - Day-2 WER number shipped: yes
