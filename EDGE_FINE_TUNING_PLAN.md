@@ -72,9 +72,11 @@ Recommended first run:
 |---|---|
 | Base model | `openai/whisper-small` |
 | Method | LoRA |
-| Train data | GramVaani train subset, 1-5 hours first |
-| Eval data | frozen fixed manifests |
-| Metric | WER/CER |
+| Run profile | `pilot` |
+| Train data | `GV_Train_100h`, capped at 3,200 clips |
+| Internal eval data | held-out `GV_Train_100h` subset, capped at 200 clips |
+| Frozen eval data | GramVaani mixed 50, 8 kHz subset, high-rate subset |
+| Metric | macro WER/CER and corpus WER/CER |
 | Kaggle save path | `/kaggle/working/checkpoints/whisper-small-lora-gramvaani-*` |
 
 Kaggle upload layout:
@@ -95,7 +97,7 @@ Kaggle upload layout:
     utt2labels
 ```
 
-`notebooks/05_whisper_small_lora_edge_smoke.ipynb` is Kaggle-first. It symlinks uploaded data into the cloned repo, excludes frozen benchmark IDs from training, saves adapters under `/kaggle/working/checkpoints/`, and writes frozen-manifest JSON/Markdown results under `/kaggle/working/results/`.
+`notebooks/05_whisper_small_lora_edge_smoke.ipynb` is Kaggle-first. It symlinks uploaded data into the cloned repo, excludes frozen benchmark IDs from training, filters training clips to 1-30 seconds, saves adapters under `/kaggle/working/checkpoints/`, and writes base-vs-LoRA frozen-manifest JSON/Markdown results under `/kaggle/working/results/`.
 
 Notebook 05 downloads and saves both labelled GramVaani archives when Kaggle internet is enabled:
 

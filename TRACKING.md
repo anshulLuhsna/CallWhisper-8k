@@ -57,6 +57,13 @@ This week's non-negotiable deliverable: complete model comparison and non-traini
 - Blocked: Full GramVaani training audio is not confirmed locally; serious fine-tuning should use `GV_Train_100h` or another train split, not the frozen held-out 50-file benchmark slice.
 - Next action: Run the LoRA smoke notebook on Colab, confirm one adapter checkpoint can be saved to Drive, then switch the training source to real GramVaani train data.
 
+### 2026-05-20 Kaggle LoRA pilot upgrade
+
+- Planned: Make the Kaggle LoRA notebook a credible pilot experiment instead of only a smoke test.
+- Done: Upgraded notebook 05 with `smoke` / `pilot` / `serious` run profiles, safe GramVaani archive download/copy/extract, dataset validation, 1-30 second duration filtering, saved train/internal-eval splits, saved run config and package versions, and same-pipeline base HF Whisper-small versus LoRA evaluation on frozen GramVaani manifests with both macro and corpus WER/CER.
+- Blocked: Notebook has not yet been executed on Kaggle GPU.
+- Next action: Run notebook 05 with default `RUN_PROFILE = "pilot"` on Kaggle, then copy the generated comparison Markdown/JSON back into `results/`.
+
 ## Scoreboard
 
 - Day-2 WER number shipped: yes

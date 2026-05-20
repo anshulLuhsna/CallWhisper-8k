@@ -49,7 +49,7 @@ The notebooks do not commit or redistribute raw audio.
 MyDrive/call-whisper/clean_control/fleurs_hi_50/fleurs_hi_clean_50.csv
 ```
 
-`05_whisper_small_lora_edge_smoke.ipynb` is the first compact fine-tuning notebook. It can run a smoke test from `GV_Dev_5h` while excluding frozen benchmark IDs, but any serious result should use a separate training split such as `GV_Train_100h`.
+`05_whisper_small_lora_edge_smoke.ipynb` is the compact fine-tuning notebook. It defaults to the `pilot` profile: train Whisper-small LoRA on `GV_Train_100h`, filter clips to 1-30 seconds, save exact split/config artifacts, and evaluate base HF Whisper-small versus LoRA on the frozen GramVaani manifests. It can still run a `smoke` profile from `GV_Dev_5h` while excluding frozen benchmark IDs, but that is only a pipeline check.
 
 For Kaggle, create a Kaggle Dataset and attach it with **Add Input**. Notebook 05 can also download both labelled GramVaani splits directly from OpenSLR if Kaggle internet is enabled, then save the original tarballs under `/kaggle/working/saved_datasets/` so they can become a reusable Kaggle Dataset after the run. Extracted working copies are placed under `/kaggle/temp/data/` to avoid saving duplicate MP3 folders in the notebook output.
 
@@ -83,4 +83,17 @@ Notebook 05 saves these dataset archives when downloads are enabled:
 /kaggle/working/saved_datasets/GV_Dev_5h.tar.gz
 /kaggle/working/saved_datasets/GV_Train_100h.tar.gz
 /kaggle/working/saved_datasets/gramvaani_saved_datasets.json
+```
+
+Notebook 05 also saves reproducibility/evaluation artifacts under:
+
+```text
+/kaggle/working/results/whisper_small_lora_pilot/
+  *_run_config.json
+  *_package_versions.json
+  *_train_split.csv
+  *_internal_eval_split.csv
+  *_excluded_rows.csv
+  *_eval_summary.json
+  *_base_vs_lora_comparison.md
 ```
