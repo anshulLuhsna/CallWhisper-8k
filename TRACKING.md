@@ -71,6 +71,13 @@ This week's non-negotiable deliverable: complete model comparison and non-traini
 - Blocked: Not yet re-run on Kaggle after the notebook update.
 - Next action: Re-run from the deterministic split cell; verify it reaches the training cell with `RUN_PROFILE = "pilot"`.
 
+### 2026-05-20 Kaggle eval import hardening
+
+- Planned: Make the frozen-manifest evaluation cell robust after long Kaggle runs or partial notebook reruns.
+- Done: Added explicit imports for `csv`, `json`, `Path`, `torch`, and `WhisperForConditionalGeneration`; inserted the cloned repo `src` path before importing `callwhisper`; added local metric/normalization fallbacks if `callwhisper.eval.*` is not importable.
+- Blocked: Not yet re-run on Kaggle after the notebook update.
+- Next action: Re-run the eval cell after training finishes and confirm base-vs-LoRA JSON/Markdown files are written.
+
 ## Scoreboard
 
 - Day-2 WER number shipped: yes
