@@ -64,6 +64,13 @@ This week's non-negotiable deliverable: complete model comparison and non-traini
 - Blocked: Notebook has not yet been executed on Kaggle GPU.
 - Next action: Run notebook 05 with default `RUN_PROFILE = "pilot"` on Kaggle, then copy the generated comparison Markdown/JSON back into `results/`.
 
+### 2026-05-20 Kaggle split progress fix
+
+- Planned: Make the deterministic split cell observable and faster on Kaggle.
+- Done: Added progress bars for transcript/SCP indexing and `ffprobe` duration probing. Changed pilot/serious duration filtering to stop after enough valid clips plus a buffer instead of probing the full 100h corpus.
+- Blocked: Not yet re-run on Kaggle after the notebook update.
+- Next action: Re-run from the deterministic split cell; verify it reaches the training cell with `RUN_PROFILE = "pilot"`.
+
 ## Scoreboard
 
 - Day-2 WER number shipped: yes
