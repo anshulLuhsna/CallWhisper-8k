@@ -59,6 +59,16 @@ Clean Hindi control:
 
 See [results/clean_control_v1.md](results/clean_control_v1.md). FLEURS and GramVaani differ in channel and domain, so this is a practical clean-control comparison rather than a claim about channel alone.
 
+Whisper-small LoRA pilot on Kaggle:
+
+| Slice | Beams | Base HF Whisper-small WER | LoRA Whisper-small WER | Delta |
+|---|---:|---:|---:|---:|
+| gramvaani_dev_50 | 5 | 1.0303 | 0.7532 | -0.2771 |
+| gramvaani_dev_50_8khz | 5 | 1.1595 | 0.8946 | -0.2649 |
+| gramvaani_dev_50_highrate | 5 | 0.8006 | 0.5018 | -0.2988 |
+
+See [results/lora_pilot_v1.md](results/lora_pilot_v1.md). This is a same-pipeline base-vs-LoRA comparison, not a claim that the adapter beats the strongest Hindi-tuned public models.
+
 ## Problem
 
 Whisper expects 16 kHz audio, while telephone audio is commonly narrowband 8 kHz. Feeding telephony audio incorrectly or assuming preprocessing helps can produce misleading results. This project measures Whisper behavior on real 8 kHz Hindi audio where possible, then compares it with synthetic telephony degradation on cleaner speech.
@@ -88,6 +98,12 @@ python -m callwhisper.eval --manifest datasets/manifests/example.csv --model tin
 For GPU model comparison, use the Colab notebooks in [notebooks](notebooks/README.md).
 
 For the compact fine-tuning direction, see [EDGE_FINE_TUNING_PLAN.md](EDGE_FINE_TUNING_PLAN.md).
+
+The first compact adapter artifact is committed under:
+
+```text
+models/whisper-small-lora-gramvaani-pilot-seed0/
+```
 
 ## Datasets And Licenses
 

@@ -115,7 +115,9 @@ It extracts temporary working copies to `/kaggle/temp/data/` so Kaggle Output ke
 | Whisper small | small | 0.8697 | TBD | TBD | vanilla |
 | Whisper large-v3 | large | 0.5616 | 0.6511 | 0.3112 | vanilla |
 | ARTPARK medium Vaani Hindi | medium | 0.2597 | 0.2900 | 0.1326 | public Hindi-tuned |
-| Our Whisper-small LoRA | small | TBD | TBD | TBD | edge-adapted |
+| Our Whisper-small LoRA | small | 0.7532 | 0.8946 | TBD | edge-adapted, same-pipeline HF beam5 |
+
+Note: the LoRA row is a same-pipeline HF base-vs-LoRA result from `results/lora_pilot_v1.md`. Do not compare it directly against earlier OpenAI Whisper CLI numbers without repeating the baselines in the same evaluation path.
 
 ## Risks
 

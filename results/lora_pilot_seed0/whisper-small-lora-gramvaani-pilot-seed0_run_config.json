@@ -1,0 +1,75 @@
+{
+  "created_utc": "2026-05-20T16:35:58.055854+00:00",
+  "run_name": "whisper-small-lora-gramvaani-pilot-seed0",
+  "run_profile": "pilot",
+  "seed": 0,
+  "base_model": "openai/whisper-small",
+  "profile": {
+    "max_train_samples": 3200,
+    "max_internal_eval_samples": 200,
+    "max_steps": 800,
+    "requires_train_split": true,
+    "per_device_train_batch_size": 4,
+    "per_device_eval_batch_size": 4,
+    "gradient_accumulation_steps": 2,
+    "learning_rate": 0.0001,
+    "warmup_steps": 80,
+    "eval_steps": 100,
+    "save_steps": 100
+  },
+  "lora": {
+    "r": 16,
+    "lora_alpha": 32,
+    "target_modules": [
+      "q_proj",
+      "v_proj"
+    ],
+    "lora_dropout": 0.05,
+    "bias": "none"
+  },
+  "duration_filter": {
+    "min_s": 1.0,
+    "max_s": 30.0
+  },
+  "decode_beams": [
+    1,
+    5
+  ],
+  "train_dataset_dir": "/kaggle/working/CallWhisper-8k/datasets/GV_Train_100h",
+  "smoke_test_only": false,
+  "frozen_manifests": [
+    "/kaggle/working/CallWhisper-8k/datasets/manifests/gramvaani_dev_50.csv",
+    "/kaggle/working/CallWhisper-8k/datasets/manifests/gramvaani_dev_50_8khz.csv",
+    "/kaggle/working/CallWhisper-8k/datasets/manifests/gramvaani_dev_50_highrate.csv"
+  ],
+  "split_summary": {
+    "candidate_rows_after_filter": 3800,
+    "train_rows": 3200,
+    "internal_eval_rows": 200,
+    "excluded_rows": 19,
+    "excluded_by_reason": {
+      "duration_too_long": 18,
+      "duration_too_short": 1
+    },
+    "duration_probe": {
+      "probe_all_durations": false,
+      "needed_rows": 3400,
+      "target_valid_rows": 3800,
+      "probed_rows": 3819,
+      "valid_rows_after_duration_filter": 3800,
+      "unprobed_after_quota": 33333,
+      "duration_probe_failures": 0
+    },
+    "duration_summary": {
+      "min": 1.224,
+      "median": 10.344,
+      "mean": 9.764319705882352,
+      "max": 29.736
+    },
+    "train_split_path": "/kaggle/working/results/whisper_small_lora_pilot/whisper-small-lora-gramvaani-pilot-seed0_train_split.csv",
+    "internal_eval_split_path": "/kaggle/working/results/whisper_small_lora_pilot/whisper-small-lora-gramvaani-pilot-seed0_internal_eval_split.csv",
+    "exclusions_path": "/kaggle/working/results/whisper_small_lora_pilot/whisper-small-lora-gramvaani-pilot-seed0_excluded_rows.csv"
+  },
+  "package_versions_path": "/kaggle/working/results/whisper_small_lora_pilot/whisper-small-lora-gramvaani-pilot-seed0_package_versions.json",
+  "saved_dataset_index": "/kaggle/working/saved_datasets/gramvaani_saved_datasets.json"
+}
