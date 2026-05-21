@@ -104,8 +104,8 @@ def load_processor(processor_dir: Path | None, base_model: str) -> Any:
 
 
 def configure_generation_model(eval_model: Any) -> Any:
-    eval_model.config.forced_decoder_ids = None
-    eval_model.config.suppress_tokens = []
+    # Newer transformers versions reject generation overrides written to
+    # model.config. Keep decoding controls on generation_config instead.
     if hasattr(eval_model, "generation_config"):
         eval_model.generation_config.forced_decoder_ids = None
         eval_model.generation_config.suppress_tokens = []
