@@ -20,6 +20,7 @@ class ManifestRow:
 def load_manifest(path: str | Path, repo_root: str | Path | None = None) -> list[ManifestRow]:
     manifest_path = Path(path)
     root = Path(repo_root) if repo_root is not None else Path.cwd()
+    manifest_parent = manifest_path.parent
 
     with manifest_path.open("r", encoding="utf-8", newline="") as file:
         reader = csv.DictReader(file)
@@ -31,7 +32,9 @@ def load_manifest(path: str | Path, repo_root: str | Path | None = None) -> list
         for index, raw in enumerate(reader, start=2):
             audio_path = Path(raw["audio_path"])
             if not audio_path.is_absolute():
-                audio_path = root / audio_path
+                root_candidate = root / audio_path
+                manifest_candidate = manifest_parent / audio_path
+                audio_path = root_candidate if root_candidate.exists() else manifest_candidate
             reference_text = raw["reference_text"].strip()
             if not reference_text:
                 raise ValueError(f"Manifest {manifest_path} row {index} has an empty reference_text")
