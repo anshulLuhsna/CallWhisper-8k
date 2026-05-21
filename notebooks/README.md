@@ -9,6 +9,7 @@ Run order:
 3. `03_decoding_adaptation_sweeps.ipynb`
 4. `04_fleurs_clean_control.ipynb`
 5. `05_whisper_small_lora_edge_smoke.ipynb` - Kaggle-first LoRA smoke notebook
+6. `06_lora_reload_eval_colab_report.ipynb` - Colab reload/eval notebook for the committed LoRA adapter and Excel-ready report tables
 
 Before running, put the GramVaani audio somewhere Colab can access. The notebooks now expect this Google Drive layout:
 
@@ -96,4 +97,10 @@ Notebook 05 also saves reproducibility/evaluation artifacts under:
   *_excluded_rows.csv
   *_eval_summary.json
   *_base_vs_lora_comparison.md
+```
+
+`06_lora_reload_eval_colab_report.ipynb` is the follow-up reporting notebook. It does not train. It clones the repo, mounts Google Drive, symlinks `MyDrive/call-whisper/GV_Dev_5h` into the repo, reloads the committed adapter under `models/whisper-small-lora-gramvaani-pilot-seed0/`, evaluates base HF Whisper-small versus the LoRA adapter, and writes Excel/CSV/JSON/Markdown outputs to:
+
+```text
+MyDrive/call-whisper/results/lora_reload_eval_colab/
 ```
