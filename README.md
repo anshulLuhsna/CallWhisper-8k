@@ -135,6 +135,22 @@ results/lora_pilot_seed0/
 results/lora_pilot_v1.md
 ```
 
+To reload the committed adapter and re-run the same-pipeline base-vs-LoRA eval:
+
+```bash
+pip install -e ".[finetune]"
+
+callwhisper-lora-eval \
+  --manifest datasets/manifests/gramvaani_dev_50.csv \
+  --manifest datasets/manifests/gramvaani_dev_50_8khz.csv \
+  --manifest datasets/manifests/gramvaani_dev_50_highrate.csv \
+  --adapter-dir models/whisper-small-lora-gramvaani-pilot-seed0/final_adapter \
+  --processor-dir models/whisper-small-lora-gramvaani-pilot-seed0/processor \
+  --output-dir results/lora_reload_eval
+```
+
+Use a GPU runtime for this command when possible. CPU evaluation will work, but it will be slow.
+
 ## Datasets And Licenses
 
 Raw audio is not committed to this repository. Dataset download scripts and manifests should reproduce slices locally.

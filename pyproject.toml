@@ -37,6 +37,7 @@ finetune = [
   "accelerate>=0.30",
   "datasets>=2.19",
   "evaluate>=0.4",
+  "librosa>=0.10",
   "peft>=0.11",
   "tensorboard>=2.16",
   "transformers>=4.41"
@@ -44,6 +45,7 @@ finetune = [
 
 [project.scripts]
 callwhisper = "callwhisper.eval.runner:main"
+callwhisper-lora-eval = "callwhisper.eval.lora_runner:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/callwhisper"]

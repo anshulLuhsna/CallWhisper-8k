@@ -62,6 +62,24 @@ Detailed JSON, splits, config, package versions, and per-sample predictions:
 results/lora_pilot_seed0/
 ```
 
+## Reproduce Adapter Evaluation
+
+The adapter can be reloaded from the committed repo artifact and evaluated against the frozen GramVaani manifests:
+
+```bash
+pip install -e ".[finetune]"
+
+callwhisper-lora-eval \
+  --manifest datasets/manifests/gramvaani_dev_50.csv \
+  --manifest datasets/manifests/gramvaani_dev_50_8khz.csv \
+  --manifest datasets/manifests/gramvaani_dev_50_highrate.csv \
+  --adapter-dir models/whisper-small-lora-gramvaani-pilot-seed0/final_adapter \
+  --processor-dir models/whisper-small-lora-gramvaani-pilot-seed0/processor \
+  --output-dir results/lora_reload_eval
+```
+
+This evaluates base HF Whisper-small and the LoRA-adapted Whisper-small through the same Hugging Face generation path, then writes per-sample JSON plus Markdown summary tables.
+
 Source Kaggle archive retained locally but not committed:
 
 ```text

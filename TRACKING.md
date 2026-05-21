@@ -82,8 +82,9 @@ This week's non-negotiable deliverable: complete model comparison and non-traini
 
 - Planned: Bring the Kaggle Whisper-small LoRA pilot outputs back into the repo.
 - Done: Added the final LoRA adapter and processor under `models/whisper-small-lora-gramvaani-pilot-seed0/`, copied detailed run artifacts to `results/lora_pilot_seed0/`, and wrote `results/lora_pilot_v1.md`. Same-pipeline beam-5 WER improved from `1.0303` to `0.7532` on `gramvaani_dev_50`, from `1.1595` to `0.8946` on the 8 kHz subset, and from `0.8006` to `0.5018` on the high-rate subset.
-- Blocked: Not yet validated outside Kaggle by reloading the committed adapter locally or in a fresh GPU runtime.
-- Next action: Add a small adapter reload/eval notebook or script, then run a clean-control FLEURS check for the adapted model.
+- Done: Added `callwhisper-lora-eval`, a repo-native adapter reload/eval runner that evaluates base HF Whisper-small and the committed LoRA adapter on fixed manifests and writes per-sample JSON plus Markdown comparison tables.
+- Blocked: Not yet re-run outside Kaggle on a GPU runtime.
+- Next action: Run `callwhisper-lora-eval` in a fresh GPU environment, then add the FLEURS clean-control manifest to check whether the adapted model regresses on clean Hindi read speech.
 
 ## Scoreboard
 
