@@ -4,7 +4,23 @@ Reproducible benchmark and inference pipeline for 8 kHz telephony-style ASR, foc
 
 ## Results Snapshot
 
-First baseline benchmarks on Gramvaani GV Dev telephone-style Hindi speech. These are early results, not final claims.
+CallWhisper-8k currently has three result tracks:
+
+1. fixed-slice benchmarking of Whisper-family and Hindi-tuned ASR models,
+2. preprocessing and decoding ablations,
+3. compact Whisper-small LoRA adaptation for edge-oriented Hindi telephony ASR.
+
+The strongest new adaptation result is the Kaggle LoRA pilot:
+
+| Experiment | Slice | Beams | WER Before | WER After | Change |
+|---|---|---:|---:|---:|---:|
+| HF Whisper-small -> Whisper-small LoRA | gramvaani_dev_50 | 5 | 1.0303 | 0.7532 | -0.2771 |
+| HF Whisper-small -> Whisper-small LoRA | gramvaani_dev_50_8khz | 5 | 1.1595 | 0.8946 | -0.2649 |
+| HF Whisper-small -> Whisper-small LoRA | gramvaani_dev_50_highrate | 5 | 0.8006 | 0.5018 | -0.2988 |
+
+This is a same-pipeline base-vs-LoRA comparison from [results/lora_pilot_v1.md](results/lora_pilot_v1.md). It shows a real adaptation signal, but it is not a claim that the adapter beats the strongest Hindi-tuned public models.
+
+Baseline benchmarks on Gramvaani GV Dev telephone-style Hindi speech:
 
 | Model | Dataset Slice | Condition | WER | CER |
 |---|---|---|---:|---:|
@@ -105,6 +121,20 @@ The first compact adapter artifact is committed under:
 models/whisper-small-lora-gramvaani-pilot-seed0/
 ```
 
+That directory contains:
+
+```text
+final_adapter/   # LoRA adapter weights and config
+processor/       # Whisper processor/tokenizer files used with the adapter
+```
+
+Detailed pilot outputs are under:
+
+```text
+results/lora_pilot_seed0/
+results/lora_pilot_v1.md
+```
+
 ## Datasets And Licenses
 
 Raw audio is not committed to this repository. Dataset download scripts and manifests should reproduce slices locally.
@@ -135,6 +165,8 @@ data/slr103/hindi/test/audio.wav,नमस्ते दुनिया,slr103_hi
 - Some Gramvaani references contain transcript-quality markers such as `<incomplete>`.
 - Common Voice synthetic telephony experiments are useful controls, not evidence of real telephone performance.
 - FLEURS Hindi is clean read speech, while GramVaani is spontaneous telephone-style speech. The clean-control comparison should not be treated as a pure channel-only ablation.
+- The LoRA pilot should be interpreted as a same-pipeline comparison against HF Whisper-small. It should not be directly compared against earlier OpenAI Whisper CLI numbers without rerunning those baselines in the same HF evaluation path.
+- The LoRA adapter has not yet been evaluated on the FLEURS clean-control slice, so clean-speech regression risk is still unknown.
 - This project reports slice-specific WER/CER deltas. It does not claim to fix Whisper for telephony.
 
 ## Future Work
