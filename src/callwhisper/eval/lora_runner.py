@@ -100,6 +100,7 @@ def load_processor(processor_dir: Path | None, base_model: str) -> Any:
     *_, WhisperForConditionalGeneration, WhisperProcessor = require_eval_dependencies()
     del WhisperForConditionalGeneration
     source = processor_dir if processor_dir is not None and processor_dir.exists() else base_model
+    print(f"Loading processor from {source}", flush=True)
     return WhisperProcessor.from_pretrained(str(source))
 
 
@@ -115,6 +116,7 @@ def configure_generation_model(eval_model: Any) -> Any:
 
 def load_base_eval_model(base_model: str, device: str) -> Any:
     *_, WhisperForConditionalGeneration, _WhisperProcessor = require_eval_dependencies()
+    print(f"Loading base model {base_model} on {device}", flush=True)
     eval_model = WhisperForConditionalGeneration.from_pretrained(base_model).to(device)
     return configure_generation_model(eval_model)
 
@@ -123,8 +125,11 @@ def load_lora_eval_model(base_model: str, adapter_dir: Path, device: str) -> Any
     *_, PeftModel, WhisperForConditionalGeneration, _WhisperProcessor = require_eval_dependencies()
     if not adapter_dir.exists():
         raise FileNotFoundError(f"Adapter directory not found: {adapter_dir}")
+    print(f"Loading LoRA base model {base_model} on {device}", flush=True)
     base = WhisperForConditionalGeneration.from_pretrained(base_model).to(device)
+    print(f"Loading LoRA adapter from {adapter_dir}", flush=True)
     adapted = PeftModel.from_pretrained(base, adapter_dir)
+    print("Merging LoRA adapter into base model", flush=True)
     adapted = adapted.merge_and_unload().to(device)
     return configure_generation_model(adapted)
 
@@ -206,6 +211,11 @@ def evaluate_model_on_manifest(
     num_beams: int,
     output_dir: Path,
 ) -> dict[str, Any]:
+    print(
+        f"Evaluating {model_label} manifest={manifest_path} "
+        f"rows={len(rows)} beams={num_beams}",
+        flush=True,
+    )
     predictions: list[dict[str, Any]] = []
     for row in progress(rows, desc=f"{model_label} {manifest_path.stem} beam{num_beams}"):
         if not row.audio_path.exists():
