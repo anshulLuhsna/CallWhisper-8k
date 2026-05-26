@@ -85,6 +85,21 @@ Whisper-small LoRA pilot on Kaggle:
 
 See [results/lora_pilot_v1.md](results/lora_pilot_v1.md). This is a same-pipeline base-vs-LoRA comparison, not a claim that the adapter beats the strongest Hindi-tuned public models.
 
+Committed adapter reload evaluation on Colab:
+
+| Slice | Beams | Base HF Whisper-small WER | LoRA Whisper-small WER | Delta |
+|---|---:|---:|---:|---:|
+| gramvaani_dev_50 | 1 | 1.5187 | 0.7473 | -0.7714 |
+| gramvaani_dev_50 | 5 | 1.0292 | 0.7532 | -0.2760 |
+| gramvaani_dev_50_8khz | 1 | 1.7725 | 0.8708 | -0.9016 |
+| gramvaani_dev_50_8khz | 5 | 1.1579 | 0.8946 | -0.2633 |
+| gramvaani_dev_50_highrate | 1 | 1.0675 | 0.5277 | -0.5398 |
+| gramvaani_dev_50_highrate | 5 | 0.8006 | 0.5018 | -0.2988 |
+| fleurs_hi_clean_50 | 1 | 0.7686 | 0.5236 | -0.2450 |
+| fleurs_hi_clean_50 | 5 | 0.5667 | 0.5128 | -0.0539 |
+
+See [results/lora_reload_eval_colab_v1.md](results/lora_reload_eval_colab_v1.md). This verifies that the committed adapter reloads and improves over base HF Whisper-small on the fixed GramVaani slices and the small FLEURS clean-control slice.
+
 ## Problem
 
 Whisper expects 16 kHz audio, while telephone audio is commonly narrowband 8 kHz. Feeding telephony audio incorrectly or assuming preprocessing helps can produce misleading results. This project measures Whisper behavior on real 8 kHz Hindi audio where possible, then compares it with synthetic telephony degradation on cleaner speech.
@@ -182,7 +197,7 @@ data/slr103/hindi/test/audio.wav,नमस्ते दुनिया,slr103_hi
 - Common Voice synthetic telephony experiments are useful controls, not evidence of real telephone performance.
 - FLEURS Hindi is clean read speech, while GramVaani is spontaneous telephone-style speech. The clean-control comparison should not be treated as a pure channel-only ablation.
 - The LoRA pilot should be interpreted as a same-pipeline comparison against HF Whisper-small. It should not be directly compared against earlier OpenAI Whisper CLI numbers without rerunning those baselines in the same HF evaluation path.
-- The LoRA adapter has not yet been evaluated on the FLEURS clean-control slice, so clean-speech regression risk is still unknown.
+- The LoRA adapter improved over base HF Whisper-small on the small FLEURS clean-control slice, but that does not prove broad clean-speech robustness.
 - This project reports slice-specific WER/CER deltas. It does not claim to fix Whisper for telephony.
 
 ## Future Work

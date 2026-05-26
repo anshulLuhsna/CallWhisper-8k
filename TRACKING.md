@@ -83,8 +83,8 @@ This week's non-negotiable deliverable: complete model comparison and non-traini
 - Planned: Bring the Kaggle Whisper-small LoRA pilot outputs back into the repo.
 - Done: Added the final LoRA adapter and processor under `models/whisper-small-lora-gramvaani-pilot-seed0/`, copied detailed run artifacts to `results/lora_pilot_seed0/`, and wrote `results/lora_pilot_v1.md`. Same-pipeline beam-5 WER improved from `1.0303` to `0.7532` on `gramvaani_dev_50`, from `1.1595` to `0.8946` on the 8 kHz subset, and from `0.8006` to `0.5018` on the high-rate subset.
 - Done: Added `callwhisper-lora-eval`, a repo-native adapter reload/eval runner that evaluates base HF Whisper-small and the committed LoRA adapter on fixed manifests and writes per-sample JSON plus Markdown comparison tables.
-- Blocked: Not yet re-run outside Kaggle on a GPU runtime.
-- Next action: Run `callwhisper-lora-eval` in a fresh GPU environment, then add the FLEURS clean-control manifest to check whether the adapted model regresses on clean Hindi read speech.
+- Done: Re-ran the committed adapter in Colab with `notebooks/06_lora_reload_eval_colab_report.ipynb`, including GramVaani fixed slices and the FLEURS clean-control slice. Added `results/lora_reload_eval_colab_v1.md` plus CSV exports under `results/lora_reload_eval_colab/`.
+- Next action: Design the next ambitious experiment: LoRA-domain-adapt `ARTPARK-IISc/whisper-medium-vaani-hindi` on GramVaani Train 100h and evaluate against the public ARTPARK checkpoint on the same frozen slices.
 
 ## Scoreboard
 
