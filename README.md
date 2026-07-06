@@ -130,6 +130,8 @@ For GPU model comparison, use the Colab notebooks in [notebooks](notebooks/READM
 
 For the compact fine-tuning direction, see [EDGE_FINE_TUNING_PLAN.md](EDGE_FINE_TUNING_PLAN.md).
 
+For the ARTPARK/Vaani competitive analysis and the next "beat ARTPARK honestly" experiment plan, see [ARTPARK_COMPETITIVE_ANALYSIS.md](ARTPARK_COMPETITIVE_ANALYSIS.md).
+
 The first compact adapter artifact is committed under:
 
 ```text

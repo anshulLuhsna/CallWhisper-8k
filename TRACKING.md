@@ -86,6 +86,13 @@ This week's non-negotiable deliverable: complete model comparison and non-traini
 - Done: Re-ran the committed adapter in Colab with `notebooks/06_lora_reload_eval_colab_report.ipynb`, including GramVaani fixed slices and the FLEURS clean-control slice. Added `results/lora_reload_eval_colab_v1.md` plus CSV exports under `results/lora_reload_eval_colab/`.
 - Next action: Design the next ambitious experiment: LoRA-domain-adapt `ARTPARK-IISc/whisper-medium-vaani-hindi` on GramVaani Train 100h and evaluate against the public ARTPARK checkpoint on the same frozen slices.
 
+### 2026-07-06 ARTPARK beat-plan refresh
+
+- Planned: Research what ARTPARK/Vaani did, whether their Hindi Whisper model is fully open source, and what CallWhisper-8k would need to beat it honestly.
+- Done: Added `ARTPARK_COMPETITIVE_ANALYSIS.md`. The key conclusion is that `ARTPARK-IISc/whisper-medium-vaani-hindi` is open-weight and Apache-2.0, but not fully open-recipe: weights, config/tokenizer files, and `trainer_state.json` are public, while exact manifests, mixture ratios, filtering rules, full training args, and training code are not published. The recommended next experiment is ARTPARK-medium LoRA domain adaptation on `GV_Train_100h`, with frozen GramVaani 50/8 kHz/high-rate and FLEURS clean-control evaluation.
+- Blocked: No ARTPARK-adapted training run has been started yet; this needs GPU time and a new notebook.
+- Next action: Create `notebooks/07_artpark_lora_domain_adaptation.ipynb` with baseline reconfirmation, leakage-safe train split construction, ARTPARK LoRA training, reload evaluation, and report-table export.
+
 ## Scoreboard
 
 - Day-2 WER number shipped: yes
