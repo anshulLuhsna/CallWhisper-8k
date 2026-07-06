@@ -6,7 +6,7 @@ This document answers one question:
 
 > What did ARTPARK-IISc likely do for `whisper-medium-vaani-hindi`, how open is it, and what would CallWhisper-8k need to do to beat it honestly?
 
-Short answer: beating ARTPARK is possible as a targeted domain-adaptation goal, but not by hand-waving. The credible path is to adapt a strong Hindi-tuned checkpoint on GramVaani telephone-style training data, evaluate against the public ARTPARK checkpoint on frozen held-out slices, and preserve a clean-speech control.
+Short answer: beating ARTPARK means building an independent challenger whose base weights are not ARTPARK weights, then evaluating it against the public ARTPARK checkpoint on frozen held-out slices. Fine-tuning ARTPARK itself is useful as an upper-bound ablation, but it is not the main goal and it is not the win condition.
 
 ## Executive Summary
 
@@ -25,13 +25,13 @@ Our current CallWhisper-8k benchmark shows ARTPARK is still far ahead of our Whi
 | Our Whisper-small LoRA | `gramvaani_dev_50_8khz`, beam 5 | 0.8946 |
 | Our Whisper-small LoRA | `gramvaani_dev_50_highrate`, beam 5 | 0.5018 |
 
-So the next serious goal is not "make small magically beat medium." The next serious goal is:
+So the next serious goal is not "adapt ARTPARK and call that a win." The next serious goal is:
 
-> Domain-adapt `ARTPARK-IISc/whisper-medium-vaani-hindi` on GramVaani Train 100h and beat the public ARTPARK checkpoint on the same frozen CallWhisper-8k GramVaani slices.
+> Build a non-ARTPARK Whisper challenger, starting from `openai/whisper-large-v3` or `openai/whisper-medium`, train it on leakage-safe Indian telephone-style Hindi data, and beat the public ARTPARK checkpoint on the same frozen CallWhisper-8k GramVaani slices.
 
 That would be a valid and ambitious win:
 
-> We built a reproducible telephony-Hindi benchmark, used ARTPARK as the strongest public baseline, then showed targeted GramVaani telephone-domain adaptation can improve over that public checkpoint on fixed held-out slices.
+> We built a reproducible telephony-Hindi benchmark, used ARTPARK as the strongest public baseline, then trained an independent Whisper-family challenger that outperformed that public checkpoint on fixed held-out telephone-style Hindi slices.
 
 ## What ARTPARK/Vaani Did
 
@@ -158,17 +158,17 @@ That is too large for a simple small-model tweak. The path to beating ARTPARK is
 
 Bad target:
 
-> Our small LoRA beats ARTPARK everywhere.
+> ARTPARK plus our LoRA beats public ARTPARK.
 
-This is not impossible forever, but it is currently unrealistic and not the most efficient path.
+That is an ablation, not a challenger. It uses the opponent's weights.
 
 Good target:
 
-> ARTPARK + CallWhisper telephony-domain LoRA beats the public ARTPARK checkpoint on fixed GramVaani held-out slices.
+> OpenAI Whisper large-v3 plus CallWhisper telephony-domain training beats the public ARTPARK checkpoint on fixed GramVaani held-out slices.
 
 Best target:
 
-> ARTPARK + CallWhisper telephony-domain LoRA improves GramVaani WER by at least 5-10% relative over public ARTPARK while preserving FLEURS clean-control performance within a small regression budget.
+> A non-ARTPARK model improves GramVaani WER by at least 5-10% relative over public ARTPARK while preserving FLEURS clean-control performance within a small regression budget.
 
 Example win gate:
 
@@ -186,14 +186,22 @@ If the adapter improves only one slice, the most meaningful slice is the 8 kHz s
 
 Use one of these, in order:
 
-1. `ARTPARK-IISc/whisper-medium-vaani-hindi`
-2. `ARTPARK-IISc/whisper-large-v3-vaani-hindi` if compute allows
-3. `openai/whisper-large-v3` with Hindi/telephone adaptation if ARTPARK licensing or training constraints become awkward
+1. `openai/whisper-large-v3` with Hindi/telephone adaptation
+2. `openai/whisper-medium` with a stronger recipe if large-v3 compute is unavailable
+3. `openai/whisper-small` only for edge-model experiments, not the primary ARTPARK-beating run
+
+Disallowed for the main challenger:
+
+- `ARTPARK-IISc/whisper-medium-vaani-hindi` as the training base
+- `ARTPARK-IISc/whisper-large-v3-vaani-hindi` as the training base
+- distilling labels from ARTPARK outputs and claiming an independent win
+
+Those can be measured as side ablations, but they do not satisfy the main goal.
 
 First recommended experiment:
 
 ```text
-Base: ARTPARK-IISc/whisper-medium-vaani-hindi
+Base: openai/whisper-large-v3
 Method: LoRA
 Train: GV_Train_100h
 Eval: frozen GramVaani 50 / 8 kHz / high-rate + FLEURS clean
@@ -229,29 +237,29 @@ Recommended pilot:
 
 | Setting | Value |
 |---|---|
-| Base model | `ARTPARK-IISc/whisper-medium-vaani-hindi` |
+| Base model | `openai/whisper-large-v3` |
 | Method | LoRA |
 | Target modules | start with `q_proj`, `v_proj`; second run test `q_proj`, `k_proj`, `v_proj`, `out_proj` |
 | LoRA rank | 16 first, then 32 if stable |
 | LoRA alpha | 32 or 64 |
 | LoRA dropout | 0.05 |
-| Learning rate | start lower than small run: `3e-5` to `5e-5` |
+| Learning rate | `1e-5` to `3e-5` for large-v3 |
 | Effective batch size | 8-32 depending on GPU |
 | Warmup | 5-10% of steps |
 | Max steps | smoke 100, pilot 1,000-2,000, serious 5,000-10,000 |
 | Eval metric | eval loss during training; WER/CER after checkpoints |
 | Decoding | beam 1 and beam 5 |
 
-Why lower LR than the small-model pilot:
+Why large-v3 first:
 
-ARTPARK is already Hindi-tuned. We are adapting an already-good model, not teaching Hindi from scratch. Too high a learning rate can erase useful generalization.
+ARTPARK already beat vanilla Whisper large-v3 by a wide margin on our slice. To beat ARTPARK without using ARTPARK weights, we need both a strong base model and domain-specific telephone training. Whisper-small LoRA proved the pipeline, but it is too far behind to be the first serious challenger.
 
 ### 5. Evaluation discipline
 
-Every ARTPARK-adaptation run must compare:
+Every independent challenger run must compare:
 
 - public ARTPARK baseline
-- ARTPARK + our LoRA
+- our non-ARTPARK adapted model
 - optional Whisper large-v3 context
 
 On:
@@ -286,7 +294,7 @@ Preferred:
 Create:
 
 ```text
-notebooks/07_artpark_lora_domain_adaptation.ipynb
+notebooks/07_whisper_large_v3_challenger.ipynb
 ```
 
 It should:
@@ -298,15 +306,15 @@ It should:
 5. build a filtered training split excluding frozen eval IDs
 6. optionally build a small clean replay split
 7. run public ARTPARK baseline eval first
-8. train ARTPARK LoRA
-9. evaluate ARTPARK + LoRA on frozen slices
+8. train `openai/whisper-large-v3` LoRA
+9. evaluate the adapted large-v3 model on frozen slices
 10. save adapter, config, train/eval splits, JSON, Markdown, and Excel/CSV tables
 
 Output path:
 
 ```text
-results/artpark_lora_v1/
-results/artpark_lora_v1.md
+results/whisper_large_v3_challenger_v1/
+results/whisper_large_v3_challenger_v1.md
 ```
 
 ## Experiment Ladder
@@ -340,7 +348,7 @@ Train on 3,000-5,000 filtered clips.
 Goal:
 
 ```text
-any WER drop vs public ARTPARK on at least one frozen GramVaani slice
+adapted openai/whisper-large-v3 closes meaningful distance to public ARTPARK
 ```
 
 ### Stage 3: Serious
@@ -350,7 +358,7 @@ Train on most/all usable `GV_Train_100h`, with clean replay and multiple seeds i
 Goal:
 
 ```text
->= 5% relative WER reduction on GramVaani 8 kHz or mixed slice
+beat public ARTPARK on GramVaani 8 kHz or mixed slice
 no major FLEURS regression
 ```
 
@@ -362,7 +370,7 @@ Run:
 - confidence intervals
 - manual error analysis
 - clean-control report
-- maybe compare with ARTPARK large-v3 public model
+- maybe compare with ARTPARK large-v3 public model as an external reference
 
 Only after this stage can we make a polished claim.
 
@@ -374,9 +382,9 @@ The model card lists GramVaani in training data. That means public ARTPARK may a
 
 Mitigation:
 
-- Target narrower telephony/domain adaptation on our exact held-out distribution.
+- Use leakage-safe GramVaani Train 100h and add a larger held-out slice if possible.
 - Keep held-out IDs excluded from our training.
-- Do not claim universal superiority.
+- Report the result as a fixed-slice challenger result, not universal superiority.
 
 ### Risk: leakage uncertainty in public ARTPARK
 
@@ -413,12 +421,12 @@ Mitigation:
 Do this next:
 
 ```text
-Build Notebook 07: ARTPARK LoRA domain adaptation.
+Build Notebook 07: openai/whisper-large-v3 challenger LoRA.
 ```
 
-Do not spend the next sprint trying to squeeze Whisper-small into beating ARTPARK. Our small adapter proved the pipeline works. The ambitious, technically sound move is to start from the public ARTPARK checkpoint and show that targeted GramVaani telephone-domain adaptation improves it.
+Do not spend the next sprint fine-tuning ARTPARK and calling it "beating ARTPARK." Our small adapter proved the pipeline works. The ambitious, technically sound move is to start from a non-ARTPARK base, preferably `openai/whisper-large-v3`, and train a stronger telephone-Hindi challenger.
 
-That is how we turn ambition into a fair benchmark result instead of a vague claim.
+That is how we turn ambition into a real competitor instead of a derivative ARTPARK checkpoint.
 
 ## Sources
 

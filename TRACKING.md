@@ -89,10 +89,11 @@ This week's non-negotiable deliverable: complete model comparison and non-traini
 ### 2026-07-06 ARTPARK beat-plan refresh
 
 - Planned: Research what ARTPARK/Vaani did, whether their Hindi Whisper model is fully open source, and what CallWhisper-8k would need to beat it honestly.
-- Done: Added `ARTPARK_COMPETITIVE_ANALYSIS.md`. The key conclusion is that `ARTPARK-IISc/whisper-medium-vaani-hindi` is open-weight and Apache-2.0, but not fully open-recipe: weights, config/tokenizer files, and `trainer_state.json` are public, while exact manifests, mixture ratios, filtering rules, full training args, and training code are not published. The recommended next experiment is ARTPARK-medium LoRA domain adaptation on `GV_Train_100h`, with frozen GramVaani 50/8 kHz/high-rate and FLEURS clean-control evaluation.
-- Done: Added `notebooks/07_artpark_lora_domain_adaptation.ipynb`, a Kaggle-first ARTPARK-medium LoRA notebook with leakage-safe split construction, lower learning-rate defaults, same-pipeline public-ARTPARK-vs-LoRA evaluation, and artifact outputs under `results/artpark_lora_v1/`.
-- Blocked: No ARTPARK-adapted training run has been started yet; this needs GPU time.
-- Next action: Run notebook 07 with `RUN_PROFILE = "smoke"` first, then `pilot` if the smoke run trains, saves, reloads, and evaluates cleanly.
+- Done: Corrected the beat-ARTPARK direction. Public ARTPARK is the opponent baseline, not the training base. The main challenger must not use ARTPARK weights.
+- Done: Updated `ARTPARK_COMPETITIVE_ANALYSIS.md` to recommend an independent `openai/whisper-large-v3` LoRA challenger on `GV_Train_100h`, evaluated against public ARTPARK on frozen GramVaani 50/8 kHz/high-rate and FLEURS clean-control slices.
+- Done: Replaced the derivative ARTPARK-LoRA notebook with `notebooks/07_whisper_large_v3_challenger.ipynb`, a Kaggle-first non-ARTPARK large-v3 LoRA notebook with leakage-safe split construction and public-ARTPARK-vs-independent-challenger evaluation.
+- Blocked: No independent challenger training run has been started yet; this needs GPU time, ideally A100/L4/A10G rather than relying on a T4 for large-v3.
+- Next action: Run notebook 07 with `RUN_PROFILE = "smoke"` first. If large-v3 OOMs on T4, move to a larger GPU rather than changing the win condition to ARTPARK fine-tuning.
 
 ## Scoreboard
 
