@@ -90,8 +90,9 @@ This week's non-negotiable deliverable: complete model comparison and non-traini
 
 - Planned: Research what ARTPARK/Vaani did, whether their Hindi Whisper model is fully open source, and what CallWhisper-8k would need to beat it honestly.
 - Done: Added `ARTPARK_COMPETITIVE_ANALYSIS.md`. The key conclusion is that `ARTPARK-IISc/whisper-medium-vaani-hindi` is open-weight and Apache-2.0, but not fully open-recipe: weights, config/tokenizer files, and `trainer_state.json` are public, while exact manifests, mixture ratios, filtering rules, full training args, and training code are not published. The recommended next experiment is ARTPARK-medium LoRA domain adaptation on `GV_Train_100h`, with frozen GramVaani 50/8 kHz/high-rate and FLEURS clean-control evaluation.
-- Blocked: No ARTPARK-adapted training run has been started yet; this needs GPU time and a new notebook.
-- Next action: Create `notebooks/07_artpark_lora_domain_adaptation.ipynb` with baseline reconfirmation, leakage-safe train split construction, ARTPARK LoRA training, reload evaluation, and report-table export.
+- Done: Added `notebooks/07_artpark_lora_domain_adaptation.ipynb`, a Kaggle-first ARTPARK-medium LoRA notebook with leakage-safe split construction, lower learning-rate defaults, same-pipeline public-ARTPARK-vs-LoRA evaluation, and artifact outputs under `results/artpark_lora_v1/`.
+- Blocked: No ARTPARK-adapted training run has been started yet; this needs GPU time.
+- Next action: Run notebook 07 with `RUN_PROFILE = "smoke"` first, then `pilot` if the smoke run trains, saves, reloads, and evaluates cleanly.
 
 ## Scoreboard
 

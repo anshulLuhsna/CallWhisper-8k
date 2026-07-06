@@ -10,6 +10,7 @@ Run order:
 4. `04_fleurs_clean_control.ipynb`
 5. `05_whisper_small_lora_edge_smoke.ipynb` - Kaggle-first LoRA smoke notebook
 6. `06_lora_reload_eval_colab_report.ipynb` - Colab reload/eval notebook for the committed LoRA adapter and Excel-ready report tables
+7. `07_artpark_lora_domain_adaptation.ipynb` - Kaggle-first ARTPARK-medium LoRA notebook for the ambitious "beat public ARTPARK on fixed GramVaani slices" experiment
 
 Before running, put the GramVaani audio somewhere Colab can access. The notebooks now expect this Google Drive layout:
 
@@ -103,4 +104,10 @@ Notebook 05 also saves reproducibility/evaluation artifacts under:
 
 ```text
 MyDrive/call-whisper/results/lora_reload_eval_colab/
+```
+
+`07_artpark_lora_domain_adaptation.ipynb` is the next ambitious training notebook. It starts from `ARTPARK-IISc/whisper-medium-vaani-hindi`, trains a LoRA adapter on `GV_Train_100h`, excludes frozen benchmark IDs, and writes public-ARTPARK-vs-adapted-ARTPARK summaries under:
+
+```text
+/kaggle/working/results/artpark_lora_v1/
 ```

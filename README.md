@@ -132,6 +132,8 @@ For the compact fine-tuning direction, see [EDGE_FINE_TUNING_PLAN.md](EDGE_FINE_
 
 For the ARTPARK/Vaani competitive analysis and the next "beat ARTPARK honestly" experiment plan, see [ARTPARK_COMPETITIVE_ANALYSIS.md](ARTPARK_COMPETITIVE_ANALYSIS.md).
 
+The first ARTPARK-domain-adaptation notebook is [notebooks/07_artpark_lora_domain_adaptation.ipynb](notebooks/07_artpark_lora_domain_adaptation.ipynb).
+
 The first compact adapter artifact is committed under:
 
 ```text
