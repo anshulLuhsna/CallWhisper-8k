@@ -26,6 +26,16 @@ For X/Twitter, use the **X / Twitter Thread** in `SOCIAL_LAUNCH_PACKET.md`.
 
 For a shorter general version, use the **Short Version** from `SOCIAL_POST_01_BENCHMARK.md`.
 
+Paste-ready text files are also available:
+
+```text
+social_assets/linkedin_post.txt
+social_assets/x_thread.txt
+social_assets/image_alt_text.txt
+social_assets/short_caption.txt
+social_assets/safe_replies.txt
+```
+
 Before posting, confirm the repo line says:
 
 ```text

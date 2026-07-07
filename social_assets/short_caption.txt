@@ -1,0 +1,3 @@
+Part 1 of CallWhisper-8k: before fine-tuning anything bigger, I am making the benchmark itself more serious.
+
+WER/CER are necessary, but for Indian telephony ASR they are not enough.

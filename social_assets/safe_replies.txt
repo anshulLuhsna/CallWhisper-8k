@@ -1,0 +1,9 @@
+Yes, exactly. That is the point of this first post. The benchmark should make that visible before I fine-tune anything. The model track comes second; the measurement track comes first.
+
+## Safe Reply If Someone Asks "What Is Novel?"
+
+The novelty is not "first Hindi ASR benchmark." Existing work already covers broad Hindi/Indic ASR and GramVaani. The narrower contribution is a telephony-focused benchmark that measures channel robustness, transcript trust, hallucination/repetition, entity preservation, and deployability under fixed Indian telephony slices.
+
+## Safe Reply If Someone Asks "Are You Claiming SOTA?"
+
+No. This is explicitly not a SOTA claim. These are slice-specific results and a benchmark-scope update before the next fine-tuning run.

@@ -1,0 +1,40 @@
+I started CallWhisper-8k as a simple question:
+
+> How badly does Whisper break on 8 kHz Indian telephony audio?
+
+After the first benchmark runs, the more interesting question is bigger:
+
+> What should a serious benchmark for Indian telephony ASR actually measure?
+
+WER/CER are necessary, but they are not enough.
+
+On my fixed GramVaani Hindi telephone-style slice:
+
+| Model | Mixed 50 WER | 8 kHz WER | High-rate WER |
+|---|---:|---:|---:|
+| Whisper medium | 0.7683 | 0.8108 | 0.6584 |
+| Whisper large-v3 | 0.5616 | 0.6511 | 0.3984 |
+| ARTPARK Whisper-medium Vaani Hindi | 0.2597 | 0.2900 | 0.2057 |
+
+The obvious result is that domain-tuned Hindi ASR beats vanilla Whisper.
+
+The less obvious result is what the benchmark needs to capture next:
+
+- native 8 kHz vs high-rate audio,
+- clean Hindi vs telephone-style Hindi,
+- preprocessing that helps one file and hurts another,
+- incomplete or risky transcripts,
+- repetition loops and hallucinated continuations,
+- entity preservation for names, places, numbers, and actionability,
+- runtime and deployability, not just accuracy.
+
+So I am splitting CallWhisper-8k into two tracks:
+
+1. a reproducible benchmark for Indian telephony ASR,
+2. a separate model/adaptation track that tries to improve on that benchmark.
+
+The benchmark comes first.
+
+Because if the measurement is weak, the fine-tuning result does not mean much.
+
+Repo: https://github.com/anshulLuhsna/CallWhisper-8k
