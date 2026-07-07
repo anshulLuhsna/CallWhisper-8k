@@ -4,13 +4,19 @@ Use this before posting `SOCIAL_POST_01_BENCHMARK.md`.
 
 ## Main Asset
 
-Use:
+Use the PNG for LinkedIn/X:
+
+```text
+social_assets/benchmark_part1_card.png
+```
+
+Keep the SVG as the editable source:
 
 ```text
 social_assets/benchmark_part1_card.svg
 ```
 
-If the platform does not accept SVG, open the file in a browser and export/screenshot it as PNG.
+If you edit the SVG later, regenerate the PNG before posting.
 
 ## Recommended Post
 
@@ -32,7 +38,7 @@ WER/CER are necessary, but for Indian telephony ASR they are not enough.
 
 ## What To Attach
 
-Attach `social_assets/benchmark_part1_card.svg` or its PNG export.
+Attach `social_assets/benchmark_part1_card.png`.
 
 ## Do Not Claim
 
