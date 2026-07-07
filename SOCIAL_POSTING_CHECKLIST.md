@@ -1,6 +1,6 @@
 # Social Posting Checklist
 
-Use this before posting `SOCIAL_POST_01_BENCHMARK.md`.
+Use this before posting `SOCIAL_POST_01_BENCHMARK.md` or the platform-specific copy in `SOCIAL_LAUNCH_PACKET.md`.
 
 ## Main Asset
 
@@ -20,7 +20,11 @@ If you edit the SVG later, regenerate the PNG before posting.
 
 ## Recommended Post
 
-Use the **Short Version** from `SOCIAL_POST_01_BENCHMARK.md`.
+For LinkedIn, use the **LinkedIn Post** in `SOCIAL_LAUNCH_PACKET.md`.
+
+For X/Twitter, use the **X / Twitter Thread** in `SOCIAL_LAUNCH_PACKET.md`.
+
+For a shorter general version, use the **Short Version** from `SOCIAL_POST_01_BENCHMARK.md`.
 
 Before posting, confirm the repo line says:
 
