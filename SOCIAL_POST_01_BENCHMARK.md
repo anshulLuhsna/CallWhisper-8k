@@ -45,7 +45,7 @@ The benchmark comes first.
 
 Because if the measurement is weak, the fine-tuning result does not mean much.
 
-Repo: [add GitHub link]
+Repo: https://github.com/anshulLuhsna/CallWhisper-8k
 
 ## Longer Version
 
@@ -92,7 +92,7 @@ It is the first checkpoint in building the measurement system I wish existed bef
 
 Next step: add benchmark diagnostics beyond WER/CER: hallucination flags, repetition detection, transcript-risk splits, and entity preservation.
 
-Repo: [add GitHub link]
+Repo: https://github.com/anshulLuhsna/CallWhisper-8k
 
 ## One-Line Hook Options
 
@@ -115,6 +115,12 @@ Use a screenshot/table with:
 Caption:
 
 > Same fixed Hindi telephony slice, very different behavior across models and channel conditions.
+
+Prepared asset:
+
+```text
+social_assets/benchmark_part1_card.svg
+```
 
 ## Do Not Say
 

@@ -148,6 +148,8 @@ For the first generated diagnostic report beyond WER/CER, see [results/benchmark
 
 For a first public update draft about the benchmark track, see [SOCIAL_POST_01_BENCHMARK.md](SOCIAL_POST_01_BENCHMARK.md).
 
+For the posting checklist and visual asset, see [SOCIAL_POSTING_CHECKLIST.md](SOCIAL_POSTING_CHECKLIST.md) and [social_assets/benchmark_part1_card.svg](social_assets/benchmark_part1_card.svg).
+
 For the ARTPARK/Vaani competitive analysis and the next "beat ARTPARK honestly" experiment plan, see [ARTPARK_COMPETITIVE_ANALYSIS.md](ARTPARK_COMPETITIVE_ANALYSIS.md).
 
 The first non-ARTPARK challenger notebook is [notebooks/07_whisper_large_v3_challenger.ipynb](notebooks/07_whisper_large_v3_challenger.ipynb).

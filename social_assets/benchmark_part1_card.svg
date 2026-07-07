@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000">
+  <rect width="1600" height="1000" fill="#f7f5ef"/>
+  <rect x="72" y="64" width="1456" height="872" rx="28" fill="#fffdf8" stroke="#1f2933" stroke-width="4"/>
+
+  <text x="120" y="142" font-family="Inter, Arial, sans-serif" font-size="54" font-weight="800" fill="#111827">CallWhisper-8k</text>
+  <text x="120" y="192" font-family="Inter, Arial, sans-serif" font-size="28" fill="#374151">A benchmark-first look at Hindi / Indian telephony ASR</text>
+  <text x="120" y="246" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700" fill="#111827">Fixed GramVaani telephone-style slice</text>
+
+  <rect x="120" y="286" width="1360" height="330" rx="18" fill="#111827"/>
+  <text x="170" y="350" font-family="Inter, Arial, sans-serif" font-size="25" font-weight="700" fill="#e5e7eb">Model</text>
+  <text x="760" y="350" font-family="Inter, Arial, sans-serif" font-size="25" font-weight="700" fill="#e5e7eb">Mixed 50 WER</text>
+  <text x="1010" y="350" font-family="Inter, Arial, sans-serif" font-size="25" font-weight="700" fill="#e5e7eb">8 kHz WER</text>
+  <text x="1235" y="350" font-family="Inter, Arial, sans-serif" font-size="25" font-weight="700" fill="#e5e7eb">High-rate WER</text>
+
+  <line x1="150" y1="380" x2="1450" y2="380" stroke="#4b5563" stroke-width="2"/>
+
+  <text x="170" y="444" font-family="Inter, Arial, sans-serif" font-size="30" fill="#f9fafb">Whisper medium</text>
+  <text x="808" y="444" font-family="Inter, Arial, sans-serif" font-size="30" fill="#f9fafb">0.7683</text>
+  <text x="1048" y="444" font-family="Inter, Arial, sans-serif" font-size="30" fill="#f9fafb">0.8108</text>
+  <text x="1285" y="444" font-family="Inter, Arial, sans-serif" font-size="30" fill="#f9fafb">0.6584</text>
+
+  <text x="170" y="516" font-family="Inter, Arial, sans-serif" font-size="30" fill="#f9fafb">Whisper large-v3</text>
+  <text x="808" y="516" font-family="Inter, Arial, sans-serif" font-size="30" fill="#f9fafb">0.5616</text>
+  <text x="1048" y="516" font-family="Inter, Arial, sans-serif" font-size="30" fill="#f9fafb">0.6511</text>
+  <text x="1285" y="516" font-family="Inter, Arial, sans-serif" font-size="30" fill="#f9fafb">0.3984</text>
+
+  <rect x="146" y="548" width="1308" height="54" rx="12" fill="#d7f2ba"/>
+  <text x="170" y="585" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700" fill="#111827">ARTPARK Whisper-medium Vaani Hindi</text>
+  <text x="808" y="585" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700" fill="#111827">0.2597</text>
+  <text x="1048" y="585" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700" fill="#111827">0.2900</text>
+  <text x="1285" y="585" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700" fill="#111827">0.2057</text>
+
+  <text x="120" y="688" font-family="Inter, Arial, sans-serif" font-size="36" font-weight="800" fill="#111827">The obvious result</text>
+  <text x="120" y="733" font-family="Inter, Arial, sans-serif" font-size="30" fill="#374151">Domain-tuned Hindi ASR beats vanilla Whisper on this slice.</text>
+
+  <text x="120" y="800" font-family="Inter, Arial, sans-serif" font-size="36" font-weight="800" fill="#111827">The better benchmark question</text>
+  <text x="120" y="846" font-family="Inter, Arial, sans-serif" font-size="29" fill="#374151">What breaks under 8 kHz telephony: WER, hallucinations, transcript risk,</text>
+  <text x="120" y="886" font-family="Inter, Arial, sans-serif" font-size="29" fill="#374151">entity preservation, and deployability?</text>
+
+  <text x="120" y="925" font-family="Inter, Arial, sans-serif" font-size="20" fill="#6b7280">Slice-specific results. Not a global ASR ranking. Lower WER is better.</text>
+</svg>
