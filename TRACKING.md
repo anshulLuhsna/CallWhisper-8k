@@ -95,6 +95,14 @@ This week's non-negotiable deliverable: complete model comparison and non-traini
 - Blocked: No independent challenger training run has been started yet; this needs GPU time, ideally A100/L4/A10G rather than relying on a T4 for large-v3.
 - Next action: Run notebook 07 with `RUN_PROFILE = "smoke"` first. If large-v3 OOMs on T4, move to a larger GPU rather than changing the win condition to ARTPARK fine-tuning.
 
+### 2026-07-07 benchmark expansion refresh
+
+- Planned: Re-scope the benchmark into something credible before the next fine-tuning/model push.
+- Done: Added `BENCHMARK_EXPANSION_PLAN.md`, which reframes CallWhisper-8k as a deployment-oriented Indian telephony ASR benchmark rather than only a WER/CER table. The expanded scope now includes channel robustness, transcript trust, hallucination/repetition safety, entity/actionability metrics, and deployability tradeoffs.
+- Done: Added `SOCIAL_POST_01_BENCHMARK.md` as a first public-update draft that can be posted before Part 2 fine-tuning.
+- Done: Added `callwhisper-diagnostics` / `python -m callwhisper.eval.diagnostics`, then generated `results/benchmark_diagnostics_v1.md` and `.json` from existing per-sample predictions. The first diagnostics cover repetition flags, length-ratio outliers, script drift, empty-output flags, and slice-level diagnostic summaries.
+- Next action: Extend diagnostics to ARTPARK and Whisper large-v3 per-sample outputs, then add entity/number preservation on a manually labeled subset.
+
 ## Scoreboard
 
 - Day-2 WER number shipped: yes

@@ -46,6 +46,7 @@ finetune = [
 [project.scripts]
 callwhisper = "callwhisper.eval.runner:main"
 callwhisper-lora-eval = "callwhisper.eval.lora_runner:main"
+callwhisper-diagnostics = "callwhisper.eval.diagnostics:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/callwhisper"]

@@ -100,6 +100,17 @@ Committed adapter reload evaluation on Colab:
 
 See [results/lora_reload_eval_colab_v1.md](results/lora_reload_eval_colab_v1.md). This verifies that the committed adapter reloads and improves over base HF Whisper-small on the fixed GramVaani slices and the small FLEURS clean-control slice.
 
+First diagnostic benchmark flags beyond WER/CER:
+
+| Model | Slice | Beams | Hallucination Risk Rate | Repetition Rate |
+|---|---|---:|---:|---:|
+| HF Whisper-small base | gramvaani_dev_50 | 1 | 0.3200 | 0.3200 |
+| HF Whisper-small base | gramvaani_dev_50_8khz | 1 | 0.3125 | 0.3125 |
+| HF Whisper-small LoRA | gramvaani_dev_50 | 1 | 0.0800 | 0.0800 |
+| HF Whisper-small LoRA | gramvaani_dev_50_8khz | 1 | 0.1250 | 0.1250 |
+
+See [results/benchmark_diagnostics_v1.md](results/benchmark_diagnostics_v1.md). These are heuristic flags for repetition loops, length explosions, script drift, and near-empty outputs; they are meant to complement WER/CER, not replace them.
+
 ## Problem
 
 Whisper expects 16 kHz audio, while telephone audio is commonly narrowband 8 kHz. Feeding telephony audio incorrectly or assuming preprocessing helps can produce misleading results. This project measures Whisper behavior on real 8 kHz Hindi audio where possible, then compares it with synthetic telephony degradation on cleaner speech.
@@ -111,6 +122,7 @@ Whisper expects 16 kHz audio, while telephone audio is commonly narrowband 8 kHz
 - Controlled adaptation experiments, only after a working baseline exists.
 - A reproducible CLI/API artifact rather than a fine-tuning-first claim.
 - An ambitious compact-model adaptation track for edge Hindi telephony ASR, kept separate from the benchmark results until it is evaluated honestly.
+- A broader benchmark direction beyond WER/CER: channel robustness, transcript trust, hallucination/repetition flags, entity preservation, and deployability tradeoffs for Indian telephony ASR.
 
 ## Quickstart
 
@@ -129,6 +141,12 @@ python -m callwhisper.eval --manifest datasets/manifests/example.csv --model tin
 For GPU model comparison, use the Colab notebooks in [notebooks](notebooks/README.md).
 
 For the compact fine-tuning direction, see [EDGE_FINE_TUNING_PLAN.md](EDGE_FINE_TUNING_PLAN.md).
+
+For the expanded benchmark scope before the next fine-tuning push, see [BENCHMARK_EXPANSION_PLAN.md](BENCHMARK_EXPANSION_PLAN.md).
+
+For the first generated diagnostic report beyond WER/CER, see [results/benchmark_diagnostics_v1.md](results/benchmark_diagnostics_v1.md).
+
+For a first public update draft about the benchmark track, see [SOCIAL_POST_01_BENCHMARK.md](SOCIAL_POST_01_BENCHMARK.md).
 
 For the ARTPARK/Vaani competitive analysis and the next "beat ARTPARK honestly" experiment plan, see [ARTPARK_COMPETITIVE_ANALYSIS.md](ARTPARK_COMPETITIVE_ANALYSIS.md).
 
