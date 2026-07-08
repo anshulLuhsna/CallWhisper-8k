@@ -103,6 +103,15 @@ This week's non-negotiable deliverable: complete model comparison and non-traini
 - Done: Added `callwhisper-diagnostics` / `python -m callwhisper.eval.diagnostics`, then generated `results/benchmark_diagnostics_v1.md` and `.json` from existing per-sample predictions. The first diagnostics cover repetition flags, length-ratio outliers, script drift, empty-output flags, and slice-level diagnostic summaries.
 - Next action: Extend diagnostics to ARTPARK and Whisper large-v3 per-sample outputs, then add entity/number preservation on a manually labeled subset.
 
+### 2026-07-08 GramVaani 100 expansion
+
+- Planned: Expand the fixed GramVaani benchmark slice beyond the original 50-file sample while keeping source-rate caveats explicit.
+- Done: Built `datasets/manifests/gramvaani_dev_100.csv` and source-rate splits: `gramvaani_dev_100_8khz.csv` with 56 native 8 kHz files and `gramvaani_dev_100_highrate.csv` with 44 higher-rate files. Documented the slice in `results/benchmark_slice_v2.md`.
+- Done: Added `COLAB_BENCHMARK_V2_RUNBOOK.md` so the 100-file mixed/8 kHz/high-rate slices can be evaluated on GPU with Whisper medium, Whisper large-v3, and ARTPARK Vaani Hindi using one reproducible Colab flow.
+- Done: Ran local CPU Whisper tiny sanity checks on all three v2 manifests. Results are saved under `results/benchmark_v2/` and summarized in `results/local_tiny_sanity_v2.md`. These are wiring checks only, not headline benchmark claims.
+- Blocked: Final model comparison still needs a GPU run using the v2 runbook.
+- Next action: Run `COLAB_BENCHMARK_V2_RUNBOOK.md`, copy back `results/model_comparison_v2.md` and `.json`, then run diagnostics on the stronger model per-sample outputs.
+
 ## Scoreboard
 
 - Day-2 WER number shipped: yes
