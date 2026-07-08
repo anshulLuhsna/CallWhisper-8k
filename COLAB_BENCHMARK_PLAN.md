@@ -14,6 +14,8 @@ notebooks/02_hindi_tuned_hf_models.ipynb
 notebooks/03_decoding_adaptation_sweeps.ipynb
 ```
 
+For the expanded 100-file benchmark, use [COLAB_BENCHMARK_V2_RUNBOOK.md](COLAB_BENCHMARK_V2_RUNBOOK.md).
+
 Minimum Colab table:
 
 | Family | Model | Why |

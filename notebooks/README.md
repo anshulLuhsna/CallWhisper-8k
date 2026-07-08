@@ -2,6 +2,12 @@
 
 These notebooks are designed for hosted GPU runs. The MacBook remains the development and quick-test machine; Colab/Kaggle is for slower model comparison and adaptation sweeps.
 
+For the expanded GramVaani 100-file benchmark, use the repo-level runbook:
+
+```text
+COLAB_BENCHMARK_V2_RUNBOOK.md
+```
+
 Run order:
 
 1. `01_openai_whisper_gpu_benchmark.ipynb`
