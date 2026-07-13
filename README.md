@@ -10,6 +10,16 @@ CallWhisper-8k currently has three result tracks:
 2. preprocessing and decoding ablations,
 3. compact Whisper-small LoRA adaptation for edge-oriented Hindi telephony ASR.
 
+The expanded GPU benchmark evaluates the same 100 GramVaani files with every model and reports the native 8 kHz and higher-rate subsets separately:
+
+| Model | Mixed 100 WER | Native 8 kHz WER | High-rate WER |
+|---|---:|---:|---:|
+| Whisper medium | 0.7182 | 0.7889 | 0.6281 |
+| Whisper large-v3 | 0.5182 | 0.6083 | 0.4036 |
+| ARTPARK-IISc/whisper-medium-vaani-hindi | **0.2565** | **0.3091** | **0.1895** |
+
+See [results/model_comparison_v2.md](results/model_comparison_v2.md). On this fixed slice, ARTPARK had the lowest WER/CER on all three views. Every model performed worse on the native 8 kHz subset than on the higher-rate subset, but source rate is not the only difference between those groups.
+
 The strongest new adaptation result is the Kaggle LoRA pilot:
 
 | Experiment | Slice | Beams | WER Before | WER After | Change |
@@ -45,15 +55,7 @@ Sample-rate split for the same Whisper `small` raw MP3 run:
 
 This split is a benchmark quality check, not a final causal claim. The 8 kHz subset is harder on this slice, but transcript quality, speakers, topics, and noise may also differ.
 
-Colab/GPU model comparison:
-
-| Model | Mixed 50 WER | 8 kHz WER | High-rate WER |
-|---|---:|---:|---:|
-| Whisper medium | 0.7683 | 0.8108 | 0.6584 |
-| Whisper large-v3 | 0.5616 | 0.6511 | 0.3984 |
-| ARTPARK-IISc/whisper-medium-vaani-hindi | 0.2597 | 0.2900 | 0.2057 |
-
-See [results/model_comparison_v1.md](results/model_comparison_v1.md). These are fixed-slice benchmark results, not global ASR model rankings.
+The earlier 50-file GPU comparison remains in [results/model_comparison_v1.md](results/model_comparison_v1.md). The 100-file v2 table above is the current headline comparison. Both are fixed-slice benchmark results, not global ASR model rankings.
 
 Decoding adaptation on Whisper `large-v3`:
 

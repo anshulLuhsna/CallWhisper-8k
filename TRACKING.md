@@ -2,9 +2,9 @@
 
 ## Current Week
 
-Week: 3 adaptation
-Tag target: v0.2-preprocessing, then v0.3-adapted
-This week's non-negotiable deliverable: complete model comparison and non-training adaptation results, then add clean Hindi control.
+Week: benchmark expansion and error diagnostics
+Tag target: v0.4-benchmark
+This week's non-negotiable deliverable: validate the expanded 100-file comparison, then diagnose the strongest model's remaining native-8-kHz failures.
 
 ## Daily Log
 
@@ -112,12 +112,21 @@ This week's non-negotiable deliverable: complete model comparison and non-traini
 - Blocked: Final model comparison still needs a GPU run using the v2 runbook.
 - Next action: Run `COLAB_BENCHMARK_V2_RUNBOOK.md`, copy back `results/model_comparison_v2.md` and `.json`, then run diagnostics on the stronger model per-sample outputs.
 
+### 2026-07-13 GramVaani 100 GPU comparison
+
+- Planned: Run the expanded fixed benchmark on a hosted GPU and verify whether the original 50-file model ordering holds on a larger slice.
+- Done: Evaluated Whisper `medium`, Whisper `large-v3`, and `ARTPARK-IISc/whisper-medium-vaani-hindi` on the same 100 GramVaani files using a Tesla T4. The source-rate views were derived from the same per-file predictions: 56 native 8 kHz files and 44 higher-rate files.
+- Done: Added nine per-model/slice JSON outputs under `results/benchmark_v2/`, report tables in `results/model_comparison_v2.md`, `.json`, and `.csv`, and exact runtime metadata in `results/benchmark_v2/model_comparison_v2_run_metadata.json`.
+- Result: On the mixed 100-file slice, WER was `0.7182` for Whisper medium, `0.5182` for Whisper large-v3, and `0.2565` for ARTPARK. On the native 8 kHz subset, WER was `0.7889`, `0.6083`, and `0.3091`, respectively.
+- Caveat: The native 8 kHz subset is harder for all three models, but the split is observational; source rate, speakers, topics, noise, and transcript quality are not independently controlled.
+- Next action: Run v2 deployment diagnostics and inspect ARTPARK's highest-error native 8 kHz samples before choosing a targeted challenger experiment.
+
 ## Scoreboard
 
 - Day-2 WER number shipped: yes
 - Baseline table shipped: yes
 - Preprocessing ablation shipped: yes
-- LoRA smoke test run: no
+- LoRA smoke test run: yes
 - Week-3 kill gate obeyed: yes, non-training adaptation was run before LoRA
 - v1.0 shipped: no
 

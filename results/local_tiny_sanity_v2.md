@@ -34,4 +34,4 @@ The same command was also run for:
 
 - This was run locally on CPU, so Whisper used FP32 instead of FP16.
 - These results are mainly pipeline checks. They should not be compared as final model results against GPU runs unless the same manifest, language mode, seed, normalization, and decoding settings are documented.
-- The next benchmark step is to run `COLAB_BENCHMARK_V2_RUNBOOK.md` on GPU for Whisper medium, Whisper large-v3, and ARTPARK Vaani Hindi on the same 100-file mixed/8 kHz/high-rate slices.
+- The GPU comparison is now complete. See `results/model_comparison_v2.md`; the tiny results here remain development-only wiring checks.

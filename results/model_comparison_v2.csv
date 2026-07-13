@@ -1,0 +1,10 @@
+model,slice,condition,files,wer,cer,file
+ARTPARK-IISc/whisper-medium-vaani-hindi,gramvaani_dev_100,telephone_mp3,100,0.2565,0.1275,colab_hf_artpark_iisc_whisper_medium_vaani_hindi_gramvaani_dev_100_seed0.json
+large-v3,gramvaani_dev_100,telephone_mp3,100,0.5182,0.278,colab_whisper_large_v3_gramvaani_dev_100_seed0.json
+medium,gramvaani_dev_100,telephone_mp3,100,0.7182,0.4316,colab_whisper_medium_gramvaani_dev_100_seed0.json
+ARTPARK-IISc/whisper-medium-vaani-hindi,gramvaani_dev_100_8khz,telephone_mp3,56,0.3091,0.165,colab_hf_artpark_iisc_whisper_medium_vaani_hindi_gramvaani_dev_100_8khz_seed0.json
+large-v3,gramvaani_dev_100_8khz,telephone_mp3,56,0.6083,0.3505,colab_whisper_large_v3_gramvaani_dev_100_8khz_seed0.json
+medium,gramvaani_dev_100_8khz,telephone_mp3,56,0.7889,0.4962,colab_whisper_medium_gramvaani_dev_100_8khz_seed0.json
+ARTPARK-IISc/whisper-medium-vaani-hindi,gramvaani_dev_100_highrate,telephone_mp3,44,0.1895,0.0798,colab_hf_artpark_iisc_whisper_medium_vaani_hindi_gramvaani_dev_100_highrate_seed0.json
+large-v3,gramvaani_dev_100_highrate,telephone_mp3,44,0.4036,0.1856,colab_whisper_large_v3_gramvaani_dev_100_highrate_seed0.json
+medium,gramvaani_dev_100_highrate,telephone_mp3,44,0.6281,0.3494,colab_whisper_medium_gramvaani_dev_100_highrate_seed0.json

@@ -25,6 +25,16 @@ Best public framing:
 
 > CallWhisper-8k is an open evaluation harness for Indian telephone-style ASR. It compares Whisper-family and Indic ASR models on fixed Hindi telephony slices and measures whether preprocessing choices such as WAV conversion, volume normalization, bandpass filtering, and 8 kHz roundtrip help or hurt.
 
+## Current State — 2026-07-13
+
+- The current headline benchmark is the fixed 100-file GramVaani slice, with 56 native 8 kHz files and 44 higher-rate files.
+- Whisper medium, Whisper large-v3, and ARTPARK Vaani Hindi were evaluated on the same 100 predictions using a Tesla T4.
+- Mixed-slice WER: medium `0.7182`, large-v3 `0.5182`, ARTPARK `0.2565`.
+- Native-8-kHz WER: medium `0.7889`, large-v3 `0.6083`, ARTPARK `0.3091`.
+- The clean FLEURS Hindi control, manual 15-file audio review, decoding adaptation sweep, Whisper-small LoRA pilot, and committed-adapter reload evaluation are complete.
+- Canonical v2 reports are `results/model_comparison_v2.md`, `.json`, and `.csv`; per-sample outputs and runtime metadata are under `results/benchmark_v2/`.
+- Next: diagnose ARTPARK's remaining native-8-kHz failures and use those errors to define a targeted independent challenger experiment.
+
 ## What Has Been Built
 
 Core eval:
@@ -39,7 +49,10 @@ Dataset tooling:
 
 - `src/callwhisper/datasets/build_gramvaani_manifest.py`: builds GramVaani manifests from `mp3.scp` and `text`.
 - `datasets/manifests/gramvaani_dev_10.csv`: first smoke-test manifest.
-- `datasets/manifests/gramvaani_dev_50.csv`: current fixed benchmark slice.
+- `datasets/manifests/gramvaani_dev_50.csv`: original fixed smoke benchmark slice.
+- `datasets/manifests/gramvaani_dev_100.csv`: expanded fixed benchmark slice.
+- `datasets/manifests/gramvaani_dev_100_8khz.csv`: 56-file native 8 kHz subset.
+- `datasets/manifests/gramvaani_dev_100_highrate.csv`: 44-file higher-rate subset.
 
 Audio preprocessing:
 
@@ -78,6 +91,16 @@ results/raw/audio/
 This is also ignored by git. Do not commit generated WAVs.
 
 ## Current Benchmark Results
+
+Expanded GPU comparison on the fixed GramVaani 100-file slice:
+
+| Model | Mixed 100 WER | Native 8 kHz WER | High-rate WER |
+|---|---:|---:|---:|
+| Whisper medium | 0.7182 | 0.7889 | 0.6281 |
+| Whisper large-v3 | 0.5182 | 0.6083 | 0.4036 |
+| ARTPARK-IISc/whisper-medium-vaani-hindi | 0.2565 | 0.3091 | 0.1895 |
+
+These are fixed-slice results, not global model rankings. The source-rate split is observational and does not isolate sample rate from content, speaker, noise, or transcript differences.
 
 Baseline on GramVaani GV Dev:
 
@@ -142,13 +165,14 @@ Whisper `small` is the fast local reference model only. It is not the final targ
 
 These are important. Do not hide them.
 
-- The 50-file slice mixes source sample rates: 32 files at 8 kHz, 16 files at 44.1 kHz, and 2 files at 48 kHz.
+- The headline 100-file slice is still small and comes from one GramVaani development set.
+- The 100-file slice mixes source rates; the 56/44 split describes model behavior but does not isolate sample rate causally.
 - Some references contain `<incomplete>` markers.
 - GramVaani transcripts are crowd-sourced and may be imperfect.
-- Current benchmark has no clean Hindi control set yet.
-- Current benchmark has no IndicWhisper / ARTPARK / Vasista comparison yet.
+- FLEURS provides a clean Hindi control, but dataset/domain differences prevent a pure channel-only claim.
+- ARTPARK is covered; broader non-Whisper Indic ASR coverage is still missing.
 - Current preprocessing gains are small; do not overclaim them.
-- Manual listening has not yet been done.
+- The first 15-file manual review is complete, but the new v2 ARTPARK 8 kHz failures still need targeted listening.
 
 See:
 
@@ -158,6 +182,13 @@ prior_art.md
 ```
 
 ## Next Session Priorities
+
+1. Generate deployment diagnostics from the v2 ARTPARK and Whisper large-v3 per-sample JSON outputs.
+2. Rank ARTPARK's worst native-8-kHz files and prepare a small human-review sheet with reference and hypothesis text.
+3. Listen to the highest-error files and separate model failures from bad audio or questionable references.
+4. Use those findings to define an independent training/augmentation experiment; do not train on the frozen 100 benchmark files.
+
+## Completed Historical Priorities
 
 ### Priority 1: Manual Listening Review
 
