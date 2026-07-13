@@ -21,8 +21,14 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--predictions-csv",
         action="append",
-        required=True,
+        default=[],
         help="Per-sample prediction CSV with reference_text and hypothesis_text columns.",
+    )
+    parser.add_argument(
+        "--predictions-json",
+        action="append",
+        default=[],
+        help="Evaluation JSON containing a top-level samples list.",
     )
     parser.add_argument(
         "--output-json",
@@ -40,7 +46,15 @@ def parse_args() -> argparse.Namespace:
         default=12,
         help="Number of high-risk examples to include in Markdown.",
     )
-    return parser.parse_args()
+    parser.add_argument(
+        "--report-title",
+        default="Benchmark Diagnostics",
+        help="Markdown report title.",
+    )
+    args = parser.parse_args()
+    if not args.predictions_csv and not args.predictions_json:
+        parser.error("provide at least one --predictions-csv or --predictions-json")
+    return args
 
 
 def token_count(text: str) -> int:
@@ -119,8 +133,12 @@ def diagnose_row(row: dict[str, str]) -> dict[str, object]:
     hyp_latin_ratio = script_ratio(LATIN_RE, hyp)
     script_drift = ref_devanagari_ratio >= 0.5 and hyp_latin_ratio >= 0.25
     empty_or_near_empty = hyp_tokens <= 1 and ref_tokens >= 3
-    length_explosion = token_length_ratio is not None and token_length_ratio >= 2.5 and hyp_tokens >= 8
-    length_collapse = token_length_ratio is not None and token_length_ratio <= 0.25 and ref_tokens >= 8
+    length_explosion = (
+        token_length_ratio is not None and token_length_ratio >= 2.5 and hyp_tokens >= 8
+    )
+    length_collapse = (
+        token_length_ratio is not None and token_length_ratio <= 0.25 and ref_tokens >= 8
+    )
     repeated_token_loop = has_repeated_token_loop(hyp)
     repeated_ngram_loop = has_repeated_ngram_loop(hyp)
     repeated_char_loop = repeated_char_ratio(hyp) >= 0.35 and hyp_chars >= 25
@@ -169,6 +187,20 @@ def read_predictions(paths: list[str]) -> list[dict[str, object]]:
     return rows
 
 
+def read_json_predictions(paths: list[str]) -> list[dict[str, object]]:
+    rows: list[dict[str, object]] = []
+    for path in paths:
+        payload = json.loads(Path(path).read_text(encoding="utf-8"))
+        samples = payload.get("samples")
+        if not isinstance(samples, list):
+            raise ValueError(f"Prediction JSON {path} has no samples list")
+        for sample in samples:
+            if not isinstance(sample, dict):
+                raise ValueError(f"Prediction JSON {path} contains a non-object sample")
+            rows.append(diagnose_row(sample))
+    return rows
+
+
 def rate(count: int, total: int) -> float:
     return count / total if total else 0.0
 
@@ -213,7 +245,9 @@ def summarize(rows: list[dict[str, object]]) -> list[dict[str, object]]:
                 "length_explosion_rate": rate(
                     sum(bool(row["length_explosion"]) for row in group), total
                 ),
-                "length_collapse_rate": rate(sum(bool(row["length_collapse"]) for row in group), total),
+                "length_collapse_rate": rate(
+                    sum(bool(row["length_collapse"]) for row in group), total
+                ),
                 "script_drift_rate": rate(sum(bool(row["script_drift"]) for row in group), total),
                 "empty_or_near_empty_rate": rate(
                     sum(bool(row["empty_or_near_empty"]) for row in group), total
@@ -271,6 +305,7 @@ def write_markdown(
     summaries: list[dict[str, object]],
     rows: list[dict[str, object]],
     top_examples: int,
+    report_title: str,
 ) -> None:
     summary_columns = [
         "model",
@@ -314,15 +349,24 @@ def write_markdown(
                 "hypothesis": short_text(row.get("hypothesis_text")),
             }
         )
-    example_columns = ["model", "slice", "num_beams", "wer", "cer", "flags", "reference", "hypothesis"]
+    example_columns = [
+        "model",
+        "slice",
+        "num_beams",
+        "wer",
+        "cer",
+        "flags",
+        "reference",
+        "hypothesis",
+    ]
     output_path.write_text(
         "\n".join(
             [
-                "# Benchmark Diagnostics v1",
+                f"# {report_title}",
                 "",
                 "This report adds deployment-oriented diagnostics on top of WER/CER.",
                 "",
-                "Source data: existing per-sample prediction CSV exports. These diagnostics are heuristics, not final human labels.",
+                "Source data: per-sample prediction exports. These diagnostics are heuristics, not final human labels.",
                 "",
                 "## Summary By Model And Slice",
                 "",
@@ -351,6 +395,7 @@ def write_markdown(
 def main() -> None:
     args = parse_args()
     rows = read_predictions(args.predictions_csv)
+    rows.extend(read_json_predictions(args.predictions_json))
     summaries = summarize(rows)
     payload = {"summary": summaries, "samples": rows}
     output_json = Path(args.output_json)
@@ -358,7 +403,7 @@ def main() -> None:
     output_json.parent.mkdir(parents=True, exist_ok=True)
     output_md.parent.mkdir(parents=True, exist_ok=True)
     output_json.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
-    write_markdown(output_md, summaries, rows, args.top_examples)
+    write_markdown(output_md, summaries, rows, args.top_examples, args.report_title)
     print(f"Wrote {output_json}")
     print(f"Wrote {output_md}")
 

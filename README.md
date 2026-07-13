@@ -113,6 +113,16 @@ First diagnostic benchmark flags beyond WER/CER:
 
 See [results/benchmark_diagnostics_v1.md](results/benchmark_diagnostics_v1.md). These are heuristic flags for repetition loops, length explosions, script drift, and near-empty outputs; they are meant to complement WER/CER, not replace them.
 
+Expanded 100-file diagnostics:
+
+| Model | Slice | Hallucination Risk Rate | Empty/Near-Empty Rate |
+|---|---|---:|---:|
+| ARTPARK Vaani Hindi | gramvaani_dev_100_8khz | 0.0000 | 0.0000 |
+| Whisper large-v3 | gramvaani_dev_100_8khz | 0.0000 | 0.0179 |
+| Whisper medium | gramvaani_dev_100_8khz | 0.0000 | 0.0893 |
+
+See [results/benchmark_diagnostics_v2.md](results/benchmark_diagnostics_v2.md). These heuristic rates do not mean ARTPARK made no transcription errors; its native-8-kHz WER was `0.3091`. In per-file comparison, ARTPARK had lower WER than large-v3 on 53 of 56 native-8-kHz files, tied on 2, and had higher WER on 1. The 15 highest-ARTPARK-WER files are prepared in [results/artpark_8khz_error_review_v1.md](results/artpark_8khz_error_review_v1.md) for human listening.
+
 ## Problem
 
 Whisper expects 16 kHz audio, while telephone audio is commonly narrowband 8 kHz. Feeding telephony audio incorrectly or assuming preprocessing helps can produce misleading results. This project measures Whisper behavior on real 8 kHz Hindi audio where possible, then compares it with synthetic telephony degradation on cleaner speech.
@@ -146,7 +156,7 @@ For the compact fine-tuning direction, see [EDGE_FINE_TUNING_PLAN.md](EDGE_FINE_
 
 For the expanded benchmark scope before the next fine-tuning push, see [BENCHMARK_EXPANSION_PLAN.md](BENCHMARK_EXPANSION_PLAN.md).
 
-For the first generated diagnostic report beyond WER/CER, see [results/benchmark_diagnostics_v1.md](results/benchmark_diagnostics_v1.md).
+For the current expanded diagnostics and human-review queue, see [results/benchmark_diagnostics_v2.md](results/benchmark_diagnostics_v2.md) and [results/artpark_8khz_error_review_v1.md](results/artpark_8khz_error_review_v1.md).
 
 For a first public update draft about the benchmark track, see [SOCIAL_POST_01_BENCHMARK.md](SOCIAL_POST_01_BENCHMARK.md).
 

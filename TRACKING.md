@@ -118,8 +118,9 @@ This week's non-negotiable deliverable: validate the expanded 100-file compariso
 - Done: Evaluated Whisper `medium`, Whisper `large-v3`, and `ARTPARK-IISc/whisper-medium-vaani-hindi` on the same 100 GramVaani files using a Tesla T4. The source-rate views were derived from the same per-file predictions: 56 native 8 kHz files and 44 higher-rate files.
 - Done: Added nine per-model/slice JSON outputs under `results/benchmark_v2/`, report tables in `results/model_comparison_v2.md`, `.json`, and `.csv`, and exact runtime metadata in `results/benchmark_v2/model_comparison_v2_run_metadata.json`.
 - Result: On the mixed 100-file slice, WER was `0.7182` for Whisper medium, `0.5182` for Whisper large-v3, and `0.2565` for ARTPARK. On the native 8 kHz subset, WER was `0.7889`, `0.6083`, and `0.3091`, respectively.
+- Done: Added JSON support to `callwhisper-diagnostics`, generated `results/benchmark_diagnostics_v2.md` and `.json`, and created a reproducible ARTPARK-vs-large-v3 error-review command and 15-file review sheet. ARTPARK had lower per-file WER on 53 of 56 native-8-kHz files, tied on 2, and had higher WER on 1.
 - Caveat: The native 8 kHz subset is harder for all three models, but the split is observational; source rate, speakers, topics, noise, and transcript quality are not independently controlled.
-- Next action: Run v2 deployment diagnostics and inspect ARTPARK's highest-error native 8 kHz samples before choosing a targeted challenger experiment.
+- Next action: Complete the 15-file listening review in `results/artpark_8khz_error_review_v1.md`, then group genuine model failures into a targeted training-data plan.
 
 ## Scoreboard
 

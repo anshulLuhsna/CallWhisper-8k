@@ -1,4 +1,6 @@
-from callwhisper.eval.diagnostics import diagnose_row, summarize
+import json
+
+from callwhisper.eval.diagnostics import diagnose_row, read_json_predictions, summarize
 
 
 def test_diagnose_row_flags_repetition_and_length_explosion():
@@ -86,3 +88,32 @@ def test_summarize_groups_diagnostics_by_model_slice_and_beam():
     assert summary[0]["macro_wer"] == 5.0
     assert summary[0]["hallucination_risk_rate"] == 0.5
     assert summary[0]["repetition_rate"] == 0.5
+
+
+def test_read_json_predictions_reads_eval_samples(tmp_path):
+    path = tmp_path / "predictions.json"
+    path.write_text(
+        json.dumps(
+            {
+                "samples": [
+                    {
+                        "model": "large-v3",
+                        "slice": "gramvaani_dev_100_8khz",
+                        "condition": "telephone_mp3",
+                        "reference_text": "मेरा नाम अनिल कुमार है",
+                        "hypothesis_text": "मेरा नाम अनिल है",
+                        "wer": 0.2,
+                        "cer": 0.1,
+                    }
+                ]
+            },
+            ensure_ascii=False,
+        ),
+        encoding="utf-8",
+    )
+
+    rows = read_json_predictions([str(path)])
+
+    assert len(rows) == 1
+    assert rows[0]["model"] == "large-v3"
+    assert rows[0]["wer"] == 0.2

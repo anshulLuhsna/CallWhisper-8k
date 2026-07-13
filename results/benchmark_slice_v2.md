@@ -64,4 +64,4 @@ results/model_comparison_v2.csv
 results/benchmark_v2/model_comparison_v2_run_metadata.json
 ```
 
-The next benchmark step is error diagnostics on the v2 ARTPARK and Whisper large-v3 per-sample outputs, especially the remaining native 8 kHz failures. The source-rate gap must remain descriptive rather than causal because content, speakers, recording quality, and transcript quality may also differ.
+Automated v2 diagnostics are complete in `results/benchmark_diagnostics_v2.md`. The next step is the 15-file listening review in `results/artpark_8khz_error_review_v1.md`, especially the remaining native 8 kHz failures. The source-rate gap must remain descriptive rather than causal because content, speakers, recording quality, and transcript quality may also differ.

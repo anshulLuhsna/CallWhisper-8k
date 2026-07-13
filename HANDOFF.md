@@ -33,7 +33,8 @@ Best public framing:
 - Native-8-kHz WER: medium `0.7889`, large-v3 `0.6083`, ARTPARK `0.3091`.
 - The clean FLEURS Hindi control, manual 15-file audio review, decoding adaptation sweep, Whisper-small LoRA pilot, and committed-adapter reload evaluation are complete.
 - Canonical v2 reports are `results/model_comparison_v2.md`, `.json`, and `.csv`; per-sample outputs and runtime metadata are under `results/benchmark_v2/`.
-- Next: diagnose ARTPARK's remaining native-8-kHz failures and use those errors to define a targeted independent challenger experiment.
+- Automated v2 diagnostics and an ARTPARK-vs-large-v3 15-file review queue are complete. ARTPARK had lower per-file WER on 53 of 56 native-8-kHz files, tied on 2, and higher WER on 1.
+- Next: complete the human listening fields in `results/artpark_8khz_error_review_v1.md`, then use genuine model failures to define a targeted independent challenger experiment.
 
 ## What Has Been Built
 
@@ -183,10 +184,10 @@ prior_art.md
 
 ## Next Session Priorities
 
-1. Generate deployment diagnostics from the v2 ARTPARK and Whisper large-v3 per-sample JSON outputs.
-2. Rank ARTPARK's worst native-8-kHz files and prepare a small human-review sheet with reference and hypothesis text.
-3. Listen to the highest-error files and separate model failures from bad audio or questionable references.
-4. Use those findings to define an independent training/augmentation experiment; do not train on the frozen 100 benchmark files.
+1. Listen to the 15 files listed in `results/artpark_8khz_error_review_v1.md` and fill the review fields.
+2. Separate genuine ARTPARK model failures from bad audio or questionable references.
+3. Group genuine model failures by type, such as names/places, numbers, short clips, code-switching, or severe channel degradation.
+4. Use those groups to define an independent training/augmentation experiment; do not train on the frozen 100 benchmark files.
 
 ## Completed Historical Priorities
 
