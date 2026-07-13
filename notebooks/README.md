@@ -2,13 +2,15 @@
 
 These notebooks are designed for hosted GPU runs. The MacBook remains the development and quick-test machine; Colab/Kaggle is for slower model comparison and adaptation sweeps.
 
-For the expanded GramVaani 100-file benchmark, use the one-click Colab notebook:
+For the expanded GramVaani 100-file benchmark, use the clean one-click Colab notebook:
 
 ```text
-08_gramvaani_100_colab_benchmark.ipynb
+09_gramvaani_100_colab_clean.ipynb
 ```
 
-It mounts Drive, clones the repo, validates the expected `GV_Dev_5h` folder, runs Whisper `medium`, Whisper `large-v3`, and ARTPARK Vaani Hindi on all three fixed v2 slices, streams live progress, and saves JSON/Markdown/CSV results to `MyDrive/call-whisper/results/benchmark_v2/`.
+It mounts Drive, clones the repo from a stable working directory, validates the expected `GV_Dev_5h` folder, runs Whisper `medium`, Whisper `large-v3`, and ARTPARK Vaani Hindi once each, derives all three fixed v2 slices from the same predictions, streams live progress, checkpoints after every model, and saves JSON/Markdown/CSV results to `MyDrive/call-whisper/results/benchmark_v2/`.
+
+`08_gramvaani_100_colab_benchmark.ipynb` is superseded by notebook 09 and should not be used for new runs.
 
 The equivalent step-by-step version remains available as:
 
@@ -26,6 +28,7 @@ Run order:
 6. `06_lora_reload_eval_colab_report.ipynb` - Colab reload/eval notebook for the committed LoRA adapter and Excel-ready report tables
 7. `07_whisper_large_v3_challenger.ipynb` - Kaggle-first non-ARTPARK Whisper large-v3 LoRA notebook for the ambitious "beat public ARTPARK on fixed GramVaani slices" experiment
 8. `08_gramvaani_100_colab_benchmark.ipynb` - one-click Colab GPU benchmark for the expanded 100-file GramVaani comparison
+9. `09_gramvaani_100_colab_clean.ipynb` - canonical clean Colab run; one inference pass per model with immediate Drive checkpoints
 
 Before running, put the GramVaani audio somewhere Colab can access. The notebooks now expect this Google Drive layout:
 

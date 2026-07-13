@@ -1,5 +1,7 @@
 # Colab Benchmark v2 Runbook
 
+> **Recommended:** use `notebooks/09_gramvaani_100_colab_clean.ipynb` and select **Runtime > Run all**. The cells below remain as a manual reference.
+
 This runbook evaluates the expanded GramVaani 100-file benchmark slice.
 
 The MacBook is only for manifest/data work. Use Colab/Kaggle GPU for these model runs.
