@@ -1,5 +1,7 @@
 # Targeted 8 kHz Challenger Plan
 
+> **Status update (July 2026):** retained as the original independent-challenger plan, but superseded as the immediate research thesis by [`TELEPHONY_TAX_RESEARCH_PLAN.md`](TELEPHONY_TAX_RESEARCH_PLAN.md). Do not spend the next GPU run on this plan until the paired Vaani telephony benchmark and predeclared win metric exist.
+
 ## Objective
 
 Train an independent Hindi telephony ASR challenger without using ARTPARK weights, then compare it with public ARTPARK on the frozen CallWhisper-8k benchmark.

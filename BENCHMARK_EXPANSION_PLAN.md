@@ -2,6 +2,8 @@
 
 Last updated: 2026-07-07
 
+> **July 2026 direction update:** the next benchmark layer is now the paired, multi-reference telephony study in [`TELEPHONY_TAX_RESEARCH_PLAN.md`](TELEPHONY_TAX_RESEARCH_PLAN.md). The full GramVaani metadata audit showed that natural source-rate groups are strongly confounded by dataset-provided gender and quality metadata, so native-8-kHz versus higher-rate WER must remain observational.
+
 This document redefines the benchmark side of CallWhisper-8k before the next fine-tuning push.
 
 ## Thesis

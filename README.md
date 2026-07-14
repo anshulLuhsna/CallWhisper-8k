@@ -10,6 +10,8 @@ CallWhisper-8k currently has three result tracks:
 2. preprocessing and decoding ablations,
 3. compact Whisper-small LoRA adaptation for edge-oriented Hindi telephony ASR.
 
+The current research direction is now more specific than another WER table or generic fine-tune: [`TELEPHONY_TAX_RESEARCH_PLAN.md`](TELEPHONY_TAX_RESEARCH_PLAN.md) defines a paired, multi-reference study of Hindi ASR under narrowband codecs, followed by a compact mitigation model evaluated against ARTPARK under a frozen win condition.
+
 The expanded GPU benchmark evaluates the same 100 GramVaani files with every model and reports the native 8 kHz and higher-rate subsets separately:
 
 | Model | Mixed 100 WER | Native 8 kHz WER | High-rate WER |
@@ -19,6 +21,8 @@ The expanded GPU benchmark evaluates the same 100 GramVaani files with every mod
 | ARTPARK-IISc/whisper-medium-vaani-hindi | **0.2565** | **0.3091** | **0.1895** |
 
 See [results/model_comparison_v2.md](results/model_comparison_v2.md). On this fixed slice, ARTPARK had the lowest WER/CER on all three views. Every model performed worse on the native 8 kHz subset than on the higher-rate subset, but source rate is not the only difference between those groups.
+
+That caveat is now measured across all 1,885 local GramVaani dev clips. Dataset-provided gender has Cramer's V `0.543` with source-rate group: `76.3%` of male-labeled clips are native 8 kHz versus `18.1%` of female-labeled clips, an odds ratio of `14.59`. Inaudibility flags are also concentrated in the native-8-kHz group. See [results/gramvaani_source_rate_confound_audit_v1.md](results/gramvaani_source_rate_confound_audit_v1.md). The natural source-rate split is a deployment view, not a causal channel experiment.
 
 The strongest new adaptation result is the Kaggle LoRA pilot:
 
@@ -158,6 +162,8 @@ For the compact fine-tuning direction, see [EDGE_FINE_TUNING_PLAN.md](EDGE_FINE_
 
 For the expanded benchmark scope before the next fine-tuning push, see [BENCHMARK_EXPANSION_PLAN.md](BENCHMARK_EXPANSION_PLAN.md).
 
+For the current article-level thesis, paired benchmark protocol, predeclared ARTPARK win condition, and compact-model plan, see [TELEPHONY_TAX_RESEARCH_PLAN.md](TELEPHONY_TAX_RESEARCH_PLAN.md).
+
 For the current expanded diagnostics and human-review queue, see [results/benchmark_diagnostics_v2.md](results/benchmark_diagnostics_v2.md) and [results/artpark_8khz_error_review_v1.md](results/artpark_8khz_error_review_v1.md).
 
 For a first public update draft about the benchmark track, see [SOCIAL_POST_01_BENCHMARK.md](SOCIAL_POST_01_BENCHMARK.md).
@@ -168,7 +174,7 @@ For the ARTPARK/Vaani competitive analysis and the next "beat ARTPARK honestly" 
 
 The manual-review-informed training recipe is in [TARGETED_8KHZ_CHALLENGER_PLAN.md](TARGETED_8KHZ_CHALLENGER_PLAN.md).
 
-The next executable step is [notebooks/10_gv_train_100h_inventory_colab.ipynb](notebooks/10_gv_train_100h_inventory_colab.ipynb). It inventories `GV_Train_100h`, excludes the frozen 100-file benchmark IDs, and saves portable accepted/rejected manifests to Drive before any training begins.
+The next executable benchmark step is `notebooks/11_vaani_paired_telephony_benchmark_colab.ipynb`, which is specified in the research plan and still needs to be built. It will pin Vaani Benchmark V1.0, create a deterministic 500-file pilot, and generate validated paired channel manifests before model evaluation. The existing [notebooks/10_gv_train_100h_inventory_colab.ipynb](notebooks/10_gv_train_100h_inventory_colab.ipynb) remains the later training-data inventory step.
 
 The first non-ARTPARK challenger notebook is [notebooks/07_whisper_large_v3_challenger.ipynb](notebooks/07_whisper_large_v3_challenger.ipynb).
 

@@ -10,6 +10,10 @@ Non-negotiable: if something is not in this roadmap, it goes into `FUTURE_WORK.m
 
 Current positioning after prior-art review: **do not claim novelty as the first Whisper/GramVaani Hindi telephony evaluation**. Prior work already covers GramVaani, IndicWhisper, Hindi Whisper fine-tunes, and call-center Whisper systems. The stronger contribution is a **neutral, reproducible telephony benchmark harness** with fixed manifests, preprocessing ablations, clean-vs-telephone comparisons, error analysis, and later multi-model/adaptation experiments.
 
+July 2026 research update: recent work also covers broad Indic telephony benchmarking, Hindi codec ablations, and ASR fairness under synthetic degradation. The current defensible thesis is the paired, multi-reference protocol in `TELEPHONY_TAX_RESEARCH_PLAN.md`: hold utterance and speaker fixed across telephone channels, measure channel-by-group interactions, validate on real GramVaani speech, then test a compact mitigation model against ARTPARK using a frozen metric.
+
+The full GramVaani dev audit confirms why this is necessary. Source rate is strongly associated with dataset-provided gender (Cramer's V `0.543`; male-versus-female native-8-kHz odds ratio `14.59`) and with quality metadata. Natural 8 kHz versus higher-rate WER is descriptive, not causal.
+
 Current completed evidence:
 
 - GramVaani 10-file and 50-file manifests.
@@ -30,10 +34,10 @@ Model policy:
 
 Immediate next milestone before Week 3 adaptation:
 
-- Manual listening review of flagged files.
-- Clean Hindi control slice.
-- Split GramVaani results by source sample rate.
-- Then run cheap adaptation experiments locally and stronger model/adaptation experiments on Colab/GPU.
+- Freeze the paired Vaani telephony protocol and dataset/model revisions.
+- Build a deterministic 500-utterance paired-channel pilot.
+- Validate multi-reference scoring and paired bootstrap analysis on ARTPARK and Adalat Whisper-small.
+- Only then inventory training data and begin compact-model adaptation.
 
 ---
 

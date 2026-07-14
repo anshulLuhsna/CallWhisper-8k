@@ -4,7 +4,7 @@ This file is the working handoff for the next session. Read this before coding.
 
 ## One-Line Project Goal
 
-CallWhisper-8k is becoming a reproducible benchmark suite for Indian telephone-style Hindi ASR, focused on Whisper-family and Indic ASR models, telephony preprocessing, WER/CER, and honest error analysis.
+CallWhisper-8k is becoming an open paired benchmark for the Hindi "telephony tax": how narrowband channels change ASR accuracy and group disparities when the same utterance, speaker, and references are held fixed, plus a compact mitigation model evaluated against ARTPARK.
 
 ## Updated Positioning
 
@@ -17,7 +17,7 @@ Prior work already includes:
 - Hindi Whisper fine-tunes from Vasista, ARTPARK-IISc, Collabora, and others.
 - Production-style Indian call-center Whisper efforts from companies.
 
-The useful remaining gap is narrower:
+The useful remaining gap is narrower than the older positioning below:
 
 > A clean, open, reproducible benchmark that studies Whisper/Indic ASR on Indian telephone-style Hindi under controlled preprocessing conditions, with fixed manifests, WER/CER, error analysis, and later multi-model comparison.
 
@@ -25,7 +25,13 @@ Best public framing:
 
 > CallWhisper-8k is an open evaluation harness for Indian telephone-style ASR. It compares Whisper-family and Indic ASR models on fixed Hindi telephony slices and measures whether preprocessing choices such as WAV conversion, volume normalization, bandpass filtering, and 8 kHz roundtrip help or hurt.
 
-## Current State — 2026-07-13
+Current primary thesis:
+
+> Build a paired, multi-reference Hindi benchmark from Vaani Benchmark V1.0, apply predeclared telephone channels to the same utterances, measure channel-by-gender/region interactions, validate on real GramVaani telephone speech, and train a compact channel-adapted Whisper-small under a frozen ARTPARK win condition.
+
+See `TELEPHONY_TAX_RESEARCH_PLAN.md`.
+
+## Current State — 2026-07-14
 
 - The current headline benchmark is the fixed 100-file GramVaani slice, with 56 native 8 kHz files and 44 higher-rate files.
 - Whisper medium, Whisper large-v3, and ARTPARK Vaani Hindi were evaluated on the same 100 predictions using a Tesla T4.
@@ -35,7 +41,9 @@ Best public framing:
 - Canonical v2 reports are `results/model_comparison_v2.md`, `.json`, and `.csv`; per-sample outputs and runtime metadata are under `results/benchmark_v2/`.
 - Automated v2 diagnostics and an ARTPARK-vs-large-v3 15-file review queue are complete. ARTPARK had lower per-file WER on 53 of 56 native-8-kHz files, tied on 2, and higher WER on 1.
 - The v2 human review is complete. Among the 15 highest-WER ARTPARK native-8-kHz files, 6 were classified as bad audio, 5 as model failures, 2 as questionable references, 1 as mixed, and 1 as uncertain. See `results/artpark_8khz_manual_review_summary_v1.md`.
-- Next: run `notebooks/10_gv_train_100h_inventory_colab.ipynb` on a Colab CPU, inspect its leakage-safe `GV_Train_100h` inventory, then create curated train/internal-eval splits before the independent large-v3 LoRA smoke experiment.
+- The full 1,885-file metadata audit is complete. Dataset-provided gender is strongly associated with source-rate group (Cramer's V `0.543`): `76.3%` of male-labeled clips are native 8 kHz versus `18.1%` of female-labeled clips. The male-versus-female native-rate odds ratio is `14.59`; inaudibility flags are also concentrated in the native-8-kHz group.
+- Result: the existing native-8-kHz/high-rate WER gap is an observational deployment comparison, not a causal bandwidth estimate.
+- Next: build `notebooks/11_vaani_paired_telephony_benchmark_colab.ipynb` from the frozen protocol in `TELEPHONY_TAX_RESEARCH_PLAN.md`. Training inventory and adaptation come after the paired pilot works.
 
 ## What Has Been Built
 
@@ -50,6 +58,7 @@ Core eval:
 Dataset tooling:
 
 - `src/callwhisper/datasets/build_gramvaani_manifest.py`: builds GramVaani manifests from `mp3.scp` and `text`.
+- `src/callwhisper/datasets/metadata_audit.py`: quantifies source-rate associations with GramVaani gender, accent, state, and quality metadata.
 - `datasets/manifests/gramvaani_dev_10.csv`: first smoke-test manifest.
 - `datasets/manifests/gramvaani_dev_50.csv`: original fixed smoke benchmark slice.
 - `datasets/manifests/gramvaani_dev_100.csv`: expanded fixed benchmark slice.
@@ -169,12 +178,13 @@ These are important. Do not hide them.
 
 - The headline 100-file slice is still small and comes from one GramVaani development set.
 - The 100-file slice mixes source rates; the 56/44 split describes model behavior but does not isolate sample rate causally.
+- The full-dev metadata audit proves the source-rate groups differ strongly in gender composition and quality flags.
 - Some references contain `<incomplete>` markers.
 - GramVaani transcripts are crowd-sourced and may be imperfect.
 - FLEURS provides a clean Hindi control, but dataset/domain differences prevent a pure channel-only claim.
 - ARTPARK is covered; broader non-Whisper Indic ASR coverage is still missing.
 - Current preprocessing gains are small; do not overclaim them.
-- The first 15-file manual review is complete, but the new v2 ARTPARK 8 kHz failures still need targeted listening.
+- Vaani Benchmark V1.0 Hub and paper releases currently report different row/hour totals; every run must pin and record the exact dataset revision.
 
 See:
 
@@ -185,10 +195,10 @@ prior_art.md
 
 ## Next Session Priorities
 
-1. Run `notebooks/10_gv_train_100h_inventory_colab.ipynb` and bring its three inventory artifacts back into the repo.
-2. Verify that all 100 frozen benchmark IDs are excluded before creating train/internal-eval splits.
-3. Group genuine model failures by type, such as names/places, numbers, short clips, code-switching, or severe channel degradation.
-4. Use those groups to define an independent training/augmentation experiment; do not train on the frozen 100 benchmark files.
+1. Freeze model/dataset revisions, transform parameters, macro-region mapping, group-size threshold, and multi-reference scoring protocol.
+2. Build `notebooks/11_vaani_paired_telephony_benchmark_colab.ipynb` and stop after the 500-file paired pilot manifests and transform validation artifacts.
+3. Evaluate ARTPARK medium and Adalat Whisper-small on the pilot; verify paired bootstrap and group-interaction analysis.
+4. Run the full baseline before training. Then run notebook 10 and curate `GV_Train_100h` for the compact challenger.
 
 ## Completed Historical Priorities
 

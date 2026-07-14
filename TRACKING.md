@@ -131,6 +131,17 @@ This week's non-negotiable deliverable: validate the expanded 100-file compariso
 - Done: Added `notebooks/10_gv_train_100h_inventory_colab.ipynb` and the tested `callwhisper-gramvaani-inventory` CLI. The CLI probes audio concurrently, preserves portable relative paths, records duration/sample rate/channels/transcript flags, and writes accepted/rejected inventories plus a JSON summary.
 - Next action: Run notebook 10 on Colab CPU, inspect the saved inventory artifacts, then create deterministic curated train/internal-eval splits before the independent large-v3 LoRA smoke experiment.
 
+### 2026-07-14 paired telephony research direction
+
+- Planned: Find a defensible contribution beyond generic Hindi Whisper fine-tuning or another small WER table.
+- Done: Re-audited recent primary work. Generic Hindi fine-tuning, Hindi codec ablations, broad Indian telephony benchmarking, and generic fairness-under-degradation are already covered by recent work including Vividh-ASR, Voice of India, Vaani Benchmark V1.0, Basu et al. (2026), Ginjala et al. (2026), and Altwlkany et al. (2025).
+- Decision: The new thesis is a paired, multi-reference Hindi telephony audit plus compact mitigation model. The same Vaani utterances will be evaluated under original, bandwidth-only 8 kHz, G.711 A-law, G.711 mu-law, and GSM-FR conditions, followed by real GramVaani validation.
+- Done: Added `TELEPHONY_TAX_RESEARCH_PLAN.md` with the novelty boundary, research questions, evaluation contract, data-leakage rules, model ablations, and a predeclared definition of beating ARTPARK.
+- Done: Added tested `callwhisper-metadata-audit` tooling and generated `results/gramvaani_source_rate_confound_audit_v1.md`, `.json`, and `_rows.csv` across all 1,885 local GramVaani dev files.
+- Finding: Dataset-provided gender and source-rate group have Cramer's V `0.543`. Native-8-kHz share is `76.3%` for male-labeled clips and `18.1%` for female-labeled clips; male-versus-female native-rate odds ratio is `14.59`. `inaudible` flags occur in 340 native-8-kHz clips versus 72 higher-rate clips.
+- Interpretation: The old source-rate WER split is useful operationally but cannot identify the causal bandwidth penalty. The paired Vaani design exists to hold speaker, utterance, and references fixed.
+- Next action: Build `notebooks/11_vaani_paired_telephony_benchmark_colab.ipynb`; stop after pinned download, deterministic 500-file pilot, paired transform generation, and hash/metadata validation.
+
 ## Scoreboard
 
 - Day-2 WER number shipped: yes

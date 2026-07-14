@@ -1,0 +1,109 @@
+{
+  "files": 1885,
+  "source_rate_counts": {
+    "native_8khz": 1169,
+    "higher_rate": 716
+  },
+  "sample_rate_counts": {
+    "8000": 1169,
+    "16000": 20,
+    "32000": 2,
+    "44100": 623,
+    "48000": 71
+  },
+  "gender_by_source_rate": {
+    "Male": {
+      "native_8khz": 976,
+      "higher_rate": 303,
+      "total": 1279
+    },
+    "Female": {
+      "native_8khz": 89,
+      "higher_rate": 403,
+      "total": 492
+    },
+    "unknown": {
+      "native_8khz": 104,
+      "higher_rate": 10,
+      "total": 114
+    }
+  },
+  "accent_by_source_rate": {
+    "unknown": {
+      "native_8khz": 724,
+      "higher_rate": 525,
+      "total": 1249
+    },
+    "Bihari": {
+      "native_8khz": 429,
+      "higher_rate": 169,
+      "total": 598
+    },
+    "Bhojpuri": {
+      "native_8khz": 14,
+      "higher_rate": 22,
+      "total": 36
+    },
+    "Lucknowi": {
+      "native_8khz": 1,
+      "higher_rate": 0,
+      "total": 1
+    },
+    "Normal_hindi": {
+      "native_8khz": 1,
+      "higher_rate": 0,
+      "total": 1
+    }
+  },
+  "state_by_source_rate": {
+    "unknown": {
+      "native_8khz": 734,
+      "higher_rate": 543,
+      "total": 1277
+    },
+    "Bihar": {
+      "native_8khz": 431,
+      "higher_rate": 171,
+      "total": 602
+    },
+    "Madhya_pradesh": {
+      "native_8khz": 1,
+      "higher_rate": 2,
+      "total": 3
+    },
+    "Jharkhand": {
+      "native_8khz": 2,
+      "higher_rate": 0,
+      "total": 2
+    },
+    "Uttar_pradesh": {
+      "native_8khz": 1,
+      "higher_rate": 0,
+      "total": 1
+    }
+  },
+  "quality_markers_by_source_rate": {
+    "inaudible": {
+      "native_8khz": 340,
+      "higher_rate": 72
+    },
+    "audio_jump": {
+      "native_8khz": 82,
+      "higher_rate": 135
+    },
+    "background_noise": {
+      "native_8khz": 0,
+      "higher_rate": 0
+    },
+    "multiple_speakers": {
+      "native_8khz": 0,
+      "higher_rate": 0
+    }
+  },
+  "association": {
+    "gender_source_rate_cramers_v": 0.5427295851264761,
+    "accent_source_rate_cramers_v": 0.14943624769045613,
+    "state_source_rate_cramers_v": 0.14103569737882476,
+    "male_vs_female_native_8khz_odds_ratio": 14.585530463158674
+  }
+}

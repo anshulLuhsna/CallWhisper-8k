@@ -1,5 +1,20 @@
 <img src="https://r2cdn.perplexity.ai/pplx-full-logo-primary-dark%402x.png" style="height:64px;margin-right:32px"/>
 
+# July 2026 Prior-Art Correction
+
+The older survey below is retained for provenance, but its claim that an 8 kHz preprocessing benchmark is the main open novelty is no longer current.
+
+Recent work now covers most broad versions of that idea:
+
+- [Vividh-ASR](https://arxiv.org/abs/2605.13087) covers complexity-stratified Hindi ASR and strong high-learning-rate Whisper fine-tuning.
+- [Factors affecting ASR performance in Indic Languages](https://arxiv.org/abs/2606.09335) evaluates Hindi ASR under GSM, narrowband/wideband filtering, Opus, resampling, bit depth, and noise.
+- [Do LLM Decoders Listen Fairly?](https://arxiv.org/abs/2604.21276) evaluates demographic ASR fairness under synthetic degradation, though only on English read/prompted speech and without telephone codecs.
+- [On the Language and Gender Biases in PSTN, VoIP and Neural Audio Codecs](https://www.isca-archive.org/interspeech_2025/altwlkany25_interspeech.html) finds gender disparities in objective codec quality, but does not evaluate downstream ASR.
+- [Voice of India](https://arxiv.org/abs/2604.19151) is a large closed benchmark for real Indian telephonic speech with geographic, demographic, and audio-quality analyses.
+- [Vaani Benchmark V1.0](https://arxiv.org/abs/2606.21408) introduces a geographically diverse, multi-reference Hindi benchmark.
+
+The current defensible direction is narrower: paired telephone transformations of the same multi-reference Hindi utterances, measurement of channel-by-group interactions, real GramVaani validation, and a compact mitigation model evaluated under a predeclared ARTPARK comparison. See [`TELEPHONY_TAX_RESEARCH_PLAN.md`](TELEPHONY_TAX_RESEARCH_PLAN.md).
+
 ## Short answer
 
 This exact project has **partially** been done.
@@ -644,4 +659,3 @@ As a **student flagship project**, CallWhisper‑8k can be novel enough **if you
 [^86]: https://model.aibase.com/models/details/1915693349128003586
 
 [^87]: https://model.aibase.com/models/details/1924737381886595072
-
