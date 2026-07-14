@@ -29,11 +29,11 @@ large-v3 hypothesis:
 
 > मोबाइल वानी को बताया कि धिकंद्रा प्रखन अतको धानो मडिकेल संस्याब्शों उन्तीज की शेर का गुडिया ने भी तेबंद पोसाहार किराशिकालो पराने के लिए शिरीपियो ने टाले जारूपे मान ला था।
 
-- Classification:
-- Speech understandable (`yes` / `partly` / `no`):
-- Reference quality (`good` / `incomplete` / `wrong` / `uncertain`):
-- Audio notes:
-- Reviewer notes:
+- Classification: bad_audio
+- Speech understandable (`yes` / `partly` / `no`): partly
+- Reference quality (`good` / `incomplete` / `wrong` / `uncertain`): good
+- Audio notes: no noise
+- Reviewer notes: ARTPARK got the parts i understood. Middle part is genuinely not understandable even after reading reference.
 
 ## 02. `01-04388-02`
 
@@ -54,11 +54,11 @@ large-v3 hypothesis:
 
 > मैं कमाचुर्पी पत्मितिम्बुं धारखन से
 
-- Classification:
-- Speech understandable (`yes` / `partly` / `no`):
-- Reference quality (`good` / `incomplete` / `wrong` / `uncertain`):
-- Audio notes:
-- Reviewer notes:
+- Classification: model_failure
+- Speech understandable (`yes` / `partly` / `no`): partly
+- Reference quality (`good` / `incomplete` / `wrong` / `uncertain`): good
+- Audio notes: clear audio no noise
+- Reviewer notes: missed entire word - सिंहभुम, but the speaker did say it lightly. Also worse than large v3 for the से
 
 ## 03. `01-04496-02`
 
@@ -79,11 +79,11 @@ large-v3 hypothesis:
 
 > *(empty transcription)*
 
-- Classification:
-- Speech understandable (`yes` / `partly` / `no`):
-- Reference quality (`good` / `incomplete` / `wrong` / `uncertain`):
-- Audio notes:
-- Reviewer notes:
+- Classification: mixed
+- Speech understandable (`yes` / `partly` / `no`): partly
+- Reference quality (`good` / `incomplete` / `wrong` / `uncertain`): incomplete - there is some speech between  खूब and अपने like ARTPARK has correctly shown
+- Audio notes: speaker audio is distorted
+- Reviewer notes: Model got some obvious words wrong, audio is also bad but it should have done better.
 
 ## 04. `01-03025-02`
 
@@ -104,11 +104,11 @@ large-v3 hypothesis:
 
 > दुखान में लगी करम कपलों के अच्छा आप जो कर दो
 
-- Classification:
-- Speech understandable (`yes` / `partly` / `no`):
-- Reference quality (`good` / `incomplete` / `wrong` / `uncertain`):
-- Audio notes:
-- Reviewer notes:
+- Classification: bad_audio
+- Speech understandable (`yes` / `partly` / `no`): partly
+- Reference quality (`good` / `incomplete` / `wrong` / `uncertain`): good
+- Audio notes: speaker audio did echo but it's acccounted for in the reference transcript. No noise
+- Reviewer notes: ARTPARK performed well but missed the start word ठंड
 
 ## 05. `01-01711-03`
 
@@ -129,11 +129,11 @@ large-v3 hypothesis:
 
 > इपनी के साथ मैं अपनी बवत तबु को
 
-- Classification:
-- Speech understandable (`yes` / `partly` / `no`):
-- Reference quality (`good` / `incomplete` / `wrong` / `uncertain`):
-- Audio notes:
-- Reviewer notes:
+- Classification: bad_audio
+- Speech understandable (`yes` / `partly` / `no`): partly
+- Reference quality (`good` / `incomplete` / `wrong` / `uncertain`): wrong - it does not sound like वक्तव
+- Audio notes: clear speaker, no noise
+- Reviewer notes: audio is bad even i didn't understand and reference is also guessing.
 
 ## 06. `01-09354-02`
 
@@ -154,11 +154,11 @@ large-v3 hypothesis:
 
 > जन्मदिन पर प्रधारुपन कर दिया भड़क चिंद्रे गोपाली की मंतुरायन में छायादार और खल्दा दिविष के पोधे लगाये इसको यह रिनाउन के पिता आर्थियाई का
 
-- Classification:
-- Speech understandable (`yes` / `partly` / `no`):
-- Reference quality (`good` / `incomplete` / `wrong` / `uncertain`):
-- Audio notes:
-- Reviewer notes:
+- Classification: bad_audio
+- Speech understandable (`yes` / `partly` / `no`): partly
+- Reference quality (`good` / `incomplete` / `wrong` / `uncertain`): uncertain
+- Audio notes: i dont know
+- Reviewer notes: its just bad audio man i didn't understand most of it either
 
 ## 07. `01-04674-01`
 
@@ -179,11 +179,11 @@ large-v3 hypothesis:
 
 > नमस्तार मैं कर्मोत कुमार मोबाइल मेडिया रिपोर्टर हजारी बार पदमा में आयोगे पेटिया खिलाब्याप्ती विशी हैं पदमा परखंड केजार पूरा शीमर पूरा
 
-- Classification:
-- Speech understandable (`yes` / `partly` / `no`):
-- Reference quality (`good` / `incomplete` / `wrong` / `uncertain`):
-- Audio notes:
-- Reviewer notes:
+- Classification: bad_audio
+- Speech understandable (`yes` / `partly` / `no`): barely
+- Reference quality (`good` / `incomplete` / `wrong` / `uncertain`): good
+- Audio notes: lots of echo, distortion
+- Reviewer notes: what a mess of an audio.
 
 ## 08. `02-19849-01`
 
@@ -204,11 +204,11 @@ large-v3 hypothesis:
 
 > नमस्कार मिचलो मेरा जनस वाजानाती
 
-- Classification:
-- Speech understandable (`yes` / `partly` / `no`):
-- Reference quality (`good` / `incomplete` / `wrong` / `uncertain`):
-- Audio notes:
-- Reviewer notes:
+- Classification: model_failure
+- Speech understandable (`yes` / `partly` / `no`): yes
+- Reference quality (`good` / `incomplete` / `wrong` / `uncertain`): good
+- Audio notes: clear audio no noise.
+- Reviewer notes: ARTPARK consistently mis-classifies से to ऐसी
 
 ## 09. `02-18228-01`
 
@@ -229,11 +229,11 @@ large-v3 hypothesis:
 
 > 2019 के लिए भाती जनता पार्टी का वास्तु का जान हर बूत पर होगा एक सेलफोन परमुख राजसान MP36 वा निजेडम के साथ होगा चलिंगाना में विदान तवच्छना है
 
-- Classification:
-- Speech understandable (`yes` / `partly` / `no`):
-- Reference quality (`good` / `incomplete` / `wrong` / `uncertain`):
-- Audio notes:
-- Reviewer notes:
+- Classification: bad_audio
+- Speech understandable (`yes` / `partly` / `no`): partly
+- Reference quality (`good` / `incomplete` / `wrong` / `uncertain`): good
+- Audio notes: too much distortion
+- Reviewer notes: only understood the start. audio is like an echo chamber its all so distorted.
 
 ## 10. `01-11380-01`
 
@@ -254,11 +254,11 @@ large-v3 hypothesis:
 
 > वहीं जबकि बकरित बर्ग को ज़िखते हुए परखंड के सभी इलाकों में विद्यो चिंजिव पांडे अंतुला धिकारी अकलेश कुमार सिन्हा ठाना अधेस
 
-- Classification:
-- Speech understandable (`yes` / `partly` / `no`):
-- Reference quality (`good` / `incomplete` / `wrong` / `uncertain`):
-- Audio notes:
-- Reviewer notes:
+- Classification: questionable_reference
+- Speech understandable (`yes` / `partly` / `no`): yes
+- Reference quality (`good` / `incomplete` / `wrong` / `uncertain`): wrong
+- Audio notes: bit of distortion
+- Reviewer notes: ARTPARK is better than reference. बी डी ओ is wrong विडियो is correct.
 
 ## 11. `13-00246-02`
 
@@ -279,11 +279,11 @@ large-v3 hypothesis:
 
 > अपरादियों पारोषित किया गया है घतना में सारे 3 रात लुखे लूट का खुड़ा सा किया गया है दल पात्मित में कहा गया है जिस शुक्रवार परात अवधेत परात समस्ती परिश्चित दुखाव
 
-- Classification:
-- Speech understandable (`yes` / `partly` / `no`):
-- Reference quality (`good` / `incomplete` / `wrong` / `uncertain`):
-- Audio notes:
-- Reviewer notes:
+- Classification: model_failure
+- Speech understandable (`yes` / `partly` / `no`): partly
+- Reference quality (`good` / `incomplete` / `wrong` / `uncertain`): good
+- Audio notes: end of the audio is distorted
+- Reviewer notes: ARTPARK missed everything after शुक्रवार otherwise would've performed better.
 
 ## 12. `01-08044-01`
 
@@ -304,11 +304,11 @@ large-v3 hypothesis:
 
 > उसको आगे बढ़ने तथा स्वचंत्र रूप से लोग काम नहीं करने दिया ज्यादा कि महिलाएं जन पर्थिमर्थि मिदी चाती ती की विकास करें लेकिन पुत्र आदी
 
-- Classification:
-- Speech understandable (`yes` / `partly` / `no`):
-- Reference quality (`good` / `incomplete` / `wrong` / `uncertain`):
-- Audio notes:
-- Reviewer notes:
+- Classification: questionable_reference
+- Speech understandable (`yes` / `partly` / `no`): yes
+- Reference quality (`good` / `incomplete` / `wrong` / `uncertain`): wrong
+- Audio notes: clear
+- Reviewer notes: ARTPARK missed  थी की but got लेकिन पुत्र correct which seems to be wrong in the reference.
 
 ## 13. `01-02689-01`
 
@@ -329,11 +329,11 @@ large-v3 hypothesis:
 
 > प्रतियसंते जितने रिश्चादत्य हैं
 
-- Classification:
-- Speech understandable (`yes` / `partly` / `no`):
-- Reference quality (`good` / `incomplete` / `wrong` / `uncertain`):
-- Audio notes:
-- Reviewer notes:
+- Classification: model_failure
+- Speech understandable (`yes` / `partly` / `no`): yes
+- Reference quality (`good` / `incomplete` / `wrong` / `uncertain`): good
+- Audio notes: perfect
+- Reviewer notes: missed the start ये संघ otherwise perfect. large-v3 is a joke at this point.
 
 ## 14. `01-03237-02`
 
@@ -354,11 +354,11 @@ large-v3 hypothesis:
 
 > पुलिस की सहायता करने वाला है पुलिस की जायचतियों का प्रश्ना शिकार होता है आज पर्चस रशियों वो गवाओं के वर्षत पुलिस को भी अपना वैभार बदलना होगा दन्दवाश
 
-- Classification:
-- Speech understandable (`yes` / `partly` / `no`):
-- Reference quality (`good` / `incomplete` / `wrong` / `uncertain`):
-- Audio notes:
-- Reviewer notes:
+- Classification: model_failure
+- Speech understandable (`yes` / `partly` / `no`): partly
+- Reference quality (`good` / `incomplete` / `wrong` / `uncertain`): good
+- Audio notes: clear
+- Reviewer notes: ARTPARK missed some parts in between which were a bit haarder
 
 ## 15. `02-13674-02`
 
@@ -379,8 +379,8 @@ large-v3 hypothesis:
 
 > जमूँ सदर प्रखने 15 सितंबर को पोषण जजिता रह ली तथा 20 सितंबर को पोषण मेला काइजन किया जाना है उन्होंने तमाम उपस्तेज़न परतिमीद्रित राधिकारी के तक पर्विनोशन वेट करते हुए कहा की
 
-- Classification:
-- Speech understandable (`yes` / `partly` / `no`):
-- Reference quality (`good` / `incomplete` / `wrong` / `uncertain`):
-- Audio notes:
-- Reviewer notes:
+- Classification: uncertain
+- Speech understandable (`yes` / `partly` / `no`): partly
+- Reference quality (`good` / `incomplete` / `wrong` / `uncertain`): good
+- Audio notes: a bit distorted
+- Reviewer notes: ARTPARK did better than me at understanding.

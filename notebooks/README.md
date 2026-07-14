@@ -29,6 +29,7 @@ Run order:
 7. `07_whisper_large_v3_challenger.ipynb` - Kaggle-first non-ARTPARK Whisper large-v3 LoRA notebook for the ambitious "beat public ARTPARK on fixed GramVaani slices" experiment
 8. `08_gramvaani_100_colab_benchmark.ipynb` - one-click Colab GPU benchmark for the expanded 100-file GramVaani comparison
 9. `09_gramvaani_100_colab_clean.ipynb` - canonical clean Colab run; one inference pass per model with immediate Drive checkpoints
+10. `10_gv_train_100h_inventory_colab.ipynb` - CPU Colab inventory of GV Train 100h with frozen-ID exclusion and persistent Drive outputs; stops before training
 
 Before running, put the GramVaani audio somewhere Colab can access. The notebooks now expect this Google Drive layout:
 

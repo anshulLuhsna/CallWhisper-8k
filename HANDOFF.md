@@ -34,7 +34,8 @@ Best public framing:
 - The clean FLEURS Hindi control, manual 15-file audio review, decoding adaptation sweep, Whisper-small LoRA pilot, and committed-adapter reload evaluation are complete.
 - Canonical v2 reports are `results/model_comparison_v2.md`, `.json`, and `.csv`; per-sample outputs and runtime metadata are under `results/benchmark_v2/`.
 - Automated v2 diagnostics and an ARTPARK-vs-large-v3 15-file review queue are complete. ARTPARK had lower per-file WER on 53 of 56 native-8-kHz files, tied on 2, and higher WER on 1.
-- Next: complete the human listening fields in `results/artpark_8khz_error_review_v1.md`, then use genuine model failures to define a targeted independent challenger experiment.
+- The v2 human review is complete. Among the 15 highest-WER ARTPARK native-8-kHz files, 6 were classified as bad audio, 5 as model failures, 2 as questionable references, 1 as mixed, and 1 as uncertain. See `results/artpark_8khz_manual_review_summary_v1.md`.
+- Next: run `notebooks/10_gv_train_100h_inventory_colab.ipynb` on a Colab CPU, inspect its leakage-safe `GV_Train_100h` inventory, then create curated train/internal-eval splits before the independent large-v3 LoRA smoke experiment.
 
 ## What Has Been Built
 
@@ -184,8 +185,8 @@ prior_art.md
 
 ## Next Session Priorities
 
-1. Listen to the 15 files listed in `results/artpark_8khz_error_review_v1.md` and fill the review fields.
-2. Separate genuine ARTPARK model failures from bad audio or questionable references.
+1. Run `notebooks/10_gv_train_100h_inventory_colab.ipynb` and bring its three inventory artifacts back into the repo.
+2. Verify that all 100 frozen benchmark IDs are excluded before creating train/internal-eval splits.
 3. Group genuine model failures by type, such as names/places, numbers, short clips, code-switching, or severe channel degradation.
 4. Use those groups to define an independent training/augmentation experiment; do not train on the frozen 100 benchmark files.
 

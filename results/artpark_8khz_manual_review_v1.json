@@ -1,0 +1,161 @@
+{
+  "source_review": "results/artpark_8khz_error_review_v1.md",
+  "summary": {
+    "reviewed_files": 15,
+    "classification_counts": {
+      "bad_audio": 6,
+      "mixed": 1,
+      "model_failure": 5,
+      "questionable_reference": 2,
+      "uncertain": 1
+    },
+    "speech_understandable_counts": {
+      "barely": 1,
+      "partly": 10,
+      "yes": 4
+    },
+    "reference_quality_counts": {
+      "good": 10,
+      "incomplete": 1,
+      "uncertain": 1,
+      "wrong": 3
+    }
+  },
+  "reviews": [
+    {
+      "rank": 1,
+      "audio_id": "02-14479-01",
+      "classification": "bad_audio",
+      "speech_understandable": "partly",
+      "reference_quality": "good",
+      "audio_notes": "no noise",
+      "reviewer_notes": "ARTPARK got the parts i understood. Middle part is genuinely not understandable even after reading reference."
+    },
+    {
+      "rank": 2,
+      "audio_id": "01-04388-02",
+      "classification": "model_failure",
+      "speech_understandable": "partly",
+      "reference_quality": "good",
+      "audio_notes": "clear audio no noise",
+      "reviewer_notes": "missed entire word - सिंहभुम, but the speaker did say it lightly. Also worse than large v3 for the से"
+    },
+    {
+      "rank": 3,
+      "audio_id": "01-04496-02",
+      "classification": "mixed",
+      "speech_understandable": "partly",
+      "reference_quality": "incomplete - there is some speech between  खूब and अपने like ARTPARK has correctly shown",
+      "audio_notes": "speaker audio is distorted",
+      "reviewer_notes": "Model got some obvious words wrong, audio is also bad but it should have done better."
+    },
+    {
+      "rank": 4,
+      "audio_id": "01-03025-02",
+      "classification": "bad_audio",
+      "speech_understandable": "partly",
+      "reference_quality": "good",
+      "audio_notes": "speaker audio did echo but it's acccounted for in the reference transcript. No noise",
+      "reviewer_notes": "ARTPARK performed well but missed the start word ठंड"
+    },
+    {
+      "rank": 5,
+      "audio_id": "01-01711-03",
+      "classification": "bad_audio",
+      "speech_understandable": "partly",
+      "reference_quality": "wrong - it does not sound like वक्तव",
+      "audio_notes": "clear speaker, no noise",
+      "reviewer_notes": "audio is bad even i didn't understand and reference is also guessing."
+    },
+    {
+      "rank": 6,
+      "audio_id": "01-09354-02",
+      "classification": "bad_audio",
+      "speech_understandable": "partly",
+      "reference_quality": "uncertain",
+      "audio_notes": "i dont know",
+      "reviewer_notes": "its just bad audio man i didn't understand most of it either"
+    },
+    {
+      "rank": 7,
+      "audio_id": "01-04674-01",
+      "classification": "bad_audio",
+      "speech_understandable": "barely",
+      "reference_quality": "good",
+      "audio_notes": "lots of echo, distortion",
+      "reviewer_notes": "what a mess of an audio."
+    },
+    {
+      "rank": 8,
+      "audio_id": "02-19849-01",
+      "classification": "model_failure",
+      "speech_understandable": "yes",
+      "reference_quality": "good",
+      "audio_notes": "clear audio no noise.",
+      "reviewer_notes": "ARTPARK consistently mis-classifies से to ऐसी"
+    },
+    {
+      "rank": 9,
+      "audio_id": "02-18228-01",
+      "classification": "bad_audio",
+      "speech_understandable": "partly",
+      "reference_quality": "good",
+      "audio_notes": "too much distortion",
+      "reviewer_notes": "only understood the start. audio is like an echo chamber its all so distorted."
+    },
+    {
+      "rank": 10,
+      "audio_id": "01-11380-01",
+      "classification": "questionable_reference",
+      "speech_understandable": "yes",
+      "reference_quality": "wrong",
+      "audio_notes": "bit of distortion",
+      "reviewer_notes": "ARTPARK is better than reference. बी डी ओ is wrong विडियो is correct."
+    },
+    {
+      "rank": 11,
+      "audio_id": "13-00246-02",
+      "classification": "model_failure",
+      "speech_understandable": "partly",
+      "reference_quality": "good",
+      "audio_notes": "end of the audio is distorted",
+      "reviewer_notes": "ARTPARK missed everything after शुक्रवार otherwise would've performed better."
+    },
+    {
+      "rank": 12,
+      "audio_id": "01-08044-01",
+      "classification": "questionable_reference",
+      "speech_understandable": "yes",
+      "reference_quality": "wrong",
+      "audio_notes": "clear",
+      "reviewer_notes": "ARTPARK missed  थी की but got लेकिन पुत्र correct which seems to be wrong in the reference."
+    },
+    {
+      "rank": 13,
+      "audio_id": "01-02689-01",
+      "classification": "model_failure",
+      "speech_understandable": "yes",
+      "reference_quality": "good",
+      "audio_notes": "perfect",
+      "reviewer_notes": "missed the start ये संघ otherwise perfect. large-v3 is a joke at this point."
+    },
+    {
+      "rank": 14,
+      "audio_id": "01-03237-02",
+      "classification": "model_failure",
+      "speech_understandable": "partly",
+      "reference_quality": "good",
+      "audio_notes": "clear",
+      "reviewer_notes": "ARTPARK missed some parts in between which were a bit haarder"
+    },
+    {
+      "rank": 15,
+      "audio_id": "02-13674-02",
+      "classification": "uncertain",
+      "speech_understandable": "partly",
+      "reference_quality": "good",
+      "audio_notes": "a bit distorted",
+      "reviewer_notes": "ARTPARK did better than me at understanding."
+    }
+  ]
+}

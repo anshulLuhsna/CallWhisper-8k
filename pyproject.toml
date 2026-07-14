@@ -48,6 +48,8 @@ callwhisper = "callwhisper.eval.runner:main"
 callwhisper-lora-eval = "callwhisper.eval.lora_runner:main"
 callwhisper-diagnostics = "callwhisper.eval.diagnostics:main"
 callwhisper-error-review = "callwhisper.eval.error_review:main"
+callwhisper-review-summary = "callwhisper.eval.review_summary:main"
+callwhisper-gramvaani-inventory = "callwhisper.datasets.gramvaani_inventory:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/callwhisper"]

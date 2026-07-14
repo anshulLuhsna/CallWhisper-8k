@@ -122,6 +122,15 @@ This week's non-negotiable deliverable: validate the expanded 100-file compariso
 - Caveat: The native 8 kHz subset is harder for all three models, but the split is observational; source rate, speakers, topics, noise, and transcript quality are not independently controlled.
 - Next action: Complete the 15-file listening review in `results/artpark_8khz_error_review_v1.md`, then group genuine model failures into a targeted training-data plan.
 
+### 2026-07-14 ARTPARK native-8-kHz manual review
+
+- Done: Completed the 15-file human review of ARTPARK's highest-WER native-8-kHz cases and saved a structured parse to `results/artpark_8khz_manual_review_v1.json`.
+- Result: 6 cases were classified as `bad_audio`, 5 as `model_failure`, 2 as `questionable_reference`, 1 as `mixed`, and 1 as `uncertain`. Four references were marked wrong or incomplete and one more uncertain.
+- Interpretation: The review set is deliberately the worst-scoring tail, so the counts diagnose failure modes rather than estimate prevalence. Residual model themes include short function-word confusion, leading-phrase deletion, tail/span omission, and local-entity errors.
+- Done: Added `results/artpark_8khz_manual_review_summary_v1.md` and `TARGETED_8KHZ_CHALLENGER_PLAN.md`.
+- Done: Added `notebooks/10_gv_train_100h_inventory_colab.ipynb` and the tested `callwhisper-gramvaani-inventory` CLI. The CLI probes audio concurrently, preserves portable relative paths, records duration/sample rate/channels/transcript flags, and writes accepted/rejected inventories plus a JSON summary.
+- Next action: Run notebook 10 on Colab CPU, inspect the saved inventory artifacts, then create deterministic curated train/internal-eval splits before the independent large-v3 LoRA smoke experiment.
+
 ## Scoreboard
 
 - Day-2 WER number shipped: yes

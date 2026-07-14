@@ -123,6 +123,8 @@ Expanded 100-file diagnostics:
 
 See [results/benchmark_diagnostics_v2.md](results/benchmark_diagnostics_v2.md). These heuristic rates do not mean ARTPARK made no transcription errors; its native-8-kHz WER was `0.3091`. In per-file comparison, ARTPARK had lower WER than large-v3 on 53 of 56 native-8-kHz files, tied on 2, and had higher WER on 1. The 15 highest-ARTPARK-WER files are prepared in [results/artpark_8khz_error_review_v1.md](results/artpark_8khz_error_review_v1.md) for human listening.
 
+That listening review is now complete. Of the 15 deliberately difficult files, 6 were classified primarily as bad audio, 5 as model failures, 2 as questionable references, 1 as mixed, and 1 as uncertain. Four references were marked wrong or incomplete, with one more uncertain. See [results/artpark_8khz_manual_review_summary_v1.md](results/artpark_8khz_manual_review_summary_v1.md). These selected-tail counts diagnose error types; they are not estimates for the full benchmark.
+
 ## Problem
 
 Whisper expects 16 kHz audio, while telephone audio is commonly narrowband 8 kHz. Feeding telephony audio incorrectly or assuming preprocessing helps can produce misleading results. This project measures Whisper behavior on real 8 kHz Hindi audio where possible, then compares it with synthetic telephony degradation on cleaner speech.
@@ -163,6 +165,10 @@ For a first public update draft about the benchmark track, see [SOCIAL_POST_01_B
 For the posting checklist, platform-specific launch copy, and visual asset, see [SOCIAL_POSTING_CHECKLIST.md](SOCIAL_POSTING_CHECKLIST.md), [SOCIAL_LAUNCH_PACKET.md](SOCIAL_LAUNCH_PACKET.md), [social_assets/benchmark_part1_card.png](social_assets/benchmark_part1_card.png), and [social_assets/benchmark_part1_card.svg](social_assets/benchmark_part1_card.svg).
 
 For the ARTPARK/Vaani competitive analysis and the next "beat ARTPARK honestly" experiment plan, see [ARTPARK_COMPETITIVE_ANALYSIS.md](ARTPARK_COMPETITIVE_ANALYSIS.md).
+
+The manual-review-informed training recipe is in [TARGETED_8KHZ_CHALLENGER_PLAN.md](TARGETED_8KHZ_CHALLENGER_PLAN.md).
+
+The next executable step is [notebooks/10_gv_train_100h_inventory_colab.ipynb](notebooks/10_gv_train_100h_inventory_colab.ipynb). It inventories `GV_Train_100h`, excludes the frozen 100-file benchmark IDs, and saves portable accepted/rejected manifests to Drive before any training begins.
 
 The first non-ARTPARK challenger notebook is [notebooks/07_whisper_large_v3_challenger.ipynb](notebooks/07_whisper_large_v3_challenger.ipynb).
 
