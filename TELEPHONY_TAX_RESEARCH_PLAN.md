@@ -282,7 +282,7 @@ The article must report null results and failed mitigation attempts. The goal is
 
 ## Immediate Next Artifact
 
-Create `notebooks/11_vaani_paired_telephony_benchmark_colab.ipynb`. Its first version should stop after:
+Implemented: `notebooks/11_vaani_paired_telephony_benchmark_colab.ipynb`. Its first version stops after:
 
 1. downloading the pinned Vaani benchmark revision;
 2. saving a dataset inventory and deterministic 500-file pilot manifest;

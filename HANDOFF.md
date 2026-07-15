@@ -43,7 +43,8 @@ See `TELEPHONY_TAX_RESEARCH_PLAN.md`.
 - The v2 human review is complete. Among the 15 highest-WER ARTPARK native-8-kHz files, 6 were classified as bad audio, 5 as model failures, 2 as questionable references, 1 as mixed, and 1 as uncertain. See `results/artpark_8khz_manual_review_summary_v1.md`.
 - The full 1,885-file metadata audit is complete. Dataset-provided gender is strongly associated with source-rate group (Cramer's V `0.543`): `76.3%` of male-labeled clips are native 8 kHz versus `18.1%` of female-labeled clips. The male-versus-female native-rate odds ratio is `14.59`; inaudibility flags are also concentrated in the native-8-kHz group.
 - Result: the existing native-8-kHz/high-rate WER gap is an observational deployment comparison, not a causal bandwidth estimate.
-- Next: build `notebooks/11_vaani_paired_telephony_benchmark_colab.ipynb` from the frozen protocol in `TELEPHONY_TAX_RESEARCH_PLAN.md`. Training inventory and adaptation come after the paired pilot works.
+- Notebook 11 is implemented with pinned gated-dataset loading, speaker-unique pilot selection, real G.711/GSM codec round trips, hashes, validation, progress, and restartable Drive archives.
+- Next: accept the Vaani dataset conditions, add `HF_TOKEN` to Colab Secrets, and run `notebooks/11_vaani_paired_telephony_benchmark_colab.ipynb` on a CPU runtime. Training inventory and adaptation come after its paired pilot passes review.
 
 ## What Has Been Built
 
@@ -59,6 +60,7 @@ Dataset tooling:
 
 - `src/callwhisper/datasets/build_gramvaani_manifest.py`: builds GramVaani manifests from `mp3.scp` and `text`.
 - `src/callwhisper/datasets/metadata_audit.py`: quantifies source-rate associations with GramVaani gender, accent, state, and quality metadata.
+- `src/callwhisper/datasets/paired_telephony.py`: deterministic speaker-stratified pilot selection, codec round trips, hashing, and audio validation for the paired benchmark.
 - `datasets/manifests/gramvaani_dev_10.csv`: first smoke-test manifest.
 - `datasets/manifests/gramvaani_dev_50.csv`: original fixed smoke benchmark slice.
 - `datasets/manifests/gramvaani_dev_100.csv`: expanded fixed benchmark slice.
@@ -196,7 +198,7 @@ prior_art.md
 ## Next Session Priorities
 
 1. Freeze model/dataset revisions, transform parameters, macro-region mapping, group-size threshold, and multi-reference scoring protocol.
-2. Build `notebooks/11_vaani_paired_telephony_benchmark_colab.ipynb` and stop after the 500-file paired pilot manifests and transform validation artifacts.
+2. Run `notebooks/11_vaani_paired_telephony_benchmark_colab.ipynb` and stop after the 500-file paired pilot manifests and transform validation artifacts.
 3. Evaluate ARTPARK medium and Adalat Whisper-small on the pilot; verify paired bootstrap and group-interaction analysis.
 4. Run the full baseline before training. Then run notebook 10 and curate `GV_Train_100h` for the compact challenger.
 

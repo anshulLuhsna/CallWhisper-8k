@@ -140,7 +140,8 @@ This week's non-negotiable deliverable: validate the expanded 100-file compariso
 - Done: Added tested `callwhisper-metadata-audit` tooling and generated `results/gramvaani_source_rate_confound_audit_v1.md`, `.json`, and `_rows.csv` across all 1,885 local GramVaani dev files.
 - Finding: Dataset-provided gender and source-rate group have Cramer's V `0.543`. Native-8-kHz share is `76.3%` for male-labeled clips and `18.1%` for female-labeled clips; male-versus-female native-rate odds ratio is `14.59`. `inaudible` flags occur in 340 native-8-kHz clips versus 72 higher-rate clips.
 - Interpretation: The old source-rate WER split is useful operationally but cannot identify the causal bandwidth penalty. The paired Vaani design exists to hold speaker, utterance, and references fixed.
-- Next action: Build `notebooks/11_vaani_paired_telephony_benchmark_colab.ipynb`; stop after pinned download, deterministic 500-file pilot, paired transform generation, and hash/metadata validation.
+- Done: Added `notebooks/11_vaani_paired_telephony_benchmark_colab.ipynb` and tested `paired_telephony.py` utilities. The CPU Colab run pins dataset revision `1bf019521d12d742178acc32bf2a42f81cf7c8ef`, selects one clip per speaker, generates five channel conditions, validates hashes/audio metadata, and checkpoints restartable archives to Drive.
+- Next action: Accept Vaani access, add `HF_TOKEN` to Colab Secrets, run notebook 11, and bring its schema, pilot manifest, and validation summary back to the repo before model inference.
 
 ## Scoreboard
 

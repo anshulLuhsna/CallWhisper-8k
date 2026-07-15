@@ -174,7 +174,7 @@ For the ARTPARK/Vaani competitive analysis and the next "beat ARTPARK honestly" 
 
 The manual-review-informed training recipe is in [TARGETED_8KHZ_CHALLENGER_PLAN.md](TARGETED_8KHZ_CHALLENGER_PLAN.md).
 
-The next executable benchmark step is `notebooks/11_vaani_paired_telephony_benchmark_colab.ipynb`, which is specified in the research plan and still needs to be built. It will pin Vaani Benchmark V1.0, create a deterministic 500-file pilot, and generate validated paired channel manifests before model evaluation. The existing [notebooks/10_gv_train_100h_inventory_colab.ipynb](notebooks/10_gv_train_100h_inventory_colab.ipynb) remains the later training-data inventory step.
+The next executable benchmark step is [notebooks/11_vaani_paired_telephony_benchmark_colab.ipynb](notebooks/11_vaani_paired_telephony_benchmark_colab.ipynb). It pins Vaani Benchmark V1.0, creates a deterministic 500-speaker pilot, generates five validated paired channel conditions, and saves restartable archives and manifests to Drive before model evaluation. The existing [notebooks/10_gv_train_100h_inventory_colab.ipynb](notebooks/10_gv_train_100h_inventory_colab.ipynb) remains the later training-data inventory step.
 
 The first non-ARTPARK challenger notebook is [notebooks/07_whisper_large_v3_challenger.ipynb](notebooks/07_whisper_large_v3_challenger.ipynb).
 

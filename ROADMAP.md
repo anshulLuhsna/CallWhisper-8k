@@ -35,7 +35,7 @@ Model policy:
 Immediate next milestone before Week 3 adaptation:
 
 - Freeze the paired Vaani telephony protocol and dataset/model revisions.
-- Build a deterministic 500-utterance paired-channel pilot.
+- Run notebook 11 to build and inspect the deterministic 500-utterance paired-channel pilot.
 - Validate multi-reference scoring and paired bootstrap analysis on ARTPARK and Adalat Whisper-small.
 - Only then inventory training data and begin compact-model adaptation.
 
