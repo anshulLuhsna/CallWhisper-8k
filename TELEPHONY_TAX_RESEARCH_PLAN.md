@@ -116,9 +116,9 @@ Create deterministic transformed copies from every primary benchmark utterance:
 |---|---|
 | `original` | Same-file reference condition |
 | `bandlimit_8k` | 300-3400 Hz band limit, 8 kHz processing, then 16 kHz input for the ASR model |
-| `g711_alaw` | PSTN A-law encode/decode |
-| `g711_mulaw` | PSTN mu-law encode/decode |
-| `gsm_fr` | Low-bitrate 2G-style speech codec stress |
+| `bandlimit_8k_g711_alaw` | 300-3400 Hz channel followed by PSTN A-law encode/decode |
+| `bandlimit_8k_g711_mulaw` | 300-3400 Hz channel followed by PSTN mu-law encode/decode |
+| `bandlimit_8k_gsm_fr` | 300-3400 Hz channel followed by low-bitrate GSM-FR stress |
 
 Core conditions are fixed before model evaluation. Opus bitrates, packet loss, jitter, AMR-NB, noise, and combined degradations belong in an extension only after the core matrix works. Adding conditions after seeing results would create a metric-shopping risk.
 
@@ -282,7 +282,7 @@ The article must report null results and failed mitigation attempts. The goal is
 
 ## Immediate Next Artifact
 
-Implemented: `notebooks/11_vaani_paired_telephony_benchmark_colab.ipynb`. Its first version stops after:
+Implemented: `notebooks/11_vaani_paired_telephony_benchmark_colab.ipynb`. Its first run stopped after:
 
 1. downloading the pinned Vaani benchmark revision;
 2. saving a dataset inventory and deterministic 500-file pilot manifest;
@@ -290,3 +290,5 @@ Implemented: `notebooks/11_vaani_paired_telephony_benchmark_colab.ipynb`. Its fi
 4. writing transform metadata and hashes.
 
 It should not run every model or train anything until the transformed audio and multi-reference scorer have been inspected.
+
+The v1 automated integrity checks passed, but manual listening correctly found that its codec-only rows sounded much closer to the original than the explicit bandwidth-limited row. No models had been evaluated. The canonical notebook now applies the telephone passband before every codec. Existing v1 users can run `notebooks/11b_vaani_stacked_codec_repair_colab.ipynb` to reuse the valid source/original/bandlimit artifacts and create a separate v2 without redownloading Vaani.

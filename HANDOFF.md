@@ -43,8 +43,9 @@ See `TELEPHONY_TAX_RESEARCH_PLAN.md`.
 - The v2 human review is complete. Among the 15 highest-WER ARTPARK native-8-kHz files, 6 were classified as bad audio, 5 as model failures, 2 as questionable references, 1 as mixed, and 1 as uncertain. See `results/artpark_8khz_manual_review_summary_v1.md`.
 - The full 1,885-file metadata audit is complete. Dataset-provided gender is strongly associated with source-rate group (Cramer's V `0.543`): `76.3%` of male-labeled clips are native 8 kHz versus `18.1%` of female-labeled clips. The male-versus-female native-rate odds ratio is `14.59`; inaudibility flags are also concentrated in the native-8-kHz group.
 - Result: the existing native-8-kHz/high-rate WER gap is an observational deployment comparison, not a causal bandwidth estimate.
-- Notebook 11 is implemented with pinned gated-dataset loading, speaker-unique pilot selection, real G.711/GSM codec round trips, hashes, validation, progress, and restartable Drive archives.
-- Next: accept the Vaani dataset conditions, add `HF_TOKEN` to Colab Secrets, and run `notebooks/11_vaani_paired_telephony_benchmark_colab.ipynb` on a CPU runtime. Training inventory and adaptation come after its paired pilot passes review.
+- Notebook 11's v1 run produced 500 speakers and 2,500 complete mono 16 kHz files with no duration or missing-file violations.
+- Manual listening caught that the v1 codec-only conditions sounded closer to original than the explicit bandlimit. No model inference had started. The canonical transform now applies 300-3400 Hz bandlimiting before A-law, mu-law, and GSM-FR.
+- Next: run `notebooks/11b_vaani_stacked_codec_repair_colab.ipynb` on a CPU. It reuses the v1 source/original/bandlimit archives, regenerates only three stacked codec conditions, and writes `vaani_paired_pilot_v2`.
 
 ## What Has Been Built
 
@@ -198,7 +199,7 @@ prior_art.md
 ## Next Session Priorities
 
 1. Freeze model/dataset revisions, transform parameters, macro-region mapping, group-size threshold, and multi-reference scoring protocol.
-2. Run `notebooks/11_vaani_paired_telephony_benchmark_colab.ipynb` and stop after the 500-file paired pilot manifests and transform validation artifacts.
+2. Run notebook 11b and repeat the listening check on the corrected v2 stacked codec conditions.
 3. Evaluate ARTPARK medium and Adalat Whisper-small on the pilot; verify paired bootstrap and group-interaction analysis.
 4. Run the full baseline before training. Then run notebook 10 and curate `GV_Train_100h` for the compact challenger.
 

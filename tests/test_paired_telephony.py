@@ -4,7 +4,9 @@ import math
 import subprocess
 from pathlib import Path
 
+import numpy as np
 import pytest
+import soundfile as sf
 
 from callwhisper.datasets.paired_telephony import (
     CONDITIONS,
@@ -75,6 +77,20 @@ def _write_sine(path: Path) -> None:
     )
 
 
+def _write_two_tones(path: Path) -> None:
+    sample_rate = 16000
+    time = np.arange(sample_rate, dtype=np.float64) / sample_rate
+    audio = 0.35 * np.sin(2 * np.pi * 100 * time) + 0.35 * np.sin(2 * np.pi * 1000 * time)
+    sf.write(path, audio, sample_rate)
+
+
+def _tone_amplitude(path: Path, frequency_hz: int) -> float:
+    audio, sample_rate = sf.read(path)
+    spectrum = np.abs(np.fft.rfft(audio))
+    frequencies = np.fft.rfftfreq(len(audio), d=1 / sample_rate)
+    return float(spectrum[np.argmin(np.abs(frequencies - frequency_hz))])
+
+
 @pytest.mark.parametrize("condition", CONDITIONS[:4])
 def test_transform_audio_produces_valid_whisper_wav(tmp_path: Path, condition: str) -> None:
     if subprocess.run(["which", "ffmpeg"], capture_output=True).returncode:
@@ -96,9 +112,20 @@ def test_gsm_transform_when_encoder_is_available(tmp_path: Path) -> None:
     if "libgsm" not in available_audio_encoders():
         pytest.skip("local ffmpeg lacks libgsm")
     source = tmp_path / "source.wav"
-    output = tmp_path / "gsm_fr.wav"
+    output = tmp_path / "bandlimit_8k_gsm_fr.wav"
     _write_sine(source)
 
-    transform_audio(source, output, "gsm_fr")
+    transform_audio(source, output, "bandlimit_8k_gsm_fr")
 
     assert probe_audio(output)["sample_rate_hz"] == 16000
+
+
+def test_codec_stack_applies_telephone_highpass(tmp_path: Path) -> None:
+    source = tmp_path / "two-tones.wav"
+    output = tmp_path / "stacked-alaw.wav"
+    _write_two_tones(source)
+
+    transform_audio(source, output, "bandlimit_8k_g711_alaw")
+
+    low_to_voice_ratio = _tone_amplitude(output, 100) / _tone_amplitude(output, 1000)
+    assert low_to_voice_ratio < 0.2

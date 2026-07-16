@@ -141,7 +141,10 @@ This week's non-negotiable deliverable: validate the expanded 100-file compariso
 - Finding: Dataset-provided gender and source-rate group have Cramer's V `0.543`. Native-8-kHz share is `76.3%` for male-labeled clips and `18.1%` for female-labeled clips; male-versus-female native-rate odds ratio is `14.59`. `inaudible` flags occur in 340 native-8-kHz clips versus 72 higher-rate clips.
 - Interpretation: The old source-rate WER split is useful operationally but cannot identify the causal bandwidth penalty. The paired Vaani design exists to hold speaker, utterance, and references fixed.
 - Done: Added `notebooks/11_vaani_paired_telephony_benchmark_colab.ipynb` and tested `paired_telephony.py` utilities. The CPU Colab run pins dataset revision `1bf019521d12d742178acc32bf2a42f81cf7c8ef`, selects one clip per speaker, generates five channel conditions, validates hashes/audio metadata, and checkpoints restartable archives to Drive.
-- Next action: Accept Vaani access, add `HF_TOKEN` to Colab Secrets, run notebook 11, and bring its schema, pilot manifest, and validation summary back to the repo before model inference.
+- Done: Ran v1. All 2,500 rows passed format, completeness, and duration checks. Manual listening then found the codec-only rows sounded closer to original than `bandlimit_8k`; code inspection confirmed only the latter had the explicit 300-3400 Hz filter.
+- Decision: Supersede v1 before model inference. Stack the telephone passband before each codec, use explicit condition names, and preserve v1 only for provenance.
+- Done: Added a spectral regression test, corrected canonical notebook 11, and added notebook 11b to reuse v1 artifacts while generating only the three corrected stacked codec conditions.
+- Next action: Run notebook 11b, inspect the v2 listening samples, and proceed to model inference only if the corrected channel semantics pass.
 
 ## Scoreboard
 

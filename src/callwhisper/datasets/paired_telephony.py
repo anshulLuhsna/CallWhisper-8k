@@ -12,12 +12,19 @@ from pathlib import Path
 from typing import Any, Iterable
 
 
-CONDITIONS = ("original", "bandlimit_8k", "g711_alaw", "g711_mulaw", "gsm_fr")
+CONDITIONS = (
+    "original",
+    "bandlimit_8k",
+    "bandlimit_8k_g711_alaw",
+    "bandlimit_8k_g711_mulaw",
+    "bandlimit_8k_gsm_fr",
+)
 REQUIRED_ENCODERS = {
-    "g711_alaw": "pcm_alaw",
-    "g711_mulaw": "pcm_mulaw",
-    "gsm_fr": "libgsm",
+    "bandlimit_8k_g711_alaw": "pcm_alaw",
+    "bandlimit_8k_g711_mulaw": "pcm_mulaw",
+    "bandlimit_8k_gsm_fr": "libgsm",
 }
+TELEPHONE_FILTER = "highpass=f=300,lowpass=f=3400"
 
 
 def stable_key(*parts: object) -> str:
@@ -207,9 +214,9 @@ def transform_audio(source_path: Path, output_path: Path, condition: str) -> dic
             _decode_to_whisper_wav(
                 source_path,
                 staged_output,
-                "highpass=f=300,lowpass=f=3400,aresample=8000,aresample=16000",
+                f"{TELEPHONE_FILTER},aresample=8000,aresample=16000",
             )
-        elif condition in {"g711_alaw", "g711_mulaw"}:
+        elif condition in {"bandlimit_8k_g711_alaw", "bandlimit_8k_g711_mulaw"}:
             codec = REQUIRED_ENCODERS[condition]
             encoded = temporary / "encoded.wav"
             _run(
@@ -222,6 +229,8 @@ def transform_audio(source_path: Path, output_path: Path, condition: str) -> dic
                     "-i",
                     str(source_path),
                     "-vn",
+                    "-af",
+                    TELEPHONE_FILTER,
                     "-ac",
                     "1",
                     "-ar",
@@ -244,6 +253,8 @@ def transform_audio(source_path: Path, output_path: Path, condition: str) -> dic
                     "-i",
                     str(source_path),
                     "-vn",
+                    "-af",
+                    TELEPHONE_FILTER,
                     "-ac",
                     "1",
                     "-ar",

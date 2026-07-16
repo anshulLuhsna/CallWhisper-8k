@@ -30,15 +30,18 @@ Run order:
 8. `08_gramvaani_100_colab_benchmark.ipynb` - one-click Colab GPU benchmark for the expanded 100-file GramVaani comparison
 9. `09_gramvaani_100_colab_clean.ipynb` - canonical clean Colab run; one inference pass per model with immediate Drive checkpoints
 10. `10_gv_train_100h_inventory_colab.ipynb` - CPU Colab inventory of GV Train 100h with frozen-ID exclusion and persistent Drive outputs; stops before training
-11. `11_vaani_paired_telephony_benchmark_colab.ipynb` - CPU Colab construction of the revision-pinned 500-speaker Vaani paired-channel pilot; stops before model inference
+11. `11_vaani_paired_telephony_benchmark_colab.ipynb` - canonical CPU Colab construction of the revision-pinned 500-speaker Vaani paired-channel pilot; stacks the telephone bandlimit before codecs and stops before model inference
+12. `11b_vaani_stacked_codec_repair_colab.ipynb` - one-time CPU repair for completed v1 runs; reuses source/original/bandlimit archives and regenerates only the three stacked codec conditions
 
 Notebook 11 requires accepted access to the gated [`ARTPARK-IISc/Vaani-Benchmark-V1.0`](https://huggingface.co/datasets/ARTPARK-IISc/Vaani-Benchmark-V1.0) dataset and a read-only `HF_TOKEN` in Colab Secrets. It downloads the exact pinned revision, infers and records the dataset schema, exports audio without TorchCodec decoding, then saves source plus per-condition archives under:
 
 ```text
-MyDrive/call-whisper/results/vaani_paired_pilot_v1/
+MyDrive/call-whisper/results/vaani_paired_pilot_v2/
 ```
 
 Use a CPU runtime. Do not spend a GPU session on benchmark construction.
+
+The first v1 run passed automated integrity checks but manual listening found that codec-only conditions sounded too close to the original because the explicit telephone passband was not applied first. No model evaluation used those rows. Notebook 11b preserves that audit trail and creates corrected v2 artifacts without another gated-dataset download.
 
 Before running, put the GramVaani audio somewhere Colab can access. The notebooks now expect this Google Drive layout:
 

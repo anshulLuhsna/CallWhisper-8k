@@ -1,0 +1,24 @@
+{
+  "status": "superseded_before_model_evaluation",
+  "integrity": {
+    "source_rows": 500,
+    "paired_rows": 2500,
+    "expected_paired_rows": 2500,
+    "unique_speakers": 500,
+    "samples_with_all_conditions": 500,
+    "sample_rates_hz": [16000],
+    "channels": [1],
+    "max_duration_delta_s": 0.019000000000000128,
+    "duration_tolerance_violations": 0,
+    "missing_output_files": 0
+  },
+  "selection": {
+    "female": 259,
+    "male": 241,
+    "states": 22
+  },
+  "dataset_revision": "1bf019521d12d742178acc32bf2a42f81cf7c8ef",
+  "repo_commit": "83b0f18b1a454d910976a6651bbbbe0825040b1b",
+  "manual_listening_finding": "bandlimit_8k sounded recognizably telephone-like, while codec-only G.711 and GSM-FR sounded closer to original",
+  "decision": "keep v1 for provenance; require 300-3400 Hz bandlimit before each codec in v2"
+}
