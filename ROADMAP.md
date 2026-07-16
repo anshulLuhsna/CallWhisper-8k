@@ -35,8 +35,9 @@ Model policy:
 Immediate next milestone before Week 3 adaptation:
 
 - Freeze the paired Vaani telephony protocol and dataset/model revisions.
-- Run notebook 11b to repair the three codec conditions by stacking the explicit telephone passband, then inspect v2.
-- Validate multi-reference scoring and paired bootstrap analysis on ARTPARK and Adalat Whisper-small.
+- Done: repaired and validated the frozen 500-speaker v2 paired artifact, including manual listening.
+- Done: implemented and tested the Vaani alignment-based multi-reference scorer.
+- Run notebook 12's restartable 10-speaker ARTPARK-versus-Adalat smoke evaluation before full inference.
 - Only then inventory training data and begin compact-model adaptation.
 
 ---

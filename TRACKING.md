@@ -144,7 +144,11 @@ This week's non-negotiable deliverable: validate the expanded 100-file compariso
 - Done: Ran v1. All 2,500 rows passed format, completeness, and duration checks. Manual listening then found the codec-only rows sounded closer to original than `bandlimit_8k`; code inspection confirmed only the latter had the explicit 300-3400 Hz filter.
 - Decision: Supersede v1 before model inference. Stack the telephone passband before each codec, use explicit condition names, and preserve v1 only for provenance.
 - Done: Added a spectral regression test, corrected canonical notebook 11, and added notebook 11b to reuse v1 artifacts while generating only the three corrected stacked codec conditions.
-- Next action: Run notebook 11b, inspect the v2 listening samples, and proceed to model inference only if the corrected channel semantics pass.
+- Done: Ran notebook 11b. V2 contains 500 speakers and 2,500 complete paired files at mono 16 kHz, with zero missing files, zero duration violations, and maximum duration delta `0.019` seconds. Manual listening passed for narrowband character, content, speed, silence, and clipping checks.
+- Decision: Freeze `vaani_paired_pilot_v2` for evaluation. No model inference used v1 codec-only rows.
+- Done: Implemented Vaani's alignment-based multi-reference WER protocol with normalization and toy tests covering accepted annotator alternatives, universal substitutions, accepted insertions, and unanimous deletions.
+- Done: Added notebook 12, a restartable T4 smoke evaluation with pinned ARTPARK medium and Adalat Whisper-small revisions, beam 1, forced Hindi, immediate per-prediction Drive checkpoints, and per-condition plus pooled-telephone summaries.
+- Next action: Run notebook 12 with `RUN_PROFILE = "smoke"`, return its 100-prediction summary, and review pipeline behavior before any 500-speaker inference.
 
 ## Scoreboard
 

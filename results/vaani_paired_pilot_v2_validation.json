@@ -1,0 +1,28 @@
+{
+  "status": "accepted_for_model_evaluation",
+  "integrity": {
+    "source_rows": 500,
+    "paired_rows": 2500,
+    "expected_paired_rows": 2500,
+    "unique_speakers": 500,
+    "samples_with_all_conditions": 500,
+    "sample_rates_hz": [16000],
+    "channels": [1],
+    "max_duration_delta_s": 0.0190000000000001,
+    "duration_tolerance_violations": 0,
+    "missing_output_files": 0
+  },
+  "dataset_revision": "1bf019521d12d742178acc32bf2a42f81cf7c8ef",
+  "generation_repo_commit": "23972f30a5eef51f53298f54725ed55248fe5d4e",
+  "channel_semantics": "bandlimit first, then codec for every codec condition",
+  "manual_listening": {
+    "status": "passed",
+    "checks": [
+      "stacked codec conditions sound recognizably narrowband",
+      "no silence",
+      "no clipping",
+      "no speed change",
+      "no mismatched audio"
+    ]
+  }
+}

@@ -32,6 +32,7 @@ Run order:
 10. `10_gv_train_100h_inventory_colab.ipynb` - CPU Colab inventory of GV Train 100h with frozen-ID exclusion and persistent Drive outputs; stops before training
 11. `11_vaani_paired_telephony_benchmark_colab.ipynb` - canonical CPU Colab construction of the revision-pinned 500-speaker Vaani paired-channel pilot; stacks the telephone bandlimit before codecs and stops before model inference
 12. `11b_vaani_stacked_codec_repair_colab.ipynb` - one-time CPU repair for completed v1 runs; reuses source/original/bandlimit archives and regenerates only the three stacked codec conditions
+13. `12_vaani_paired_artpark_adalat_smoke_colab.ipynb` - restartable T4 smoke evaluation of pinned ARTPARK medium and Adalat Whisper-small on 10 speakers across all five frozen v2 conditions, using alignment-based multi-reference WER
 
 Notebook 11 requires accepted access to the gated [`ARTPARK-IISc/Vaani-Benchmark-V1.0`](https://huggingface.co/datasets/ARTPARK-IISc/Vaani-Benchmark-V1.0) dataset and a read-only `HF_TOKEN` in Colab Secrets. It downloads the exact pinned revision, infers and records the dataset schema, exports audio without TorchCodec decoding, then saves source plus per-condition archives under:
 
@@ -42,6 +43,8 @@ MyDrive/call-whisper/results/vaani_paired_pilot_v2/
 Use a CPU runtime. Do not spend a GPU session on benchmark construction.
 
 The first v1 run passed automated integrity checks but manual listening found that codec-only conditions sounded too close to the original because the explicit telephone passband was not applied first. No model evaluation used those rows. Notebook 11b preserves that audit trail and creates corrected v2 artifacts without another gated-dataset download.
+
+Notebook 12 requires a GPU runtime and defaults to `RUN_PROFILE = 'smoke'`: 10 speakers, five conditions, and two models, or 100 total transcriptions. It reads the corrected v2 archives from Drive, saves every prediction immediately, resumes completed rows after interruption, and writes per-condition plus pooled-telephone multi-reference WER tables. Do not switch it to `full` until the smoke predictions and row completeness pass review.
 
 Before running, put the GramVaani audio somewhere Colab can access. The notebooks now expect this Google Drive layout:
 

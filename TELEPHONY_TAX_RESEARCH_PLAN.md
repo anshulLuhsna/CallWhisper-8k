@@ -148,6 +148,8 @@ Add Vaani Fast Conformer only if an official public checkpoint and reproducible 
 
 Use one pinned decoding contract per architecture. For Whisper models, begin with deterministic beam 1 and manifest language `hi`. Beam 5 is a secondary ablation, never a hidden per-model choice.
 
+The first paired smoke run freezes ARTPARK medium at revision `8e4d906e0eec66f27a31286e1a034702ef6d11bc` and Adalat Whisper-small at revision `e78553113fe7a483dbf82fefb2cbe4ea4b6bf901`. It uses deterministic beam 1 and forced Hindi transcription for both models.
+
 ## Metrics And Statistical Contract
 
 ### Primary accuracy metric
@@ -292,3 +294,5 @@ Implemented: `notebooks/11_vaani_paired_telephony_benchmark_colab.ipynb`. Its fi
 It should not run every model or train anything until the transformed audio and multi-reference scorer have been inspected.
 
 The v1 automated integrity checks passed, but manual listening correctly found that its codec-only rows sounded much closer to the original than the explicit bandwidth-limited row. No models had been evaluated. The canonical notebook now applies the telephone passband before every codec. Existing v1 users can run `notebooks/11b_vaani_stacked_codec_repair_colab.ipynb` to reuse the valid source/original/bandlimit artifacts and create a separate v2 without redownloading Vaani.
+
+V2 has now passed automated integrity and manual listening. The alignment-based multi-reference scorer is implemented in `src/callwhisper/eval/multiref.py` with fixed toy tests. `notebooks/12_vaani_paired_artpark_adalat_smoke_colab.ipynb` is the next executable gate; its 10-speaker result is pipeline validation, not a benchmark claim.

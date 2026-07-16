@@ -45,7 +45,9 @@ See `TELEPHONY_TAX_RESEARCH_PLAN.md`.
 - Result: the existing native-8-kHz/high-rate WER gap is an observational deployment comparison, not a causal bandwidth estimate.
 - Notebook 11's v1 run produced 500 speakers and 2,500 complete mono 16 kHz files with no duration or missing-file violations.
 - Manual listening caught that the v1 codec-only conditions sounded closer to original than the explicit bandlimit. No model inference had started. The canonical transform now applies 300-3400 Hz bandlimiting before A-law, mu-law, and GSM-FR.
-- Next: run `notebooks/11b_vaani_stacked_codec_repair_colab.ipynb` on a CPU. It reuses the v1 source/original/bandlimit archives, regenerates only three stacked codec conditions, and writes `vaani_paired_pilot_v2`.
+- Vaani paired pilot v2 is complete and frozen: 500 speaker-unique source utterances, 2,500 complete paired files, mono 16 kHz output, no missing files, no duration violations, and a passed manual listening check. See `results/vaani_paired_pilot_v2_validation.md`.
+- The Vaani alignment-based multi-reference scorer is implemented and covered by toy cases for accepted alternatives, universal substitutions, insertions, and unanimous deletions.
+- Next: run `notebooks/12_vaani_paired_artpark_adalat_smoke_colab.ipynb` on a T4. It evaluates 10 speakers across five conditions and two pinned models, checkpoints every prediction, and stops before the full run.
 
 ## What Has Been Built
 
@@ -199,8 +201,8 @@ prior_art.md
 ## Next Session Priorities
 
 1. Freeze model/dataset revisions, transform parameters, macro-region mapping, group-size threshold, and multi-reference scoring protocol.
-2. Run notebook 11b and repeat the listening check on the corrected v2 stacked codec conditions.
-3. Evaluate ARTPARK medium and Adalat Whisper-small on the pilot; verify paired bootstrap and group-interaction analysis.
+2. Run notebook 12 with its default `smoke` profile on a T4.
+3. Review its 100 predictions, completeness, scorer counts, and pooled-telephone table before changing the profile to `full`.
 4. Run the full baseline before training. Then run notebook 10 and curate `GV_Train_100h` for the compact challenger.
 
 ## Completed Historical Priorities
