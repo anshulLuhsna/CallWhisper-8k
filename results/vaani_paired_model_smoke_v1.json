@@ -1,0 +1,62 @@
+{
+  "status": "pipeline_validation_only",
+  "speakers": 10,
+  "conditions": 5,
+  "predictions": 100,
+  "num_beams": 1,
+  "language": "hi",
+  "dataset_revision": "1bf019521d12d742178acc32bf2a42f81cf7c8ef",
+  "models": {
+    "artpark_medium_vaani_hindi": {
+      "model_id": "ARTPARK-IISc/whisper-medium-vaani-hindi",
+      "revision": "8e4d906e0eec66f27a31286e1a034702ef6d11bc",
+      "multiref_corpus_wer": {
+        "original": 0.166052,
+        "bandlimit_8k": 0.144444,
+        "bandlimit_8k_g711_alaw": 0.144444,
+        "bandlimit_8k_g711_mulaw": 0.125926,
+        "bandlimit_8k_gsm_fr": 0.116788,
+        "pooled_telephone": 0.132841
+      },
+      "mean_single_reference_corpus_wer": {
+        "original": 0.231795,
+        "bandlimit_8k": 0.219611,
+        "bandlimit_8k_g711_alaw": 0.219611,
+        "bandlimit_8k_g711_mulaw": 0.201406,
+        "bandlimit_8k_gsm_fr": 0.195428
+      },
+      "paired": {
+        "bandlimit_8k": {"improved": 4, "unchanged": 5, "worsened": 1, "mean_wer_delta": -0.014398, "total_error_delta": -6},
+        "bandlimit_8k_g711_alaw": {"improved": 4, "unchanged": 5, "worsened": 1, "mean_wer_delta": -0.014398, "total_error_delta": -6},
+        "bandlimit_8k_g711_mulaw": {"improved": 4, "unchanged": 5, "worsened": 1, "mean_wer_delta": -0.022872, "total_error_delta": -11},
+        "bandlimit_8k_gsm_fr": {"improved": 4, "unchanged": 4, "worsened": 2, "mean_wer_delta": -0.034936, "total_error_delta": -13}
+      }
+    },
+    "adalat_whisper_small_hi_high_lr": {
+      "model_id": "adalat-ai/whisper-small-hi-high-lr",
+      "revision": "e78553113fe7a483dbf82fefb2cbe4ea4b6bf901",
+      "multiref_corpus_wer": {
+        "original": 0.198529,
+        "bandlimit_8k": 0.224265,
+        "bandlimit_8k_g711_alaw": 0.237918,
+        "bandlimit_8k_g711_mulaw": 0.227941,
+        "bandlimit_8k_gsm_fr": 0.269663,
+        "pooled_telephone": 0.239815
+      },
+      "mean_single_reference_corpus_wer": {
+        "original": 0.258490,
+        "bandlimit_8k": 0.283995,
+        "bandlimit_8k_g711_alaw": 0.308239,
+        "bandlimit_8k_g711_mulaw": 0.287609,
+        "bandlimit_8k_gsm_fr": 0.343407
+      },
+      "paired": {
+        "bandlimit_8k": {"improved": 1, "unchanged": 6, "worsened": 3, "mean_wer_delta": 0.017217, "total_error_delta": 7},
+        "bandlimit_8k_g711_alaw": {"improved": 1, "unchanged": 5, "worsened": 4, "mean_wer_delta": 0.016026, "total_error_delta": 10},
+        "bandlimit_8k_g711_mulaw": {"improved": 1, "unchanged": 5, "worsened": 4, "mean_wer_delta": 0.006415, "total_error_delta": 8},
+        "bandlimit_8k_gsm_fr": {"improved": 1, "unchanged": 4, "worsened": 5, "mean_wer_delta": 0.059276, "total_error_delta": 18}
+      }
+    }
+  },
+  "decision": "smoke_passed_proceed_to_500_speakers"
+}

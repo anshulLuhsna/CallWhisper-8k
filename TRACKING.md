@@ -148,7 +148,9 @@ This week's non-negotiable deliverable: validate the expanded 100-file compariso
 - Decision: Freeze `vaani_paired_pilot_v2` for evaluation. No model inference used v1 codec-only rows.
 - Done: Implemented Vaani's alignment-based multi-reference WER protocol with normalization and toy tests covering accepted annotator alternatives, universal substitutions, accepted insertions, and unanimous deletions.
 - Done: Added notebook 12, a restartable T4 smoke evaluation with pinned ARTPARK medium and Adalat Whisper-small revisions, beam 1, forced Hindi, immediate per-prediction Drive checkpoints, and per-condition plus pooled-telephone summaries.
-- Next action: Run notebook 12 with `RUN_PROFILE = "smoke"`, return its 100-prediction summary, and review pipeline behavior before any 500-speaker inference.
+- Done: Completed notebook 12 smoke inference: 100/100 predictions were saved. ARTPARK pooled-telephone multi-reference WER was `0.1328`; Adalat was `0.2398`. The surprising ARTPARK improvement under transformed audio also persists when conventional WER is computed separately against all three references, but four to five clips per condition were unchanged and one difficult clip contributed heavily. This remains a smoke signal, not a claim. See `results/vaani_paired_model_smoke_v1.md`.
+- Done: Added fixed-reference WER reporting and paired per-clip win/unchanged/loss diagnostics to notebook 12. Smoke gate passed; its default profile is now `full`.
+- Next action: Run notebook 12 on all 500 frozen speakers, then compute paired speaker-level bootstrap confidence intervals before interpreting codec effects or model-rank changes.
 
 ## Scoreboard
 

@@ -126,3 +126,21 @@ def alignment_multireference_corpus_score(
     if not seen:
         raise ValueError("Cannot score an empty corpus")
     return total
+
+
+def single_reference_score(reference: str, hypothesis: str) -> MultiReferenceScore:
+    """Return conventional WER counts after applying Vaani normalization."""
+    output = process_words(
+        normalize_vaani_text(reference),
+        normalize_vaani_text(hypothesis),
+    )
+    reference_words = len(output.references[0])
+    if reference_words <= 0:
+        raise ValueError("Single-reference WER requires a non-empty normalized reference")
+    return MultiReferenceScore(
+        substitutions=output.substitutions,
+        insertions=output.insertions,
+        deletions=output.deletions,
+        reference_words=reference_words,
+        hypothesis_words=len(output.hypotheses[0]),
+    )

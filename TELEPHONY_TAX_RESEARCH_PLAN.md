@@ -156,7 +156,7 @@ The first paired smoke run freezes ARTPARK medium at revision `8e4d906e0eec66f27
 
 **Pooled telephony multi-reference corpus WER** over the four predeclared transformed conditions, with each condition represented equally.
 
-For each utterance, score against all three Vaani references and use the paper's segment-level minimum-reference protocol as the primary multi-reference implementation. Also report each individual reference and the alignment-based protocol if its official implementation is available.
+For each utterance, use Vaani's alignment-based multi-reference protocol as the primary benchmark score. Also report conventional corpus WER against each of the three references separately and their unweighted mean. This robustness view uses fixed reference denominators and checks whether conclusions depend on the primary scorer.
 
 ### Required secondary metrics
 
@@ -295,4 +295,4 @@ It should not run every model or train anything until the transformed audio and 
 
 The v1 automated integrity checks passed, but manual listening correctly found that its codec-only rows sounded much closer to the original than the explicit bandwidth-limited row. No models had been evaluated. The canonical notebook now applies the telephone passband before every codec. Existing v1 users can run `notebooks/11b_vaani_stacked_codec_repair_colab.ipynb` to reuse the valid source/original/bandlimit artifacts and create a separate v2 without redownloading Vaani.
 
-V2 has now passed automated integrity and manual listening. The alignment-based multi-reference scorer is implemented in `src/callwhisper/eval/multiref.py` with fixed toy tests. `notebooks/12_vaani_paired_artpark_adalat_smoke_colab.ipynb` is the next executable gate; its 10-speaker result is pipeline validation, not a benchmark claim.
+V2 has now passed automated integrity and manual listening. The alignment-based multi-reference scorer is implemented in `src/callwhisper/eval/multiref.py` with fixed toy tests. Notebook 12's 10-speaker smoke run completed all 100 predictions and passed pipeline review. ARTPARK's transformed-audio WER unexpectedly decreased while Adalat's increased; fixed-reference checks preserved the direction, but one difficult clip contributed heavily. The notebook now defaults to the 500-speaker full run and saves paired clip-level diagnostics. See `results/vaani_paired_model_smoke_v1.md`.

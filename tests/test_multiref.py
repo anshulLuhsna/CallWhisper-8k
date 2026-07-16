@@ -8,6 +8,7 @@ from callwhisper.eval.multiref import (
     alignment_multireference_corpus_score,
     alignment_multireference_score,
     normalize_vaani_text,
+    single_reference_score,
 )
 
 
@@ -70,3 +71,18 @@ def test_empty_inputs_are_rejected() -> None:
         alignment_multireference_score([], "hypothesis")
     with pytest.raises(ValueError, match="empty corpus"):
         alignment_multireference_corpus_score([])
+
+
+def test_single_reference_score_uses_fixed_reference_length() -> None:
+    score = single_reference_score("a b c", "a x c extra")
+
+    assert score.substitutions == 1
+    assert score.insertions == 1
+    assert score.deletions == 0
+    assert score.reference_words == 3
+    assert math.isclose(score.wer, 2 / 3)
+
+
+def test_single_reference_score_rejects_annotation_only_reference() -> None:
+    with pytest.raises(ValueError, match="non-empty"):
+        single_reference_score("[noise]", "hello")

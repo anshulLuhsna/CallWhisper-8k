@@ -200,10 +200,10 @@ prior_art.md
 
 ## Next Session Priorities
 
-1. Freeze model/dataset revisions, transform parameters, macro-region mapping, group-size threshold, and multi-reference scoring protocol.
-2. Run notebook 12 with its default `smoke` profile on a T4.
-3. Review its 100 predictions, completeness, scorer counts, and pooled-telephone table before changing the profile to `full`.
-4. Run the full baseline before training. Then run notebook 10 and curate `GV_Train_100h` for the compact challenger.
+1. Run notebook 12 with its reviewed default `full` profile on a T4 or stronger GPU.
+2. Confirm both prediction checkpoints reach 2,500 rows and save `summary.csv`, `artpark_vs_adalat.csv`, and `paired_channel_deltas.csv`.
+3. Add paired speaker-level bootstrap confidence intervals and predeclared group slices before making any channel-effect claim.
+4. Run the full baseline before training. Then curate leakage-safe training data for the compact channel-adapted challenger.
 
 ## Completed Historical Priorities
 
