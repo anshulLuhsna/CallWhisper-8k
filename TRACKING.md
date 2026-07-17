@@ -155,6 +155,7 @@ This week's non-negotiable deliverable: validate the expanded 100-file compariso
 - Finding: GSM-FR caused the largest significant penalty for both models. ARTPARK's bandlimit and G.711 penalty intervals included zero; every Adalat interval excluded zero.
 - Caveat: ARTPARK's model card says its training mixture includes Vaani, while Vaani Benchmark V1.0 is drawn from Vaani. Exact utterance overlap is undocumented, so absolute model-ranking claims require external replication or a verified overlap audit.
 - Done: Added `notebooks/13_lahaja_external_paired_replication_colab.ipynb`, a one-click external replication on a pinned LAHAJA revision. It freezes one 1-30 second clip from each of 132 speakers, regenerates all five channel conditions, runs pinned ARTPARK and Adalat checkpoints through identical decoding, checkpoints every prediction, computes single-reference WER/CER and RTF, and runs 20,000 speaker-clustered bootstrap replicates.
+- Fixed: LAHAJA `fname` values are not globally unique. Notebook 13 now keys rows by pinned dataset index plus `fname`, retains the duplicate-key guard, and replaces stale preflight-only configs without touching any completed audio or predictions.
 - Next action: Run notebook 13 on a T4, return `replication_conclusion.json`, `summary.csv`, and `paired_bootstrap_v1.csv`, then decide whether the compact channel-adaptation target is externally supported.
 
 ## Scoreboard
