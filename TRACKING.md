@@ -154,7 +154,8 @@ This week's non-negotiable deliverable: validate the expanded 100-file compariso
 - Done: Added tested `callwhisper-paired-bootstrap` tooling and ran 20,000 paired speaker bootstrap replicates. ARTPARK's pooled penalty was `+0.0049` with 95% CI `[+0.0008, +0.0088]`; Adalat's was `+0.0280` with CI `[+0.0223, +0.0340]`. The Adalat-minus-ARTPARK penalty gap was `+0.0232`, CI `[+0.0166, +0.0300]`.
 - Finding: GSM-FR caused the largest significant penalty for both models. ARTPARK's bandlimit and G.711 penalty intervals included zero; every Adalat interval excluded zero.
 - Caveat: ARTPARK's model card says its training mixture includes Vaani, while Vaani Benchmark V1.0 is drawn from Vaani. Exact utterance overlap is undocumented, so absolute model-ranking claims require external replication or a verified overlap audit.
-- Next action: Add predeclared gender/region bootstrap slices and an external held-out paired replication before starting the compact Adalat channel-adaptation run.
+- Done: Added `notebooks/13_lahaja_external_paired_replication_colab.ipynb`, a one-click external replication on a pinned LAHAJA revision. It freezes one 1-30 second clip from each of 132 speakers, regenerates all five channel conditions, runs pinned ARTPARK and Adalat checkpoints through identical decoding, checkpoints every prediction, computes single-reference WER/CER and RTF, and runs 20,000 speaker-clustered bootstrap replicates.
+- Next action: Run notebook 13 on a T4, return `replication_conclusion.json`, `summary.csv`, and `paired_bootstrap_v1.csv`, then decide whether the compact channel-adaptation target is externally supported.
 
 ## Scoreboard
 

@@ -180,6 +180,8 @@ Notebook 12's 10-speaker smoke gate completed all 100 predictions. ARTPARK poole
 
 The 500-speaker run rejects that smoke artifact. ARTPARK's pooled channel penalty was `+0.0049` WER, while Adalat's was `+0.0280`; the paired-bootstrap penalty gap was `+0.0232` with 95% CI `[+0.0166, +0.0300]`. GSM-FR caused the largest penalty. See [results/vaani_paired_model_full_v1.md](results/vaani_paired_model_full_v1.md). ARTPARK was trained with Vaani data, so its absolute advantage on a Vaani-derived evaluation set is descriptive until exact overlap is excluded; the paired channel-sensitivity result is the stronger claim.
 
+[Notebook 13](notebooks/13_lahaja_external_paired_replication_colab.ipynb) is the external replication gate. It pins LAHAJA and both model revisions, selects one 1-30 second utterance from each of 132 speakers, recreates the same five matched channels, reports conventional single-reference WER/CER and speed, and generates 20,000 paired speaker-bootstrap replicates. Its primary output is whether the pooled Adalat-minus-ARTPARK channel-penalty gap excludes zero; training starts only after that result is known.
+
 The first non-ARTPARK challenger notebook is [notebooks/07_whisper_large_v3_challenger.ipynb](notebooks/07_whisper_large_v3_challenger.ipynb).
 
 The first compact adapter artifact is committed under:

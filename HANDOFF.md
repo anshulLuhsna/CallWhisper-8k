@@ -47,7 +47,8 @@ See `TELEPHONY_TAX_RESEARCH_PLAN.md`.
 - Manual listening caught that the v1 codec-only conditions sounded closer to original than the explicit bandlimit. No model inference had started. The canonical transform now applies 300-3400 Hz bandlimiting before A-law, mu-law, and GSM-FR.
 - Vaani paired pilot v2 is complete and frozen: 500 speaker-unique source utterances, 2,500 complete paired files, mono 16 kHz output, no missing files, no duration violations, and a passed manual listening check. See `results/vaani_paired_pilot_v2_validation.md`.
 - The Vaani alignment-based multi-reference scorer is implemented and covered by toy cases for accepted alternatives, universal substitutions, insertions, and unanimous deletions.
-- Next: run `notebooks/12_vaani_paired_artpark_adalat_smoke_colab.ipynb` on a T4. It evaluates 10 speakers across five conditions and two pinned models, checkpoints every prediction, and stops before the full run.
+- Notebook 12's full run is complete: 500 speakers, five conditions, two models, and 5,000 predictions. The pooled Adalat-minus-ARTPARK channel-penalty gap is `+0.0232` WER with 95% speaker-bootstrap CI `[+0.0166, +0.0300]`.
+- Next: run `notebooks/13_lahaja_external_paired_replication_colab.ipynb` on a T4. It tests the same channel-sensitivity question on one deterministic 1-30 second clip from each of LAHAJA's 132 speakers and saves an objective bootstrap-based replication verdict.
 
 ## What Has Been Built
 
@@ -200,9 +201,9 @@ prior_art.md
 
 ## Next Session Priorities
 
-1. Add predeclared gender and macro-region slices with paired speaker bootstrap intervals to the completed 500-speaker baseline.
-2. Choose and freeze an external paired replication corpus whose evaluation utterances were not used to train ARTPARK or Adalat.
-3. Treat ARTPARK's Vaani result as an in-domain upper baseline until exact train/evaluation overlap can be excluded.
+1. Run notebook 13 and inspect LAHAJA's pooled `channel_penalty_gap` confidence interval.
+2. If the interval is entirely above zero, freeze the compact-model robustness finding as externally replicated.
+3. Add predeclared gender and macro-region slices to the completed Vaani and LAHAJA outputs.
 4. Curate leakage-safe training data, then run balanced channel augmentation plus clean replay on Adalat Whisper-small.
 
 ## Completed Historical Priorities

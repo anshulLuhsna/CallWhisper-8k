@@ -32,7 +32,8 @@ Run order:
 10. `10_gv_train_100h_inventory_colab.ipynb` - CPU Colab inventory of GV Train 100h with frozen-ID exclusion and persistent Drive outputs; stops before training
 11. `11_vaani_paired_telephony_benchmark_colab.ipynb` - canonical CPU Colab construction of the revision-pinned 500-speaker Vaani paired-channel pilot; stacks the telephone bandlimit before codecs and stops before model inference
 12. `11b_vaani_stacked_codec_repair_colab.ipynb` - one-time CPU repair for completed v1 runs; reuses source/original/bandlimit archives and regenerates only the three stacked codec conditions
-13. `12_vaani_paired_artpark_adalat_smoke_colab.ipynb` - restartable T4 smoke evaluation of pinned ARTPARK medium and Adalat Whisper-small on 10 speakers across all five frozen v2 conditions, using alignment-based multi-reference WER
+13. `12_vaani_paired_artpark_adalat_smoke_colab.ipynb` - restartable T4 evaluation of pinned ARTPARK medium and Adalat Whisper-small on the frozen 500-speaker Vaani paired benchmark, using alignment-based multi-reference WER
+14. `13_lahaja_external_paired_replication_colab.ipynb` - one-click T4 external replication on one deterministic clip from each of LAHAJA's 132 speakers; builds the same five channels, evaluates both pinned models, and writes single-reference WER/CER plus 20,000 speaker-bootstrap intervals
 
 Notebook 11 requires accepted access to the gated [`ARTPARK-IISc/Vaani-Benchmark-V1.0`](https://huggingface.co/datasets/ARTPARK-IISc/Vaani-Benchmark-V1.0) dataset and a read-only `HF_TOKEN` in Colab Secrets. It downloads the exact pinned revision, infers and records the dataset schema, exports audio without TorchCodec decoding, then saves source plus per-condition archives under:
 
@@ -44,7 +45,15 @@ Use a CPU runtime. Do not spend a GPU session on benchmark construction.
 
 The first v1 run passed automated integrity checks but manual listening found that codec-only conditions sounded too close to the original because the explicit telephone passband was not applied first. No model evaluation used those rows. Notebook 11b preserves that audit trail and creates corrected v2 artifacts without another gated-dataset download.
 
-Notebook 12 requires a GPU runtime and defaults to `RUN_PROFILE = 'smoke'`: 10 speakers, five conditions, and two models, or 100 total transcriptions. It reads the corrected v2 archives from Drive, saves every prediction immediately, resumes completed rows after interruption, and writes per-condition plus pooled-telephone multi-reference WER tables. Do not switch it to `full` until the smoke predictions and row completeness pass review.
+Notebook 12 requires a GPU runtime and defaults to the completed `full` profile: 500 speakers, five conditions, and two models, or 5,000 total transcriptions. It reads the corrected v2 archives from Drive, saves every prediction immediately, resumes completed rows after interruption, and writes per-condition plus pooled-telephone multi-reference WER tables.
+
+Notebook 13 requires accepted access to gated [`ai4bharat/Lahaja`](https://huggingface.co/datasets/ai4bharat/Lahaja), a read-only `HF_TOKEN` in Colab Secrets, and a T4 GPU. It pins dataset and model revisions, filters source clips to 1-30 seconds, selects one deterministic utterance per speaker, generates the same five matched channel conditions, and evaluates both models through one decoding path. Outputs are restartable and persist under:
+
+```text
+MyDrive/call-whisper/results/lahaja_paired_external_v1/
+```
+
+The primary external-replication result is the pooled `channel_penalty_gap` in `replication_conclusion.json`. Absolute LAHAJA WER is single-reference and must not be compared directly with Vaani's multi-reference WER.
 
 Before running, put the GramVaani audio somewhere Colab can access. The notebooks now expect this Google Drive layout:
 
