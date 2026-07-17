@@ -1,0 +1,29 @@
+{
+  "verdict": "replicated",
+  "interpretation": "Adalat has a statistically supported larger pooled telephone WER penalty than ARTPARK on this LAHAJA speaker-balanced slice.",
+  "primary_metric": "pooled telephone channel-penalty gap",
+  "channel_penalty_gap_estimate": 0.029218106995884757,
+  "channel_penalty_gap_ci_95": [
+    0.013726340608847386,
+    0.045914397164517645
+  ],
+  "original_model_gap_estimate": -0.0111111111111111,
+  "original_model_gap_ci_95": [
+    -0.030523932685282928,
+    0.007701674946261105
+  ],
+  "pooled_model_gap_estimate": 0.018106995884773658,
+  "pooled_model_gap_ci_95": [
+    -0.00030115505419811615,
+    0.03681335923490732
+  ],
+  "artpark_pooled_rtf": 0.2667525814677015,
+  "adalat_pooled_rtf": 0.14179669773562995,
+  "artpark_to_adalat_rtf_ratio": 1.881232678387497,
+  "important_limitations": [
+    "LAHAJA provides one reference per utterance; Vaani used three-reference scoring.",
+    "Absolute WER across LAHAJA and Vaani is not directly comparable.",
+    "Model training-set disjointness from LAHAJA is not independently proven.",
+    "The paired degradation effect is causal for these transforms, not for every real phone call."
+  ]
+}

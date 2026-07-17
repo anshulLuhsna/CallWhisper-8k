@@ -1,0 +1,7 @@
+slice,corpus_wer_adalat_whisper_small_hi_high_lr,corpus_wer_artpark_medium_vaani_hindi,corpus_cer_adalat_whisper_small_hi_high_lr,corpus_cer_artpark_medium_vaani_hindi,mean_real_time_factor_adalat_whisper_small_hi_high_lr,mean_real_time_factor_artpark_medium_vaani_hindi,adalat_minus_artpark_wer,adalat_minus_artpark_cer
+bandlimit_8k,0.209877,0.194650,0.072665,0.059923,0.139602,0.267195,0.015226,0.012742
+bandlimit_8k_g711_alaw,0.210700,0.190947,0.074559,0.057684,0.141333,0.272431,0.019753,0.016875
+bandlimit_8k_g711_mulaw,0.209053,0.195885,0.070512,0.060611,0.144415,0.264817,0.013169,0.009901
+bandlimit_8k_gsm_fr,0.231276,0.206996,0.085579,0.070512,0.141836,0.262567,0.024280,0.015067
+original,0.180247,0.191358,0.056909,0.057684,0.142346,0.267830,-0.011111,-0.000775
+pooled_telephone,0.215226,0.197119,0.075829,0.062183,0.141797,0.266753,0.018107,0.013646

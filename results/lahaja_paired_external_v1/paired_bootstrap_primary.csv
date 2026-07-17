@@ -1,0 +1,16 @@
+metric,model_label,slice,estimate,ci_95_lower,ci_95_upper,speakers,replicates,seed,reference_model,candidate_model
+channel_penalty,artpark_medium_vaani_hindi,bandlimit_8k,0.003292,-0.006126,0.012270,132,20000,0,artpark_medium_vaani_hindi,adalat_whisper_small_hi_high_lr
+channel_penalty,artpark_medium_vaani_hindi,bandlimit_8k_g711_alaw,-0.000412,-0.009554,0.008281,132,20000,0,artpark_medium_vaani_hindi,adalat_whisper_small_hi_high_lr
+channel_penalty,artpark_medium_vaani_hindi,bandlimit_8k_g711_mulaw,0.004527,-0.004737,0.013204,132,20000,0,artpark_medium_vaani_hindi,adalat_whisper_small_hi_high_lr
+channel_penalty,artpark_medium_vaani_hindi,bandlimit_8k_gsm_fr,0.015638,0.005598,0.025947,132,20000,0,artpark_medium_vaani_hindi,adalat_whisper_small_hi_high_lr
+channel_penalty,artpark_medium_vaani_hindi,pooled_telephone,0.005761,-0.002267,0.013479,132,20000,0,artpark_medium_vaani_hindi,adalat_whisper_small_hi_high_lr
+channel_penalty,adalat_whisper_small_hi_high_lr,bandlimit_8k,0.029630,0.015417,0.045421,132,20000,0,artpark_medium_vaani_hindi,adalat_whisper_small_hi_high_lr
+channel_penalty,adalat_whisper_small_hi_high_lr,bandlimit_8k_g711_alaw,0.030453,0.016619,0.045948,132,20000,0,artpark_medium_vaani_hindi,adalat_whisper_small_hi_high_lr
+channel_penalty,adalat_whisper_small_hi_high_lr,bandlimit_8k_g711_mulaw,0.028807,0.015917,0.043419,132,20000,0,artpark_medium_vaani_hindi,adalat_whisper_small_hi_high_lr
+channel_penalty,adalat_whisper_small_hi_high_lr,bandlimit_8k_gsm_fr,0.051029,0.036550,0.066384,132,20000,0,artpark_medium_vaani_hindi,adalat_whisper_small_hi_high_lr
+channel_penalty,adalat_whisper_small_hi_high_lr,pooled_telephone,0.034979,0.022180,0.049249,132,20000,0,artpark_medium_vaani_hindi,adalat_whisper_small_hi_high_lr
+channel_penalty_gap,,bandlimit_8k,0.026337,0.009297,0.044614,132,20000,0,artpark_medium_vaani_hindi,adalat_whisper_small_hi_high_lr
+channel_penalty_gap,,bandlimit_8k_g711_alaw,0.030864,0.013387,0.049890,132,20000,0,artpark_medium_vaani_hindi,adalat_whisper_small_hi_high_lr
+channel_penalty_gap,,bandlimit_8k_g711_mulaw,0.024280,0.008254,0.041755,132,20000,0,artpark_medium_vaani_hindi,adalat_whisper_small_hi_high_lr
+channel_penalty_gap,,bandlimit_8k_gsm_fr,0.035391,0.018699,0.052590,132,20000,0,artpark_medium_vaani_hindi,adalat_whisper_small_hi_high_lr
+channel_penalty_gap,,pooled_telephone,0.029218,0.013726,0.045914,132,20000,0,artpark_medium_vaani_hindi,adalat_whisper_small_hi_high_lr

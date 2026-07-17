@@ -1,0 +1,13 @@
+model_label,slice,speakers,files,substitutions,insertions,deletions,reference_words,corpus_wer,macro_utterance_wer,corpus_cer,macro_utterance_cer,mean_real_time_factor
+artpark_medium_vaani_hindi,original,132,132,371,30,64,2430,0.191358,0.196769,0.057684,0.060657,0.267830
+artpark_medium_vaani_hindi,bandlimit_8k,132,132,374,30,69,2430,0.194650,0.201773,0.059923,0.063385,0.267195
+artpark_medium_vaani_hindi,bandlimit_8k_g711_alaw,132,132,375,27,62,2430,0.190947,0.196369,0.057684,0.061405,0.272431
+artpark_medium_vaani_hindi,bandlimit_8k_g711_mulaw,132,132,383,27,66,2430,0.195885,0.201472,0.060611,0.064055,0.264817
+artpark_medium_vaani_hindi,bandlimit_8k_gsm_fr,132,132,403,31,69,2430,0.206996,0.221125,0.070512,0.074513,0.262567
+artpark_medium_vaani_hindi,pooled_telephone,132,528,1535,115,266,9720,0.197119,0.205185,0.062183,0.065840,0.266753
+adalat_whisper_small_hi_high_lr,original,132,132,355,25,58,2430,0.180247,0.190524,0.056909,0.060926,0.142346
+adalat_whisper_small_hi_high_lr,bandlimit_8k,132,132,400,27,83,2430,0.209877,0.214577,0.072665,0.075462,0.139602
+adalat_whisper_small_hi_high_lr,bandlimit_8k_g711_alaw,132,132,397,31,84,2430,0.210700,0.222752,0.074559,0.079019,0.141333
+adalat_whisper_small_hi_high_lr,bandlimit_8k_g711_mulaw,132,132,399,32,77,2430,0.209053,0.218544,0.070512,0.073470,0.144415
+adalat_whisper_small_hi_high_lr,bandlimit_8k_gsm_fr,132,132,450,39,73,2430,0.231276,0.243668,0.085579,0.091358,0.141836
+adalat_whisper_small_hi_high_lr,pooled_telephone,132,528,1646,129,317,9720,0.215226,0.224886,0.075829,0.079827,0.141797

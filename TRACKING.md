@@ -156,7 +156,13 @@ This week's non-negotiable deliverable: validate the expanded 100-file compariso
 - Caveat: ARTPARK's model card says its training mixture includes Vaani, while Vaani Benchmark V1.0 is drawn from Vaani. Exact utterance overlap is undocumented, so absolute model-ranking claims require external replication or a verified overlap audit.
 - Done: Added `notebooks/13_lahaja_external_paired_replication_colab.ipynb`, a one-click external replication on a pinned LAHAJA revision. It freezes one 1-30 second clip from each of 132 speakers, regenerates all five channel conditions, runs pinned ARTPARK and Adalat checkpoints through identical decoding, checkpoints every prediction, computes single-reference WER/CER and RTF, and runs 20,000 speaker-clustered bootstrap replicates.
 - Fixed: LAHAJA `fname` values are not globally unique. Notebook 13 now keys rows by pinned dataset index plus `fname`, retains the duplicate-key guard, and replaces stale preflight-only configs without touching any completed audio or predictions.
-- Next action: Run notebook 13 on a T4, return `replication_conclusion.json`, `summary.csv`, and `paired_bootstrap_v1.csv`, then decide whether the compact channel-adaptation target is externally supported.
+- Done: Completed notebook 13 on all 132 LAHAJA speakers: 1,320 predictions across two pinned models and five matched conditions. ARTPARK's pooled telephone penalty was `+0.0058`; Adalat's was `+0.0350`.
+- Finding: The pooled Adalat-minus-ARTPARK channel-penalty gap was `+0.0292` WER with 95% speaker-bootstrap CI `[+0.0137, +0.0459]`. Every per-condition penalty-gap interval also excluded zero. The Vaani channel-sensitivity result is externally replicated.
+- Tradeoff: Adalat was about `1.88x` faster and had nominally lower original-audio WER on LAHAJA, but neither the original-audio nor pooled-telephone absolute model gap excluded zero. The defensible claim is robustness difference, not global model superiority.
+- Done: Added exact user-returned LAHAJA tables and the machine-readable conclusion under `results/lahaja_paired_external_v1/`, with the narrative report at `results/lahaja_paired_external_v1.md`.
+- Open check: The final Drive report bundle was not visible through Drive web/connector at ingestion time, and Transformers emitted an attention-mask warning. Recover the raw predictions and run a small equivalence audit before publication-final scoring.
+- Decision: Proceed to leakage-safe, channel-balanced adaptation of Adalat Whisper-small with clean replay. Benchmark clips remain evaluation-only.
+- Next action: archive raw Notebook 13 predictions, audit the attention-mask behavior, add frozen demographic slices, then build the benchmark-disjoint training/internal-validation manifests.
 
 ## Scoreboard
 

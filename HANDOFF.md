@@ -31,7 +31,7 @@ Current primary thesis:
 
 See `TELEPHONY_TAX_RESEARCH_PLAN.md`.
 
-## Current State — 2026-07-14
+## Current State — 2026-07-17
 
 - The current headline benchmark is the fixed 100-file GramVaani slice, with 56 native 8 kHz files and 44 higher-rate files.
 - Whisper medium, Whisper large-v3, and ARTPARK Vaani Hindi were evaluated on the same 100 predictions using a Tesla T4.
@@ -48,7 +48,12 @@ See `TELEPHONY_TAX_RESEARCH_PLAN.md`.
 - Vaani paired pilot v2 is complete and frozen: 500 speaker-unique source utterances, 2,500 complete paired files, mono 16 kHz output, no missing files, no duration violations, and a passed manual listening check. See `results/vaani_paired_pilot_v2_validation.md`.
 - The Vaani alignment-based multi-reference scorer is implemented and covered by toy cases for accepted alternatives, universal substitutions, insertions, and unanimous deletions.
 - Notebook 12's full run is complete: 500 speakers, five conditions, two models, and 5,000 predictions. The pooled Adalat-minus-ARTPARK channel-penalty gap is `+0.0232` WER with 95% speaker-bootstrap CI `[+0.0166, +0.0300]`.
-- Next: run `notebooks/13_lahaja_external_paired_replication_colab.ipynb` on a T4. It tests the same channel-sensitivity question on one deterministic 1-30 second clip from each of LAHAJA's 132 speakers and saves an objective bootstrap-based replication verdict.
+- Notebook 13's LAHAJA external run is complete: 132 speakers, five matched conditions, two models, and 1,320 predictions. The pooled Adalat-minus-ARTPARK channel-penalty gap is `+0.0292` WER with 95% CI `[+0.0137, +0.0459]`; the verdict is `replicated`.
+- Adalat has the useful product tradeoff: original-audio WER was nominally `0.1802` versus ARTPARK's `0.1914`, and it ran about `1.88x` faster. But its pooled telephone WER rose to `0.2152`, while ARTPARK remained at `0.1971`.
+- The absolute original and pooled model-gap confidence intervals include zero. Do not claim ARTPARK or Adalat is globally superior from LAHAJA. Claim the externally replicated difference in channel sensitivity.
+- Canonical exact tables are in `results/lahaja_paired_external_v1.md` and `results/lahaja_paired_external_v1/`.
+- Before publication, recover the original prediction JSONL/report bundle from Drive and run a small attention-mask equivalence audit because the completed Transformers run emitted the pad/EOS attention-mask warning.
+- Next build target: leakage-safe channel-balanced adaptation of Adalat Whisper-small with clean replay. Do not train on Vaani Benchmark, LAHAJA, GramVaani Dev, or any other frozen evaluation clip.
 
 ## What Has Been Built
 
@@ -201,10 +206,11 @@ prior_art.md
 
 ## Next Session Priorities
 
-1. Run notebook 13 and inspect LAHAJA's pooled `channel_penalty_gap` confidence interval.
-2. If the interval is entirely above zero, freeze the compact-model robustness finding as externally replicated.
-3. Add predeclared gender and macro-region slices to the completed Vaani and LAHAJA outputs.
-4. Curate leakage-safe training data, then run balanced channel augmentation plus clean replay on Adalat Whisper-small.
+1. Recover and archive Notebook 13's original prediction JSONL/report bundle; verify Drive contains it.
+2. Run a deterministic attention-mask equivalence audit on a small frozen subset. Rerun the full benchmark only if predictions change materially.
+3. Add predeclared gender and macro-region slices to the completed Vaani and LAHAJA outputs without changing the primary claim.
+4. Curate speaker-disjoint, benchmark-disjoint training and internal-validation manifests from `GV_Train_100h` plus clean Hindi replay data.
+5. Train channel-balanced Adalat Whisper-small and evaluate once against the frozen Vaani and LAHAJA gates.
 
 ## Completed Historical Priorities
 
