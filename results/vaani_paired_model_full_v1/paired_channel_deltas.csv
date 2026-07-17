@@ -1,0 +1,9 @@
+model_label,condition,speakers,improved,unchanged,worsened,mean_utterance_wer_delta,median_utterance_wer_delta,total_error_delta
+artpark_medium_vaani_hindi,bandlimit_8k,500,70,327,103,0.001932278013812362,0.0,23
+artpark_medium_vaani_hindi,bandlimit_8k_g711_alaw,500,78,313,109,0.003274468538378196,0.0,42
+artpark_medium_vaani_hindi,bandlimit_8k_g711_mulaw,500,81,314,105,0.002668129635474531,0.0,34
+artpark_medium_vaani_hindi,bandlimit_8k_gsm_fr,500,90,252,158,0.010891285628147866,0.0,109
+adalat_whisper_small_hi_high_lr,bandlimit_8k,500,85,242,173,0.019897123633924464,0.0,213
+adalat_whisper_small_hi_high_lr,bandlimit_8k_g711_alaw,500,87,246,167,0.01632712734982073,0.0,213
+adalat_whisper_small_hi_high_lr,bandlimit_8k_g711_mulaw,500,80,242,178,0.018579106457769196,0.0,237
+adalat_whisper_small_hi_high_lr,bandlimit_8k_gsm_fr,500,64,184,252,0.052672858925297744,0.0032063513697696555,615

@@ -178,6 +178,8 @@ The 500-speaker v1 construction run passed every automated integrity check, but 
 
 Notebook 12's 10-speaker smoke gate completed all 100 predictions. ARTPARK pooled-telephone multi-reference WER was `0.1328` versus Adalat Whisper-small's `0.2398`; unexpectedly, ARTPARK scored better after degradation while Adalat worsened. Per-clip and fixed-reference checks show this is not only scorer arithmetic, but 10 speakers are far too few for a claim. See [results/vaani_paired_model_smoke_v1.md](results/vaani_paired_model_smoke_v1.md). [Notebook 12](notebooks/12_vaani_paired_artpark_adalat_smoke_colab.ipynb) now defaults to the frozen 500-speaker run and exports paired channel diagnostics.
 
+The 500-speaker run rejects that smoke artifact. ARTPARK's pooled channel penalty was `+0.0049` WER, while Adalat's was `+0.0280`; the paired-bootstrap penalty gap was `+0.0232` with 95% CI `[+0.0166, +0.0300]`. GSM-FR caused the largest penalty. See [results/vaani_paired_model_full_v1.md](results/vaani_paired_model_full_v1.md). ARTPARK was trained with Vaani data, so its absolute advantage on a Vaani-derived evaluation set is descriptive until exact overlap is excluded; the paired channel-sensitivity result is the stronger claim.
+
 The first non-ARTPARK challenger notebook is [notebooks/07_whisper_large_v3_challenger.ipynb](notebooks/07_whisper_large_v3_challenger.ipynb).
 
 The first compact adapter artifact is committed under:

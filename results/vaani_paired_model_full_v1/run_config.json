@@ -1,0 +1,32 @@
+{
+  "semantic_config": {
+    "run_profile": "full",
+    "speaker_limit": 500,
+    "conditions": [
+      "original",
+      "bandlimit_8k",
+      "bandlimit_8k_g711_alaw",
+      "bandlimit_8k_g711_mulaw",
+      "bandlimit_8k_gsm_fr"
+    ],
+    "models": [
+      {
+        "label": "artpark_medium_vaani_hindi",
+        "model_id": "ARTPARK-IISc/whisper-medium-vaani-hindi",
+        "revision": "8e4d906e0eec66f27a31286e1a034702ef6d11bc"
+      },
+      {
+        "label": "adalat_whisper_small_hi_high_lr",
+        "model_id": "adalat-ai/whisper-small-hi-high-lr",
+        "revision": "e78553113fe7a483dbf82fefb2cbe4ea4b6bf901"
+      }
+    ],
+    "num_beams": 1,
+    "language": "hi",
+    "task": "transcribe",
+    "seed": 0,
+    "dataset_revision": "1bf019521d12d742178acc32bf2a42f81cf7c8ef",
+    "paired_artifact": "vaani_paired_pilot_v2"
+  },
+  "repo_commit": "9a69654e45f0e1b28eb44b3449193a3ddb85b58b"
+}

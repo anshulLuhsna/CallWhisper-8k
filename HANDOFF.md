@@ -200,10 +200,10 @@ prior_art.md
 
 ## Next Session Priorities
 
-1. Run notebook 12 with its reviewed default `full` profile on a T4 or stronger GPU.
-2. Confirm both prediction checkpoints reach 2,500 rows and save `summary.csv`, `artpark_vs_adalat.csv`, and `paired_channel_deltas.csv`.
-3. Add paired speaker-level bootstrap confidence intervals and predeclared group slices before making any channel-effect claim.
-4. Run the full baseline before training. Then curate leakage-safe training data for the compact channel-adapted challenger.
+1. Add predeclared gender and macro-region slices with paired speaker bootstrap intervals to the completed 500-speaker baseline.
+2. Choose and freeze an external paired replication corpus whose evaluation utterances were not used to train ARTPARK or Adalat.
+3. Treat ARTPARK's Vaani result as an in-domain upper baseline until exact train/evaluation overlap can be excluded.
+4. Curate leakage-safe training data, then run balanced channel augmentation plus clean replay on Adalat Whisper-small.
 
 ## Completed Historical Priorities
 

@@ -150,7 +150,11 @@ This week's non-negotiable deliverable: validate the expanded 100-file compariso
 - Done: Added notebook 12, a restartable T4 smoke evaluation with pinned ARTPARK medium and Adalat Whisper-small revisions, beam 1, forced Hindi, immediate per-prediction Drive checkpoints, and per-condition plus pooled-telephone summaries.
 - Done: Completed notebook 12 smoke inference: 100/100 predictions were saved. ARTPARK pooled-telephone multi-reference WER was `0.1328`; Adalat was `0.2398`. The surprising ARTPARK improvement under transformed audio also persists when conventional WER is computed separately against all three references, but four to five clips per condition were unchanged and one difficult clip contributed heavily. This remains a smoke signal, not a claim. See `results/vaani_paired_model_smoke_v1.md`.
 - Done: Added fixed-reference WER reporting and paired per-clip win/unchanged/loss diagnostics to notebook 12. Smoke gate passed; its default profile is now `full`.
-- Next action: Run notebook 12 on all 500 frozen speakers, then compute paired speaker-level bootstrap confidence intervals before interpreting codec effects or model-rank changes.
+- Done: Completed the 500-speaker `full` pilot profile: 5,000 predictions across two models and five matched conditions. ARTPARK pooled-telephone WER was `0.1509`; Adalat was `0.2020`.
+- Done: Added tested `callwhisper-paired-bootstrap` tooling and ran 20,000 paired speaker bootstrap replicates. ARTPARK's pooled penalty was `+0.0049` with 95% CI `[+0.0008, +0.0088]`; Adalat's was `+0.0280` with CI `[+0.0223, +0.0340]`. The Adalat-minus-ARTPARK penalty gap was `+0.0232`, CI `[+0.0166, +0.0300]`.
+- Finding: GSM-FR caused the largest significant penalty for both models. ARTPARK's bandlimit and G.711 penalty intervals included zero; every Adalat interval excluded zero.
+- Caveat: ARTPARK's model card says its training mixture includes Vaani, while Vaani Benchmark V1.0 is drawn from Vaani. Exact utterance overlap is undocumented, so absolute model-ranking claims require external replication or a verified overlap audit.
+- Next action: Add predeclared gender/region bootstrap slices and an external held-out paired replication before starting the compact Adalat channel-adaptation run.
 
 ## Scoreboard
 
