@@ -106,6 +106,9 @@ def test_transform_audio_produces_valid_whisper_wav(tmp_path: Path, condition: s
     assert metadata["condition"] == condition
     assert probed["sample_rate_hz"] == 16000
     assert probed["channels"] == 1
+    assert paired_telephony._pcm_frame_count(output) == paired_telephony._pcm_frame_count(
+        source
+    )
     assert math.isclose(probed["duration_s"], 0.25, abs_tol=0.05)
 
 
@@ -119,6 +122,9 @@ def test_gsm_transform_when_encoder_is_available(tmp_path: Path) -> None:
     transform_audio(source, output, "bandlimit_8k_gsm_fr")
 
     assert probe_audio(output)["sample_rate_hz"] == 16000
+    assert paired_telephony._pcm_frame_count(output) == paired_telephony._pcm_frame_count(
+        source
+    )
 
 
 def test_codec_stack_applies_telephone_highpass(tmp_path: Path) -> None:
@@ -158,11 +164,23 @@ def test_duration_validation_uses_decoded_audio_not_container_metadata(
 def test_duration_conformance_trims_codec_padding(tmp_path: Path) -> None:
     padded = tmp_path / "padded.wav"
     conformed = tmp_path / "conformed.wav"
-    sf.write(padded, np.zeros(int(16000 * 0.45), dtype=np.float32), 16000)
+    expected_frames = int(16000 * 0.25)
+    sf.write(padded, np.zeros(expected_frames + 144, dtype=np.float32), 16000)
 
     paired_telephony._conform_whisper_wav_duration(
-        padded, conformed, expected_frames=int(16000 * 0.25)
+        padded, conformed, expected_frames=expected_frames
     )
 
-    assert paired_telephony._pcm_frame_count(conformed) == int(16000 * 0.25)
+    assert paired_telephony._pcm_frame_count(conformed) == expected_frames
     assert math.isclose(probe_audio(conformed)["duration_s"], 0.25, abs_tol=0.002)
+
+
+def test_transform_conforms_small_codec_frame_delta(tmp_path: Path) -> None:
+    source = tmp_path / "odd-length.wav"
+    output = tmp_path / "odd-length-alaw.wav"
+    sf.write(source, np.zeros(4001, dtype=np.float32), 16000)
+
+    metadata = transform_audio(source, output, "bandlimit_8k_g711_alaw")
+
+    assert paired_telephony._pcm_frame_count(output) == 4001
+    assert metadata["duration_delta_s"] == 0

@@ -230,8 +230,8 @@ def transform_audio(source_path: Path, output_path: Path, condition: str) -> dic
         decoded_source = temporary / "decoded_source.wav"
         staged_output = temporary / "output.wav"
         _decode_to_whisper_wav(source_path, decoded_source)
-        source_probe = probe_audio(decoded_source)
         expected_frames = _pcm_frame_count(decoded_source)
+        source_duration_s = expected_frames / 16000
         if condition == "original":
             staged_output = decoded_source
         elif condition == "bandlimit_8k":
@@ -293,11 +293,9 @@ def transform_audio(source_path: Path, output_path: Path, condition: str) -> dic
             _decode_to_whisper_wav(encoded, staged_output)
 
         raw_output_probe = probe_audio(staged_output)
-        preconform_duration_delta = abs(
-            raw_output_probe["duration_s"] - source_probe["duration_s"]
-        )
-        tolerance = max(0.05, source_probe["duration_s"] * 0.01)
-        hard_tolerance = max(0.5, source_probe["duration_s"] * 0.05)
+        raw_output_frames = _pcm_frame_count(staged_output)
+        preconform_duration_delta = abs(raw_output_frames - expected_frames) / 16000
+        hard_tolerance = max(0.5, source_duration_s * 0.05)
         if (
             raw_output_probe["sample_rate_hz"] != 16000
             or raw_output_probe["channels"] != 1
@@ -308,7 +306,7 @@ def transform_audio(source_path: Path, output_path: Path, condition: str) -> dic
                 f"Duration changed by {preconform_duration_delta:.3f}s for {condition}; "
                 f"hard tolerance={hard_tolerance:.3f}s"
             )
-        duration_conformed = preconform_duration_delta > tolerance
+        duration_conformed = raw_output_frames != expected_frames
         if duration_conformed:
             conformed_output = temporary / "conformed_output.wav"
             _conform_whisper_wav_duration(
@@ -317,10 +315,12 @@ def transform_audio(source_path: Path, output_path: Path, condition: str) -> dic
             staged_output = conformed_output
 
         output_probe = probe_audio(staged_output)
-        duration_delta = abs(output_probe["duration_s"] - source_probe["duration_s"])
-        if duration_delta > 0.002:
+        output_frames = _pcm_frame_count(staged_output)
+        duration_delta = abs(output_frames - expected_frames) / 16000
+        if output_frames != expected_frames:
             raise ValueError(
-                f"Duration conformance failed by {duration_delta:.3f}s for {condition}"
+                f"Duration conformance failed by {abs(output_frames - expected_frames)} "
+                f"PCM frames for {condition}"
             )
         shutil.move(staged_output, output_path)
 
@@ -329,9 +329,9 @@ def transform_audio(source_path: Path, output_path: Path, condition: str) -> dic
         "audio_path": str(output_path),
         "source_sha256": sha256_file(source_path),
         "output_sha256": sha256_file(output_path),
-        "source_duration_s": source_probe["duration_s"],
+        "source_duration_s": source_duration_s,
         "source_container_duration_s": source_container_probe["duration_s"],
-        "duration_s": output_probe["duration_s"],
+        "duration_s": output_frames / 16000,
         "duration_delta_s": duration_delta,
         "preconform_duration_delta_s": preconform_duration_delta,
         "duration_conformed": duration_conformed,
