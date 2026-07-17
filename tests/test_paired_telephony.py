@@ -8,6 +8,7 @@ import numpy as np
 import pytest
 import soundfile as sf
 
+import callwhisper.datasets.paired_telephony as paired_telephony
 from callwhisper.datasets.paired_telephony import (
     CONDITIONS,
     available_audio_encoders,
@@ -129,3 +130,26 @@ def test_codec_stack_applies_telephone_highpass(tmp_path: Path) -> None:
 
     low_to_voice_ratio = _tone_amplitude(output, 100) / _tone_amplitude(output, 1000)
     assert low_to_voice_ratio < 0.2
+
+
+def test_duration_validation_uses_decoded_audio_not_container_metadata(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    source = tmp_path / "source.wav"
+    output = tmp_path / "stacked-alaw.wav"
+    _write_sine(source)
+    real_probe = paired_telephony.probe_audio
+
+    def probe_with_bad_container_duration(path: Path):
+        metadata = real_probe(path)
+        if Path(path) == source:
+            metadata = {**metadata, "duration_s": metadata["duration_s"] + 0.2}
+        return metadata
+
+    monkeypatch.setattr(paired_telephony, "probe_audio", probe_with_bad_container_duration)
+    metadata = paired_telephony.transform_audio(
+        source, output, "bandlimit_8k_g711_alaw"
+    )
+
+    assert metadata["duration_delta_s"] <= 0.05
+    assert metadata["source_container_duration_s"] > metadata["source_duration_s"]

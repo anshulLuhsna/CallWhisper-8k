@@ -204,15 +204,18 @@ def transform_audio(source_path: Path, output_path: Path, condition: str) -> dic
         raise FileNotFoundError(source_path)
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
-    source_probe = probe_audio(source_path)
+    source_container_probe = probe_audio(source_path)
     with tempfile.TemporaryDirectory(dir=output_path.parent) as temporary_dir:
         temporary = Path(temporary_dir)
+        decoded_source = temporary / "decoded_source.wav"
         staged_output = temporary / "output.wav"
+        _decode_to_whisper_wav(source_path, decoded_source)
+        source_probe = probe_audio(decoded_source)
         if condition == "original":
-            _decode_to_whisper_wav(source_path, staged_output)
+            staged_output = decoded_source
         elif condition == "bandlimit_8k":
             _decode_to_whisper_wav(
-                source_path,
+                decoded_source,
                 staged_output,
                 f"{TELEPHONE_FILTER},aresample=8000,aresample=16000",
             )
@@ -227,7 +230,7 @@ def transform_audio(source_path: Path, output_path: Path, condition: str) -> dic
                     "-loglevel",
                     "error",
                     "-i",
-                    str(source_path),
+                    str(decoded_source),
                     "-vn",
                     "-af",
                     TELEPHONE_FILTER,
@@ -251,7 +254,7 @@ def transform_audio(source_path: Path, output_path: Path, condition: str) -> dic
                     "-loglevel",
                     "error",
                     "-i",
-                    str(source_path),
+                    str(decoded_source),
                     "-vn",
                     "-af",
                     TELEPHONE_FILTER,
@@ -285,6 +288,7 @@ def transform_audio(source_path: Path, output_path: Path, condition: str) -> dic
         "source_sha256": sha256_file(source_path),
         "output_sha256": sha256_file(output_path),
         "source_duration_s": source_probe["duration_s"],
+        "source_container_duration_s": source_container_probe["duration_s"],
         "duration_s": output_probe["duration_s"],
         "duration_delta_s": duration_delta,
         "sample_rate_hz": output_probe["sample_rate_hz"],
