@@ -56,7 +56,7 @@ The absolute WER values must not be compared across datasets because Vaani uses 
 
 ## Adaptation Decision
 
-The compact-model adaptation target is now supported. Start from Adalat Whisper-small and train only on leakage-safe training data with balanced clean and telephony-channel replay. The objective is to keep its speed advantage while reducing the channel penalty on both frozen benchmarks.
+The compact-model adaptation target is now supported. Start from Adalat Whisper-small and train only on leakage-safe training data. The verified GramVaani inventory is already telephone speech and no substantial clean Hindi training corpus is currently available in Drive, so the first experiment keeps every selected released source and adds balanced channel-stress views to one-third of sources. The objective is to keep Adalat's speed advantage while reducing the channel penalty on both frozen benchmarks.
 
 Predeclared final gate:
 

@@ -182,6 +182,8 @@ The 500-speaker run rejects that smoke artifact. ARTPARK's pooled channel penalt
 
 [Notebook 13](notebooks/13_lahaja_external_paired_replication_colab.ipynb) passed the external replication gate on one deterministic utterance from each of LAHAJA's 132 speakers. ARTPARK's pooled telephone penalty was `+0.0058` WER and Adalat's was `+0.0350`; the Adalat-minus-ARTPARK penalty gap was `+0.0292` with 95% CI `[+0.0137, +0.0459]`. Adalat was about `1.88x` faster, and neither the original-audio nor pooled-telephone absolute model gap established a winner at 95% confidence. See [results/lahaja_paired_external_v1.md](results/lahaja_paired_external_v1.md). The compact adaptation target is now supported: retain Adalat's efficiency while reducing its replicated telephone fragility.
 
+[Notebook 14](notebooks/14_adalat_channel_adaptation_colab.ipynb) is the resulting serious adaptation run. It LoRA-adapts the pinned Adalat Whisper-small checkpoint using the 100.68-hour GramVaani training inventory, a recording-group-disjoint internal split, and a training mix of 75% released telephone sources plus 25% additional balanced channel stress. The default serious profile uses 18,000 source clips and about 65.36 view-hours. It proceeds to the frozen benchmarks only if internal pooled telephone WER improves while relative WER regression on the released source channel remains at or below 5%. GramVaani is already telephone audio, so the notebook deliberately does not call its unmodified rows "clean replay."
+
 The first non-ARTPARK challenger notebook is [notebooks/07_whisper_large_v3_challenger.ipynb](notebooks/07_whisper_large_v3_challenger.ipynb).
 
 The first compact adapter artifact is committed under:

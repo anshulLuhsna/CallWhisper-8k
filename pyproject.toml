@@ -53,6 +53,7 @@ callwhisper-review-summary = "callwhisper.eval.review_summary:main"
 callwhisper-gramvaani-inventory = "callwhisper.datasets.gramvaani_inventory:main"
 callwhisper-metadata-audit = "callwhisper.datasets.metadata_audit:main"
 callwhisper-paired-bootstrap = "callwhisper.eval.paired_bootstrap:main"
+callwhisper-channel-splits = "callwhisper.datasets.channel_adaptation:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/callwhisper"]

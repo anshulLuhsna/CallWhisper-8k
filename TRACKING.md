@@ -2,9 +2,9 @@
 
 ## Current Week
 
-Week: benchmark expansion and error diagnostics
-Tag target: v0.4-benchmark
-This week's non-negotiable deliverable: validate the expanded 100-file comparison, then diagnose the strongest model's remaining native-8-kHz failures.
+Week: compact telephone adaptation
+Tag target: v0.5-channel-adaptation
+This week's non-negotiable deliverable: train one leakage-aware Adalat-small LoRA adapter, pass its held-out channel gate, then evaluate it once on the frozen Vaani and LAHAJA benchmarks.
 
 ## Daily Log
 
@@ -161,8 +161,18 @@ This week's non-negotiable deliverable: validate the expanded 100-file compariso
 - Tradeoff: Adalat was about `1.88x` faster and had nominally lower original-audio WER on LAHAJA, but neither the original-audio nor pooled-telephone absolute model gap excluded zero. The defensible claim is robustness difference, not global model superiority.
 - Done: Added exact user-returned LAHAJA tables and the machine-readable conclusion under `results/lahaja_paired_external_v1/`, with the narrative report at `results/lahaja_paired_external_v1.md`.
 - Open check: The final Drive report bundle was not visible through Drive web/connector at ingestion time, and Transformers emitted an attention-mask warning. Recover the raw predictions and run a small equivalence audit before publication-final scoring.
-- Decision: Proceed to leakage-safe, channel-balanced adaptation of Adalat Whisper-small with clean replay. Benchmark clips remain evaluation-only.
+- Decision: Proceed to leakage-safe, channel-balanced adaptation of Adalat Whisper-small. Benchmark clips remain evaluation-only.
 - Next action: archive raw Notebook 13 predictions, audit the attention-mask behavior, add frozen demographic slices, then build the benchmark-disjoint training/internal-validation manifests.
+
+### 2026-07-17 channel adaptation gate
+
+- Done: Verified the Drive inventory contains 37,023 accepted GramVaani training clips totaling 100.68 hours, including 22,665 native-8-kHz clips. No substantial clean Hindi training corpus is currently present in Drive; the 50-clip FLEURS control remains evaluation-only.
+- Decision: Do not mislabel GramVaani source audio as clean replay. The first adaptation recipe keeps every selected released telephone source and adds one balanced bandwidth/G.711/GSM stress view to one-third of sources, producing an approximately 75% source / 25% extra-stress mix.
+- Done: Added deterministic recording-group-disjoint split tooling and audit manifests. The serious profile selects 18,000 training sources, 23,989 training views, 65.36 view-hours, 500 loss-evaluation views, and zero recording-group overlap. Speaker-disjointness is not claimed because the released inventory has no speaker IDs.
+- Done: Added [notebook 14](notebooks/14_adalat_channel_adaptation_colab.ipynb), a one-click T4 LoRA run for the pinned Adalat-small checkpoint with visible cache/training/evaluation progress, durable Drive checkpoint resume, attention masks, a paired internal WER audit, artifact hashes, and a browser-download backup.
+- Fixed: Notebook 13 now writes masked rerun outputs to a new `lahaja_paired_external_v2_masked` directory, passes the Whisper attention mask during generation, includes content hashes inside its report archive, and downloads an independent backup.
+- Gate: Continue to the frozen benchmarks only if adapted pooled telephone WER is lower than base and relative original-channel WER regression is at most 5%.
+- Next action: Push these changes, rerun Notebook 13 once for publication-final masked results, then run Notebook 14 with `RUN_PROFILE = "serious"`.
 
 ## Scoreboard
 
