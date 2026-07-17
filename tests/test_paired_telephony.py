@@ -153,3 +153,16 @@ def test_duration_validation_uses_decoded_audio_not_container_metadata(
 
     assert metadata["duration_delta_s"] <= 0.05
     assert metadata["source_container_duration_s"] > metadata["source_duration_s"]
+
+
+def test_duration_conformance_trims_codec_padding(tmp_path: Path) -> None:
+    padded = tmp_path / "padded.wav"
+    conformed = tmp_path / "conformed.wav"
+    sf.write(padded, np.zeros(int(16000 * 0.45), dtype=np.float32), 16000)
+
+    paired_telephony._conform_whisper_wav_duration(
+        padded, conformed, expected_frames=int(16000 * 0.25)
+    )
+
+    assert paired_telephony._pcm_frame_count(conformed) == int(16000 * 0.25)
+    assert math.isclose(probe_audio(conformed)["duration_s"], 0.25, abs_tol=0.002)

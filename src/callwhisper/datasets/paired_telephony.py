@@ -7,6 +7,7 @@ import json
 import shutil
 import subprocess
 import tempfile
+import wave
 from collections import defaultdict, deque
 from pathlib import Path
 from typing import Any, Iterable
@@ -196,6 +197,25 @@ def _decode_to_whisper_wav(input_path: Path, output_path: Path, filters: str | N
     _run(command)
 
 
+def _pcm_frame_count(path: Path) -> int:
+    with wave.open(str(path), "rb") as handle:
+        if handle.getframerate() != 16000 or handle.getnchannels() != 1:
+            raise ValueError(f"Expected mono 16 kHz PCM WAV: {path}")
+        return handle.getnframes()
+
+
+def _conform_whisper_wav_duration(
+    input_path: Path, output_path: Path, expected_frames: int
+) -> None:
+    if expected_frames <= 0:
+        raise ValueError("expected_frames must be positive")
+    _decode_to_whisper_wav(
+        input_path,
+        output_path,
+        f"apad,atrim=end_sample={expected_frames}",
+    )
+
+
 def transform_audio(source_path: Path, output_path: Path, condition: str) -> dict[str, Any]:
     """Apply one predeclared channel and return portable validation metadata."""
     if condition not in CONDITIONS:
@@ -211,6 +231,7 @@ def transform_audio(source_path: Path, output_path: Path, condition: str) -> dic
         staged_output = temporary / "output.wav"
         _decode_to_whisper_wav(source_path, decoded_source)
         source_probe = probe_audio(decoded_source)
+        expected_frames = _pcm_frame_count(decoded_source)
         if condition == "original":
             staged_output = decoded_source
         elif condition == "bandlimit_8k":
@@ -271,14 +292,35 @@ def transform_audio(source_path: Path, output_path: Path, condition: str) -> dic
             )
             _decode_to_whisper_wav(encoded, staged_output)
 
+        raw_output_probe = probe_audio(staged_output)
+        preconform_duration_delta = abs(
+            raw_output_probe["duration_s"] - source_probe["duration_s"]
+        )
+        tolerance = max(0.05, source_probe["duration_s"] * 0.01)
+        hard_tolerance = max(0.5, source_probe["duration_s"] * 0.05)
+        if (
+            raw_output_probe["sample_rate_hz"] != 16000
+            or raw_output_probe["channels"] != 1
+        ):
+            raise ValueError(f"Invalid output format for {condition}: {raw_output_probe}")
+        if preconform_duration_delta > hard_tolerance:
+            raise ValueError(
+                f"Duration changed by {preconform_duration_delta:.3f}s for {condition}; "
+                f"hard tolerance={hard_tolerance:.3f}s"
+            )
+        duration_conformed = preconform_duration_delta > tolerance
+        if duration_conformed:
+            conformed_output = temporary / "conformed_output.wav"
+            _conform_whisper_wav_duration(
+                staged_output, conformed_output, expected_frames
+            )
+            staged_output = conformed_output
+
         output_probe = probe_audio(staged_output)
         duration_delta = abs(output_probe["duration_s"] - source_probe["duration_s"])
-        tolerance = max(0.05, source_probe["duration_s"] * 0.01)
-        if output_probe["sample_rate_hz"] != 16000 or output_probe["channels"] != 1:
-            raise ValueError(f"Invalid output format for {condition}: {output_probe}")
-        if duration_delta > tolerance:
+        if duration_delta > 0.002:
             raise ValueError(
-                f"Duration changed by {duration_delta:.3f}s for {condition}; tolerance={tolerance:.3f}s"
+                f"Duration conformance failed by {duration_delta:.3f}s for {condition}"
             )
         shutil.move(staged_output, output_path)
 
@@ -291,6 +333,8 @@ def transform_audio(source_path: Path, output_path: Path, condition: str) -> dic
         "source_container_duration_s": source_container_probe["duration_s"],
         "duration_s": output_probe["duration_s"],
         "duration_delta_s": duration_delta,
+        "preconform_duration_delta_s": preconform_duration_delta,
+        "duration_conformed": duration_conformed,
         "sample_rate_hz": output_probe["sample_rate_hz"],
         "channels": output_probe["channels"],
     }
