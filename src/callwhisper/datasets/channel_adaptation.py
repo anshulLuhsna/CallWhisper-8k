@@ -7,12 +7,19 @@ import csv
 import json
 from collections import Counter
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any, Iterable, Sequence
 
 from .paired_telephony import CONDITIONS, stable_key
 
 
 TELEPHONE_CONDITIONS = tuple(condition for condition in CONDITIONS if condition != "original")
+
+
+def effective_label_token_count(token_ids: Sequence[int], bos_token_id: int | None) -> int:
+    """Count labels after the Whisper collator removes a shared BOS token."""
+    if token_ids and bos_token_id is not None and token_ids[0] == bos_token_id:
+        return len(token_ids) - 1
+    return len(token_ids)
 
 
 def recording_group_id(utterance_id: str) -> str:

@@ -9,6 +9,7 @@ from callwhisper.datasets.channel_adaptation import (
     build_internal_eval_views,
     build_paired_eval_views,
     build_training_views,
+    effective_label_token_count,
     recording_group_id,
     split_inventory,
 )
@@ -25,6 +26,12 @@ def row(utterance_id: str, rate_group: str = "native_8khz") -> dict[str, str]:
         "source_rate_group": rate_group,
         "transcript_flags": "",
     }
+
+
+def test_effective_label_token_count_removes_only_leading_bos() -> None:
+    assert effective_label_token_count([50258, 1, 2], 50258) == 2
+    assert effective_label_token_count([1, 2, 3], 50258) == 3
+    assert effective_label_token_count([], 50258) == 0
 
 
 def test_recording_group_id() -> None:
