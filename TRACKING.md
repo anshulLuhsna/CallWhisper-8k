@@ -174,6 +174,13 @@ This week's non-negotiable deliverable: train one leakage-aware Adalat-small LoR
 - Gate: Continue to the frozen benchmarks only if adapted pooled telephone WER is lower than base and relative original-channel WER regression is at most 5%.
 - Next action: Push these changes, rerun Notebook 13 once for publication-final masked results, then run Notebook 14 with `RUN_PROFILE = "serious"`.
 
+### 2026-07-24 frozen adapter evaluation
+
+- Done: Notebook 14's serious run passed its recording-group-held-out internal gate and saved the fixed `serious_labelsafe_v1` adapter.
+- Done: Added [notebook 15](notebooks/15_adalat_frozen_evaluation_colab.ipynb), a restartable T4 evaluation on the already frozen Vaani and LAHAJA paired benchmarks. It performs no training, audits attention-mask compatibility before reusing prior baselines, checkpoints every prediction to Drive, and writes 20,000-replicate paired-bootstrap gates.
+- Gate: External generalization requires a statistically supported pooled telephone WER improvement over base Adalat on both benchmarks, with original-audio relative WER regression at or below 5%.
+- Next action: Run Notebook 15 once with **Run all**, then return `final_frozen_gate.json`, `vaani_summary.csv`, and `lahaja_summary.csv`. Do not tune or rerun Notebook 14 based on the frozen results.
+
 ## Scoreboard
 
 - Day-2 WER number shipped: yes

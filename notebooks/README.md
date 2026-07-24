@@ -34,6 +34,9 @@ Run order:
 12. `11b_vaani_stacked_codec_repair_colab.ipynb` - one-time CPU repair for completed v1 runs; reuses source/original/bandlimit archives and regenerates only the three stacked codec conditions
 13. `12_vaani_paired_artpark_adalat_smoke_colab.ipynb` - restartable T4 evaluation of pinned ARTPARK medium and Adalat Whisper-small on the frozen 500-speaker Vaani paired benchmark, using alignment-based multi-reference WER
 14. `13_lahaja_external_paired_replication_colab.ipynb` - one-click T4 external replication on one deterministic clip from each of LAHAJA's 132 speakers; builds the same five channels, evaluates both pinned models, and writes single-reference WER/CER plus 20,000 speaker-bootstrap intervals
+15. `14a_adalat_channel_cache_cpu_colab.ipynb` - resumable CPU preparation of the deterministic GramVaani channel cache used by the serious adaptation run
+16. `14_adalat_channel_adaptation_colab.ipynb` - restartable T4 LoRA adaptation of pinned Adalat-small with a recording-group-disjoint internal gate
+17. `15_adalat_frozen_evaluation_colab.ipynb` - the one authorized post-adaptation evaluation on frozen Vaani and LAHAJA, with paired-bootstrap external gates
 
 Notebook 11 requires accepted access to the gated [`ARTPARK-IISc/Vaani-Benchmark-V1.0`](https://huggingface.co/datasets/ARTPARK-IISc/Vaani-Benchmark-V1.0) dataset and a read-only `HF_TOKEN` in Colab Secrets. It downloads the exact pinned revision, infers and records the dataset schema, exports audio without TorchCodec decoding, then saves source plus per-condition archives under:
 
@@ -54,6 +57,20 @@ MyDrive/call-whisper/results/lahaja_paired_external_v1/
 ```
 
 The primary external-replication result is the pooled `channel_penalty_gap` in `replication_conclusion.json`. Absolute LAHAJA WER is single-reference and must not be compared directly with Vaani's multi-reference WER.
+
+Notebook 15 is the next step after Notebook 14 returns
+`pass_to_frozen_benchmarks`. It does not train or tune. It restores the existing
+Vaani and LAHAJA archives, evaluates the fixed `serious_labelsafe_v1` adapter,
+and writes restartable outputs under:
+
+```text
+MyDrive/call-whisper/results/adalat_frozen_evaluation_v1/
+```
+
+Run it on a T4 with **Run all**. Existing base and ARTPARK predictions are reused
+only after a deterministic attention-mask audit produces identical normalized
+text; otherwise the affected baseline is recomputed. Read
+`final_frozen_gate.json` first when the run completes.
 
 Before running, put the GramVaani audio somewhere Colab can access. The notebooks now expect this Google Drive layout:
 
