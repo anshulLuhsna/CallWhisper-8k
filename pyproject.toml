@@ -9,8 +9,19 @@ description = "Reproducible benchmark and inference pipeline for 8 kHz telephony
 readme = "README.md"
 requires-python = ">=3.10"
 license = { file = "LICENSE" }
+keywords = ["asr", "whisper", "hindi", "telephony", "speech-recognition", "benchmark"]
 authors = [
   { name = "Anshul" }
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
 ]
 dependencies = [
   "jiwer>=3.0.4",
@@ -54,6 +65,10 @@ callwhisper-gramvaani-inventory = "callwhisper.datasets.gramvaani_inventory:main
 callwhisper-metadata-audit = "callwhisper.datasets.metadata_audit:main"
 callwhisper-paired-bootstrap = "callwhisper.eval.paired_bootstrap:main"
 callwhisper-channel-splits = "callwhisper.datasets.channel_adaptation:main"
+
+[project.urls]
+Repository = "https://github.com/anshulLuhsna/CallWhisper-8k"
+Documentation = "https://github.com/anshulLuhsna/CallWhisper-8k#readme"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/callwhisper"]

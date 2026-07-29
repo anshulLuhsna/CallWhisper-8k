@@ -179,7 +179,11 @@ This week's non-negotiable deliverable: train one leakage-aware Adalat-small LoR
 - Done: Notebook 14's serious run passed its recording-group-held-out internal gate and saved the fixed `serious_labelsafe_v1` adapter.
 - Done: Added [notebook 15](notebooks/15_adalat_frozen_evaluation_colab.ipynb), a restartable T4 evaluation on the already frozen Vaani and LAHAJA paired benchmarks. It performs no training, audits attention-mask compatibility before reusing prior baselines, checkpoints every prediction to Drive, and writes 20,000-replicate paired-bootstrap gates.
 - Gate: External generalization requires a statistically supported pooled telephone WER improvement over base Adalat on both benchmarks, with original-audio relative WER regression at or below 5%.
-- Next action: Run Notebook 15 once with **Run all**, then return `final_frozen_gate.json`, `vaani_summary.csv`, and `lahaja_summary.csv`. Do not tune or rerun Notebook 14 based on the frozen results.
+- Done: Notebook 15 completed. Vaani pooled telephone WER worsened from `0.2022` to `0.2262`, with adapted-minus-base 95% CI `[+0.0158, +0.0320]`. LAHAJA changed from `0.2153` to `0.2189` and did not satisfy the absolute-improvement gate.
+- Done: Original-audio relative WER regressed by `14.47%` on Vaani and `10.96%` on LAHAJA, both above the predeclared 5% limit.
+- Decision: Final verdict is `fail_external_generalization`. Do not tune Notebook 14 against the now-observed Vaani or LAHAJA results.
+- Done: Added curated final outputs at `results/adalat_frozen_evaluation_v1.md` and `.json`.
+- Release framing: reproducible Hindi telephony benchmark plus an honest failed-adaptation case study; not a production-ready ASR service.
 
 ## Scoreboard
 
@@ -188,7 +192,8 @@ This week's non-negotiable deliverable: train one leakage-aware Adalat-small LoR
 - Preprocessing ablation shipped: yes
 - LoRA smoke test run: yes
 - Week-3 kill gate obeyed: yes, non-training adaptation was run before LoRA
-- v1.0 shipped: no
+- Public research release documentation ready: yes
+- Production API/Docker/demo shipped: no; intentionally not claimed by this release
 
 ## Cut List Temptations
 

@@ -1,8 +1,39 @@
-# GPU Notebooks
+# Experiment Notebooks
 
-These notebooks are designed for hosted GPU runs. The MacBook remains the development and quick-test machine; Colab/Kaggle is for slower model comparison and adaptation sweeps.
+These notebooks record the project from baseline evaluation through the final
+frozen adapter decision. CPU notebooks construct and validate datasets; GPU
+notebooks run model inference or training. Completed benchmark outputs are
+curated under [`results/`](../results/).
 
-For the expanded GramVaani 100-file benchmark, use the clean one-click Colab notebook:
+## Canonical Map
+
+| Notebook | Purpose | Status |
+|---|---|---|
+| 01 | OpenAI Whisper baseline on fixed GramVaani audio | complete |
+| 02 | Hindi-tuned model comparison | complete |
+| 03 | Decoding-only adaptation sweep | complete |
+| 04 | FLEURS clean Hindi control | complete |
+| 05 | Whisper-small LoRA pilot | complete |
+| 06 | Reload and verify committed pilot adapter | complete |
+| 07 | Large-v3 challenger experiment | historical branch |
+| 08 | First 100-file benchmark notebook | superseded by 09 |
+| 09 | Canonical 100-file GramVaani benchmark | complete |
+| 10 | GramVaani 100-hour inventory | complete |
+| 11 | Corrected paired Vaani audio construction | complete |
+| 11b | One-time repair of the earlier codec construction | historical repair |
+| 12 | Full paired Vaani ARTPARK-vs-Adalat evaluation | complete |
+| 13 | LAHAJA external replication | complete |
+| 14a | Resumable CPU channel-cache preparation | complete |
+| 14 | Serious Adalat LoRA adaptation and internal gate | complete |
+| 15 | Single frozen external adapter evaluation | complete; failed gate |
+
+The final model verdict is documented in
+[`results/adalat_frozen_evaluation_v1.md`](../results/adalat_frozen_evaluation_v1.md).
+
+## Running The Benchmark
+
+For the expanded GramVaani 100-file benchmark, use the clean one-click Colab
+notebook:
 
 ```text
 09_gramvaani_100_colab_clean.ipynb
@@ -58,19 +89,20 @@ MyDrive/call-whisper/results/lahaja_paired_external_v1/
 
 The primary external-replication result is the pooled `channel_penalty_gap` in `replication_conclusion.json`. Absolute LAHAJA WER is single-reference and must not be compared directly with Vaani's multi-reference WER.
 
-Notebook 15 is the next step after Notebook 14 returns
-`pass_to_frozen_benchmarks`. It does not train or tune. It restores the existing
-Vaani and LAHAJA archives, evaluates the fixed `serious_labelsafe_v1` adapter,
-and writes restartable outputs under:
+Notebook 15 was the one authorized step after Notebook 14 returned
+`pass_to_frozen_benchmarks`. It did not train or tune. It restored the existing
+Vaani and LAHAJA archives, evaluated the fixed `serious_labelsafe_v1` adapter,
+and wrote restartable outputs under:
 
 ```text
 MyDrive/call-whisper/results/adalat_frozen_evaluation_v1/
 ```
 
-Run it on a T4 with **Run all**. Existing base and ARTPARK predictions are reused
-only after a deterministic attention-mask audit produces identical normalized
-text; otherwise the affected baseline is recomputed. Read
-`final_frozen_gate.json` first when the run completes.
+The run completed with verdict `fail_external_generalization`. Existing base
+and ARTPARK predictions were reused only after a deterministic attention-mask
+audit produced identical normalized text; otherwise the affected baseline was
+recomputed. Read `final_frozen_gate.json` first in the Drive bundle, or use the
+curated repository report linked above.
 
 Before running, put the GramVaani audio somewhere Colab can access. The notebooks now expect this Google Drive layout:
 

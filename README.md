@@ -1,263 +1,296 @@
 # CallWhisper-8k
 
-Reproducible benchmark and inference pipeline for 8 kHz telephony-style ASR, focused on Hindi and Indian narrowband speech.
+[![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-3776AB)](pyproject.toml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
-## Results Snapshot
+A reproducible benchmark for Hindi telephony ASR, plus an honest case study of
+a Whisper-small LoRA adapter that improved in-domain and failed on frozen
+external benchmarks.
 
-CallWhisper-8k currently has three result tracks:
+> **Project status:** research and ML engineering artifact. This repository is
+> not presented as a production-ready ASR service.
 
-1. fixed-slice benchmarking of Whisper-family and Hindi-tuned ASR models,
-2. preprocessing and decoding ablations,
-3. compact Whisper-small LoRA adaptation for edge-oriented Hindi telephony ASR.
+## Bottom Line
 
-The current research direction is now more specific than another WER table or generic fine-tune: [`TELEPHONY_TAX_RESEARCH_PLAN.md`](TELEPHONY_TAX_RESEARCH_PLAN.md) defines a paired, multi-reference study of Hindi ASR under narrowband codecs, followed by a compact mitigation model evaluated against ARTPARK under a frozen win condition.
+The benchmark succeeded. The final model adaptation did not.
 
-The expanded GPU benchmark evaluates the same 100 GramVaani files with every model and reports the native 8 kHz and higher-rate subsets separately:
+1. A compact Adalat Whisper-small model was about `1.88x` faster than ARTPARK
+   Whisper-medium on a T4, but it lost more accuracy when the same speech was
+   converted to telephone-quality audio.
+2. That channel-robustness gap appeared on 500 Vaani speakers and replicated on
+   132 LAHAJA speakers.
+3. LoRA training substantially improved Adalat on held-out GramVaani data, but
+   the fixed adapter became worse on the untouched Vaani and LAHAJA benchmarks.
+4. The final verdict was `fail_external_generalization`.
 
-| Model | Mixed 100 WER | Native 8 kHz WER | High-rate WER |
+This is evidence for a robustness-efficiency tradeoff and for the importance of
+frozen external evaluation. It is not evidence that the adapted model is ready
+for deployment.
+
+For the complete non-technical story, read
+[The Whole Project in Plain English](PROJECT_JOURNEY_PLAIN_ENGLISH.md).
+
+## Headline Results
+
+### 1. Paired Telephone Robustness
+
+Each model transcribed the same utterances in five matched conditions:
+original, 8 kHz bandlimited, G.711 A-law, G.711 mu-law, and GSM-FR. The channel
+penalty is pooled telephone WER minus original WER. Lower is better.
+
+| Benchmark | Speakers | ARTPARK penalty | Adalat penalty | Adalat minus ARTPARK | 95% CI |
+|---|---:|---:|---:|---:|---:|
+| Vaani | 500 | +0.0049 | +0.0280 | **+0.0232** | [+0.0166, +0.0300] |
+| LAHAJA | 132 | +0.0058 | +0.0350 | **+0.0292** | [+0.0137, +0.0459] |
+
+The confidence intervals are entirely above zero on both datasets. On these
+fixed slices and transforms, Adalat was consistently more channel-sensitive
+than ARTPARK.
+
+Reports:
+[Vaani](results/vaani_paired_model_full_v1.md) and
+[LAHAJA](results/lahaja_paired_external_v1.md).
+
+### 2. The Adaptation Failure
+
+The serious LoRA run used 18,000 GramVaani source clips, about 65 view-hours,
+3,000 optimizer steps, and a recording-group-disjoint internal split.
+
+| Evaluation | Metric | Base Adalat | Adapted Adalat | Outcome |
+|---|---|---:|---:|---|
+| Internal GramVaani | Original WER | 0.6031 | **0.4991** | improved |
+| Internal GramVaani | Pooled telephone WER | 0.6122 | **0.5087** | improved |
+| Frozen Vaani | Original WER | **0.1741** | 0.1993 | regressed |
+| Frozen Vaani | Pooled telephone WER | **0.2022** | 0.2262 | regressed |
+| Frozen LAHAJA | Original WER | **0.1802** | 0.2000 | regressed |
+| Frozen LAHAJA | Pooled telephone WER | **0.2153** | 0.2189 | no improvement |
+
+On Vaani, adapted minus base pooled WER was `+0.0240`, with a paired 95%
+interval of `[+0.0158, +0.0320]`. The harm was statistically supported. On
+LAHAJA, the pooled difference was uncertain, but the adapter still failed the
+predeclared absolute-improvement and clean-regression gates.
+
+The likely explanation is domain overfitting: the adapter learned GramVaani's
+speech and transcript patterns more than general telephone robustness.
+
+Full report:
+[Frozen Adalat Evaluation](results/adalat_frozen_evaluation_v1.md).
+
+### 3. Fixed-Slice Model Comparison
+
+The same 100 GramVaani files were evaluated with each model. This is useful
+engineering evidence, not a global leaderboard.
+
+| Model | Mixed WER | Native 8 kHz WER | Higher-rate WER |
 |---|---:|---:|---:|
 | Whisper medium | 0.7182 | 0.7889 | 0.6281 |
 | Whisper large-v3 | 0.5182 | 0.6083 | 0.4036 |
-| ARTPARK-IISc/whisper-medium-vaani-hindi | **0.2565** | **0.3091** | **0.1895** |
+| ARTPARK Whisper-medium Vaani Hindi | **0.2565** | **0.3091** | **0.1895** |
 
-See [results/model_comparison_v2.md](results/model_comparison_v2.md). On this fixed slice, ARTPARK had the lowest WER/CER on all three views. Every model performed worse on the native 8 kHz subset than on the higher-rate subset, but source rate is not the only difference between those groups.
+The natural source-rate groups are confounded by speaker, gender, topic, noise,
+and transcript quality. They motivated the later same-utterance paired design;
+they do not establish a causal 8 kHz penalty by themselves.
 
-That caveat is now measured across all 1,885 local GramVaani dev clips. Dataset-provided gender has Cramer's V `0.543` with source-rate group: `76.3%` of male-labeled clips are native 8 kHz versus `18.1%` of female-labeled clips, an odds ratio of `14.59`. Inaudibility flags are also concentrated in the native-8-kHz group. See [results/gramvaani_source_rate_confound_audit_v1.md](results/gramvaani_source_rate_confound_audit_v1.md). The natural source-rate split is a deployment view, not a causal channel experiment.
+Report: [Model Comparison v2](results/model_comparison_v2.md).
 
-The strongest new adaptation result is the Kaggle LoRA pilot:
+## Why This Benchmark Is Different
 
-| Experiment | Slice | Beams | WER Before | WER After | Change |
-|---|---|---:|---:|---:|---:|
-| HF Whisper-small -> Whisper-small LoRA | gramvaani_dev_50 | 5 | 1.0303 | 0.7532 | -0.2771 |
-| HF Whisper-small -> Whisper-small LoRA | gramvaani_dev_50_8khz | 5 | 1.1595 | 0.8946 | -0.2649 |
-| HF Whisper-small -> Whisper-small LoRA | gramvaani_dev_50_highrate | 5 | 0.8006 | 0.5018 | -0.2988 |
+A weak comparison takes unrelated clean and telephone recordings, then
+attributes every score difference to the channel. CallWhisper-8k instead keeps
+the speaker, utterance, words, and reference fixed while changing only the
+audio condition.
 
-This is a same-pipeline base-vs-LoRA comparison from [results/lora_pilot_v1.md](results/lora_pilot_v1.md). It shows a real adaptation signal, but it is not a claim that the adapter beats the strongest Hindi-tuned public models.
+```mermaid
+flowchart LR
+    A["Frozen source utterance"] --> B["Original audio"]
+    A --> C["8 kHz bandlimit"]
+    A --> D["Bandlimit + G.711 A-law"]
+    A --> E["Bandlimit + G.711 mu-law"]
+    A --> F["Bandlimit + GSM-FR"]
+    B --> G["Pinned ASR models"]
+    C --> G
+    D --> G
+    E --> G
+    F --> G
+    G --> H["Normalized transcripts"]
+    H --> I["WER and CER"]
+    I --> J["Paired speaker bootstrap"]
+    J --> K["Markdown, CSV, and JSON reports"]
+```
 
-Baseline benchmarks on Gramvaani GV Dev telephone-style Hindi speech:
+The audio pipeline validates sample rate, channels, duration, completeness, and
+codec support. Manual listening caught an early transform error before model
+evaluation; those incorrect codec-only rows were superseded and never used for
+the headline result.
 
-| Model | Dataset Slice | Condition | WER | CER |
-|---|---|---|---:|---:|
-| Whisper tiny | gramvaani_dev_10 | telephone_mp3 | 1.5256 | 1.5637 |
-| Whisper base | gramvaani_dev_10 | telephone_mp3 | 0.9981 | 0.9250 |
-| Whisper small | gramvaani_dev_10 | telephone_mp3 | 0.8109 | 0.4963 |
-| Whisper small | gramvaani_dev_50 | telephone_mp3 | 0.8434 | 0.5598 |
-| Whisper small | gramvaani_dev_50 | mono_16khz_wav | 0.8327 | 0.5240 |
-| Whisper small | gramvaani_dev_50 | volume_normalized_wav | 0.8223 | 0.5087 |
-| Whisper small | gramvaani_dev_50 | telephone_bandpass_wav | 0.8452 | 0.5709 |
-| Whisper small | gramvaani_dev_50 | roundtrip_8k_wav | 0.8468 | 0.5457 |
-| Whisper medium | gramvaani_dev_50 | telephone_mp3 | 0.7683 | 0.4860 |
-| Whisper large-v3 | gramvaani_dev_50 | telephone_mp3 | 0.5616 | 0.3057 |
-| ARTPARK-IISc/whisper-medium-vaani-hindi | gramvaani_dev_50 | telephone_mp3 | 0.2597 | 0.1298 |
+## What Is Included
 
-Sample-rate split for the same Whisper `small` raw MP3 run:
-
-| Dataset Slice | Files | Source Sample Rate | WER | CER |
-|---|---:|---|---:|---:|
-| gramvaani_dev_50_8khz | 32 | 8 kHz | 0.9239 | 0.6528 |
-| gramvaani_dev_50_highrate | 18 | 44.1/48 kHz | 0.7003 | 0.3946 |
-
-This split is a benchmark quality check, not a final causal claim. The 8 kHz subset is harder on this slice, but transcript quality, speakers, topics, and noise may also differ.
-
-The earlier 50-file GPU comparison remains in [results/model_comparison_v1.md](results/model_comparison_v1.md). The 100-file v2 table above is the current headline comparison. Both are fixed-slice benchmark results, not global ASR model rankings.
-
-Decoding adaptation on Whisper `large-v3`:
-
-| Experiment | Slice | WER | CER |
-|---|---|---:|---:|
-| baseline manifest hint | gramvaani_dev_50 | 0.5616 | 0.3057 |
-| beam size 5 | gramvaani_dev_50 | 0.5248 | 0.2861 |
-| auto language detection | gramvaani_dev_50 | 0.6685 | 0.4654 |
-
-See [results/adaptation_v1.md](results/adaptation_v1.md). On this slice, beam search helped, while prompt biasing and auto language detection hurt.
-
-Clean Hindi control:
-
-| Model | FLEURS Clean WER | GramVaani Mixed WER | GramVaani 8 kHz WER |
-|---|---:|---:|---:|
-| Whisper medium | 0.4363 | 0.7683 | 0.8108 |
-| Whisper large-v3 | 0.3112 | 0.5616 | 0.6511 |
-| ARTPARK-IISc/whisper-medium-vaani-hindi | 0.1326 | 0.2597 | 0.2900 |
-
-See [results/clean_control_v1.md](results/clean_control_v1.md). FLEURS and GramVaani differ in channel and domain, so this is a practical clean-control comparison rather than a claim about channel alone.
-
-Whisper-small LoRA pilot on Kaggle:
-
-| Slice | Beams | Base HF Whisper-small WER | LoRA Whisper-small WER | Delta |
-|---|---:|---:|---:|---:|
-| gramvaani_dev_50 | 5 | 1.0303 | 0.7532 | -0.2771 |
-| gramvaani_dev_50_8khz | 5 | 1.1595 | 0.8946 | -0.2649 |
-| gramvaani_dev_50_highrate | 5 | 0.8006 | 0.5018 | -0.2988 |
-
-See [results/lora_pilot_v1.md](results/lora_pilot_v1.md). This is a same-pipeline base-vs-LoRA comparison, not a claim that the adapter beats the strongest Hindi-tuned public models.
-
-Committed adapter reload evaluation on Colab:
-
-| Slice | Beams | Base HF Whisper-small WER | LoRA Whisper-small WER | Delta |
-|---|---:|---:|---:|---:|
-| gramvaani_dev_50 | 1 | 1.5187 | 0.7473 | -0.7714 |
-| gramvaani_dev_50 | 5 | 1.0292 | 0.7532 | -0.2760 |
-| gramvaani_dev_50_8khz | 1 | 1.7725 | 0.8708 | -0.9016 |
-| gramvaani_dev_50_8khz | 5 | 1.1579 | 0.8946 | -0.2633 |
-| gramvaani_dev_50_highrate | 1 | 1.0675 | 0.5277 | -0.5398 |
-| gramvaani_dev_50_highrate | 5 | 0.8006 | 0.5018 | -0.2988 |
-| fleurs_hi_clean_50 | 1 | 0.7686 | 0.5236 | -0.2450 |
-| fleurs_hi_clean_50 | 5 | 0.5667 | 0.5128 | -0.0539 |
-
-See [results/lora_reload_eval_colab_v1.md](results/lora_reload_eval_colab_v1.md). This verifies that the committed adapter reloads and improves over base HF Whisper-small on the fixed GramVaani slices and the small FLEURS clean-control slice.
-
-First diagnostic benchmark flags beyond WER/CER:
-
-| Model | Slice | Beams | Hallucination Risk Rate | Repetition Rate |
-|---|---|---:|---:|---:|
-| HF Whisper-small base | gramvaani_dev_50 | 1 | 0.3200 | 0.3200 |
-| HF Whisper-small base | gramvaani_dev_50_8khz | 1 | 0.3125 | 0.3125 |
-| HF Whisper-small LoRA | gramvaani_dev_50 | 1 | 0.0800 | 0.0800 |
-| HF Whisper-small LoRA | gramvaani_dev_50_8khz | 1 | 0.1250 | 0.1250 |
-
-See [results/benchmark_diagnostics_v1.md](results/benchmark_diagnostics_v1.md). These are heuristic flags for repetition loops, length explosions, script drift, and near-empty outputs; they are meant to complement WER/CER, not replace them.
-
-Expanded 100-file diagnostics:
-
-| Model | Slice | Hallucination Risk Rate | Empty/Near-Empty Rate |
-|---|---|---:|---:|
-| ARTPARK Vaani Hindi | gramvaani_dev_100_8khz | 0.0000 | 0.0000 |
-| Whisper large-v3 | gramvaani_dev_100_8khz | 0.0000 | 0.0179 |
-| Whisper medium | gramvaani_dev_100_8khz | 0.0000 | 0.0893 |
-
-See [results/benchmark_diagnostics_v2.md](results/benchmark_diagnostics_v2.md). These heuristic rates do not mean ARTPARK made no transcription errors; its native-8-kHz WER was `0.3091`. In per-file comparison, ARTPARK had lower WER than large-v3 on 53 of 56 native-8-kHz files, tied on 2, and had higher WER on 1. The 15 highest-ARTPARK-WER files are prepared in [results/artpark_8khz_error_review_v1.md](results/artpark_8khz_error_review_v1.md) for human listening.
-
-That listening review is now complete. Of the 15 deliberately difficult files, 6 were classified primarily as bad audio, 5 as model failures, 2 as questionable references, 1 as mixed, and 1 as uncertain. Four references were marked wrong or incomplete, with one more uncertain. See [results/artpark_8khz_manual_review_summary_v1.md](results/artpark_8khz_manual_review_summary_v1.md). These selected-tail counts diagnose error types; they are not estimates for the full benchmark.
-
-## Problem
-
-Whisper expects 16 kHz audio, while telephone audio is commonly narrowband 8 kHz. Feeding telephony audio incorrectly or assuming preprocessing helps can produce misleading results. This project measures Whisper behavior on real 8 kHz Hindi audio where possible, then compares it with synthetic telephony degradation on cleaner speech.
-
-## What This Project Shows
-
-- Baseline WER/CER for Whisper on narrowband or telephony-style Hindi speech.
-- Whether simple telephony preprocessing changes WER/CER on the chosen slice.
-- Controlled adaptation experiments, only after a working baseline exists.
-- A reproducible CLI/API artifact rather than a fine-tuning-first claim.
-- An ambitious compact-model adaptation track for edge Hindi telephony ASR, kept separate from the benchmark results until it is evaluated honestly.
-- A broader benchmark direction beyond WER/CER: channel robustness, transcript trust, hallucination/repetition flags, entity preservation, and deployability tradeoffs for Indian telephony ASR.
+- Manifest-driven Whisper evaluation with per-file WER/CER output.
+- Telephony transforms for 8 kHz bandlimiting, G.711 A-law, G.711 mu-law, and
+  GSM-FR.
+- Multi-reference Vaani scoring and conventional single-reference LAHAJA
+  scoring.
+- Speaker-clustered paired bootstrap intervals.
+- Metadata auditing, diagnostic flags, and human error-review tooling.
+- Reproducible Colab notebooks for benchmark construction, GPU inference,
+  LoRA training, checkpoint resume, and frozen evaluation.
+- A committed pilot LoRA adapter that can be reloaded and evaluated.
+- Curated Markdown, CSV, and JSON result artifacts.
 
 ## Quickstart
 
+### Install
+
 ```bash
+git clone https://github.com/anshulLuhsna/CallWhisper-8k.git
+cd CallWhisper-8k
 python -m venv .venv
 source .venv/bin/activate
 pip install -e ".[dev]"
 ```
 
-The Week 1 target command is:
+FFmpeg must be available on the system for audio conversion and Whisper
+inference.
+
+### Evaluate Your Own Audio
+
+Create a CSV manifest:
+
+```csv
+audio_path,reference_text,slice,condition,language
+data/example.wav,reference transcript,example,original,hi
+```
+
+Then run:
 
 ```bash
-python -m callwhisper.eval --manifest datasets/manifests/example.csv --model tiny
+callwhisper \
+  --manifest datasets/manifests/example.csv \
+  --model tiny \
+  --language-mode hi \
+  --output-json results/example_tiny.json
 ```
 
-For GPU model comparison, use the Colab notebooks in [notebooks](notebooks/README.md).
+The example manifest is a schema template; provide the referenced audio file
+locally. Raw datasets and audio are intentionally not committed.
 
-For the compact fine-tuning direction, see [EDGE_FINE_TUNING_PLAN.md](EDGE_FINE_TUNING_PLAN.md).
-
-For the expanded benchmark scope before the next fine-tuning push, see [BENCHMARK_EXPANSION_PLAN.md](BENCHMARK_EXPANSION_PLAN.md).
-
-For the current article-level thesis, paired benchmark protocol, predeclared ARTPARK win condition, and compact-model plan, see [TELEPHONY_TAX_RESEARCH_PLAN.md](TELEPHONY_TAX_RESEARCH_PLAN.md).
-
-For the current expanded diagnostics and human-review queue, see [results/benchmark_diagnostics_v2.md](results/benchmark_diagnostics_v2.md) and [results/artpark_8khz_error_review_v1.md](results/artpark_8khz_error_review_v1.md).
-
-For a first public update draft about the benchmark track, see [SOCIAL_POST_01_BENCHMARK.md](SOCIAL_POST_01_BENCHMARK.md).
-
-For the posting checklist, platform-specific launch copy, and visual asset, see [SOCIAL_POSTING_CHECKLIST.md](SOCIAL_POSTING_CHECKLIST.md), [SOCIAL_LAUNCH_PACKET.md](SOCIAL_LAUNCH_PACKET.md), [social_assets/benchmark_part1_card.png](social_assets/benchmark_part1_card.png), and [social_assets/benchmark_part1_card.svg](social_assets/benchmark_part1_card.svg).
-
-For the ARTPARK/Vaani competitive analysis and the next "beat ARTPARK honestly" experiment plan, see [ARTPARK_COMPETITIVE_ANALYSIS.md](ARTPARK_COMPETITIVE_ANALYSIS.md).
-
-The manual-review-informed training recipe is in [TARGETED_8KHZ_CHALLENGER_PLAN.md](TARGETED_8KHZ_CHALLENGER_PLAN.md).
-
-The 500-speaker v1 construction run passed every automated integrity check, but manual listening caught an important semantic issue before model evaluation: codec-only G.711/GSM rows sounded much closer to the original than the explicit 300-3400 Hz condition. See [results/vaani_paired_pilot_v1_validation.md](results/vaani_paired_pilot_v1_validation.md). The corrected v2 artifact is now frozen: 500 speakers, 2,500 complete paired files, zero missing or duration violations, and a passed listening check. See [results/vaani_paired_pilot_v2_validation.md](results/vaani_paired_pilot_v2_validation.md).
-
-Notebook 12's 10-speaker smoke gate completed all 100 predictions. ARTPARK pooled-telephone multi-reference WER was `0.1328` versus Adalat Whisper-small's `0.2398`; unexpectedly, ARTPARK scored better after degradation while Adalat worsened. Per-clip and fixed-reference checks show this is not only scorer arithmetic, but 10 speakers are far too few for a claim. See [results/vaani_paired_model_smoke_v1.md](results/vaani_paired_model_smoke_v1.md). [Notebook 12](notebooks/12_vaani_paired_artpark_adalat_smoke_colab.ipynb) now defaults to the frozen 500-speaker run and exports paired channel diagnostics.
-
-The 500-speaker run rejects that smoke artifact. ARTPARK's pooled channel penalty was `+0.0049` WER, while Adalat's was `+0.0280`; the paired-bootstrap penalty gap was `+0.0232` with 95% CI `[+0.0166, +0.0300]`. GSM-FR caused the largest penalty. See [results/vaani_paired_model_full_v1.md](results/vaani_paired_model_full_v1.md). ARTPARK was trained with Vaani data, so its absolute advantage on a Vaani-derived evaluation set is descriptive until exact overlap is excluded; the paired channel-sensitivity result is the stronger claim.
-
-[Notebook 13](notebooks/13_lahaja_external_paired_replication_colab.ipynb) passed the external replication gate on one deterministic utterance from each of LAHAJA's 132 speakers. ARTPARK's pooled telephone penalty was `+0.0058` WER and Adalat's was `+0.0350`; the Adalat-minus-ARTPARK penalty gap was `+0.0292` with 95% CI `[+0.0137, +0.0459]`. Adalat was about `1.88x` faster, and neither the original-audio nor pooled-telephone absolute model gap established a winner at 95% confidence. See [results/lahaja_paired_external_v1.md](results/lahaja_paired_external_v1.md). The compact adaptation target is now supported: retain Adalat's efficiency while reducing its replicated telephone fragility.
-
-[Notebook 14a](notebooks/14a_adalat_channel_cache_cpu_colab.ipynb) first prepares the 16 kHz channel cache on a CPU-only Colab runtime and checkpoints deterministic 500-file archives to Drive, making the long FFmpeg stage resumable without consuming GPU time. [Notebook 14](notebooks/14_adalat_channel_adaptation_colab.ipynb) then restores and verifies that cache on a T4 before LoRA-adapting the pinned Adalat Whisper-small checkpoint. The experiment uses the 100.68-hour GramVaani training inventory, a recording-group-disjoint internal split, and a mix of 75% released telephone sources plus 25% additional balanced channel stress. The default serious profile uses 18,000 source clips and about 65.36 view-hours. Sources whose references exceed Whisper's decoder limit are excluded consistently from training and internal evaluation, with an exported utterance-level audit; transcripts are never silently truncated. The run proceeds to the frozen benchmarks only if internal pooled telephone WER improves while relative WER regression on the released source channel remains at or below 5%. GramVaani is already telephone audio, so the notebook deliberately does not call its unmodified rows "clean replay."
-
-[Notebook 15](notebooks/15_adalat_frozen_evaluation_colab.ipynb) is the single frozen post-adaptation evaluation. It compares the fixed adapter with base Adalat on the untouched Vaani and LAHAJA paired benchmarks, runs 20,000 speaker-clustered bootstrap replicates, and separately tests the predeclared ARTPARK headline gate on Vaani. Prediction rows persist immediately to Drive and resume after interruption. This notebook must be run once without changing the adapter, benchmark rows, decoding settings, or success rule after seeing results.
-
-The first non-ARTPARK challenger notebook is [notebooks/07_whisper_large_v3_challenger.ipynb](notebooks/07_whisper_large_v3_challenger.ipynb).
-
-The first compact adapter artifact is committed under:
-
-```text
-models/whisper-small-lora-gramvaani-pilot-seed0/
-```
-
-That directory contains:
-
-```text
-final_adapter/   # LoRA adapter weights and config
-processor/       # Whisper processor/tokenizer files used with the adapter
-```
-
-Detailed pilot outputs are under:
-
-```text
-results/lora_pilot_seed0/
-results/lora_pilot_v1.md
-```
-
-To reload the committed adapter and re-run the same-pipeline base-vs-LoRA eval:
+### Reload the Committed Pilot Adapter
 
 ```bash
 pip install -e ".[finetune]"
 
 callwhisper-lora-eval \
   --manifest datasets/manifests/gramvaani_dev_50.csv \
-  --manifest datasets/manifests/gramvaani_dev_50_8khz.csv \
-  --manifest datasets/manifests/gramvaani_dev_50_highrate.csv \
   --adapter-dir models/whisper-small-lora-gramvaani-pilot-seed0/final_adapter \
   --processor-dir models/whisper-small-lora-gramvaani-pilot-seed0/processor \
   --output-dir results/lora_reload_eval
 ```
 
-Use a GPU runtime for this command when possible. CPU evaluation will work, but it will be slow.
+A GPU is recommended. The serious `serious_labelsafe_v1` adapter is preserved
+with its training artifacts in the experiment's persistent Drive output; the
+smaller pilot adapter is the model artifact committed here.
 
-## Datasets And Licenses
+## Reproducing The Evidence
 
-Raw audio is not committed to this repository. Dataset download scripts and manifests should reproduce slices locally.
+There are three reproduction levels:
 
-- OpenSLR SLR103 / MUCS Hindi: real 8 kHz Hindi speech anchor. Use for the first narrowband benchmark if it downloads cleanly.
-- Gramvaani GV Dev 5h: real spontaneous telephone-style Hindi speech used for the first smoke-test baseline. Academic use is free; commercial use requires permission from Gram Vaani.
-- Mozilla Common Voice Hindi: clean Hindi speech candidate for synthetic telephony degradation.
-- MUSAN: optional noise source for Week 2 SNR-controlled overlays.
+| Level | What you can do | Data access |
+|---|---|---|
+| Inspect | Read curated reports, configs, manifests, and aggregate results | none |
+| Local CLI | Run the evaluator on your own labelled audio | your own audio |
+| Full benchmark | Rebuild paired audio and rerun pinned models/notebooks | gated Vaani/LAHAJA access plus GramVaani files |
 
-See [datasets/README.md](datasets/README.md) for links, license notes, and current v1.0 dataset decisions.
+The canonical notebook sequence and status are documented in
+[notebooks/README.md](notebooks/README.md). Expensive runs pin model or dataset
+revisions, save prediction rows immediately, and resume from persistent
+checkpoints.
 
-## Evaluation Methodology
+## Repository Map
 
-Each manifest row points to one local audio file and one reference transcript. The eval runner transcribes each file with Whisper, normalizes reference and hypothesis text, then computes WER and CER.
-
-Manifest columns:
-
-```csv
-audio_path,reference_text,slice,condition,language
-data/slr103/hindi/test/audio.wav,नमस्ते दुनिया,slr103_hindi_test,raw_8khz,hi
+```text
+src/callwhisper/
+  audio/       telephony transforms and preprocessing
+  datasets/    manifest, inventory, cache, and metadata tools
+  eval/        inference, WER/CER, diagnostics, and paired bootstrap
+datasets/
+  manifests/   fixed benchmark manifests; raw audio is excluded
+models/
+  whisper-small-lora-gramvaani-pilot-seed0/
+notebooks/     17 staged CPU/GPU experiment notebooks
+results/       curated reports and machine-readable outputs
+tests/         unit tests for scoring, transforms, caches, and audits
 ```
+
+## Experimental Journey
+
+1. Established manifest-based Whisper evaluation on GramVaani.
+2. Compared model size and Hindi-tuned checkpoints on fixed files.
+3. Tested decoding changes; beam size 5 helped on the tested large-v3 slice.
+4. Added FLEURS Hindi as a cleaner control.
+5. Measured simple preprocessing; no method solved the telephone problem.
+6. Audited the confounded natural 8 kHz split.
+7. Built and validated matched telephony transforms.
+8. Found the ARTPARK-Adalat robustness gap on Vaani.
+9. Replicated it externally on LAHAJA.
+10. Trained a serious Adalat LoRA adapter and passed the internal gate.
+11. Ran one frozen external evaluation and rejected the adapter.
+
+The [plain-English project journey](PROJECT_JOURNEY_PLAIN_ENGLISH.md) explains
+each step, including the failed runs and what they taught us.
 
 ## Limitations
 
-- SLR103 is real 8 kHz Hindi speech, but it is not the same as natural call-center dialogue.
-- Gramvaani GV Dev is real telephone-style Hindi, but the current slice mixes 8 kHz, 44.1 kHz, and 48 kHz source files.
-- The initial sample-rate split shows higher error on the 8 kHz subset, but this should not be attributed to sample rate alone without manual audio review and a clean Hindi control.
-- Some Gramvaani references contain transcript-quality markers such as `<incomplete>`.
-- Common Voice synthetic telephony experiments are useful controls, not evidence of real telephone performance.
-- FLEURS Hindi is clean read speech, while GramVaani is spontaneous telephone-style speech. The clean-control comparison should not be treated as a pure channel-only ablation.
-- The LoRA pilot should be interpreted as a same-pipeline comparison against HF Whisper-small. It should not be directly compared against earlier OpenAI Whisper CLI numbers without rerunning those baselines in the same HF evaluation path.
-- The LoRA adapter improved over base HF Whisper-small on the small FLEURS clean-control slice, but that does not prove broad clean-speech robustness.
-- This project reports slice-specific WER/CER deltas. It does not claim to fix Whisper for telephony.
+- Results apply to the tested slices, checkpoints, decoding settings, and
+  simulated transforms. They do not represent every real phone call.
+- Vaani uses alignment-based multi-reference scoring; LAHAJA uses one
+  reference. Their absolute WER values should not be compared directly.
+- ARTPARK's published training mixture includes Vaani, so its absolute Vaani
+  ranking may be affected by training exposure. The externally replicated
+  paired channel-penalty gap is the stronger claim.
+- The LAHAJA replication uses one deterministic eligible utterance from each of
+  132 speakers.
+- GramVaani does not provide speaker IDs in the released inventory, so the
+  serious training split is recording-group-disjoint, not proven
+  speaker-disjoint.
+- The external benchmarks are now observed and must not be reused for tuning a
+  revised adapter. A new attempt needs a new untouched final holdout.
+- Raw speech is not redistributed. Users must follow each upstream dataset's
+  access and license terms.
+- The repository provides research tooling and notebooks, not a hosted API,
+  Docker deployment, streaming system, or production SLA.
 
-## Future Work
+## What Failed And What Comes Next
 
-See [FUTURE_WORK.md](FUTURE_WORK.md). New ideas go there unless they directly support the current weekly deliverable.
+The failed adapter is still useful: it proves the full training pipeline worked,
+including dataset preparation, LoRA, attention masks, label-length auditing,
+durable checkpoints, adapter reload, and frozen evaluation. What failed was
+generalization.
+
+A defensible next attempt would require:
+
+- broader Hindi and Hinglish training domains;
+- genuine clean replay rather than only already-telephone GramVaani audio;
+- clean-to-telephone paired augmentation;
+- multi-domain validation during training;
+- gentler adaptation and stronger regularization;
+- a new untouched external benchmark for the final decision.
+
+The existing Vaani and LAHAJA results should remain frozen evidence, not become
+another tuning loop.
+
+## Key Reports
+
+- [Final frozen adapter evaluation](results/adalat_frozen_evaluation_v1.md)
+- [Vaani paired model result](results/vaani_paired_model_full_v1.md)
+- [LAHAJA external replication](results/lahaja_paired_external_v1.md)
+- [GramVaani model comparison](results/model_comparison_v2.md)
+- [Preprocessing ablation](results/preprocessing_v1.md)
+- [Decoding adaptation](results/adaptation_v1.md)
+- [Manual audio review](results/manual_audio_review_v1.md)
+- [Committed LoRA pilot](results/lora_pilot_v1.md)
+
+## License
+
+The code is released under the [MIT License](LICENSE). Dataset licenses and
+access restrictions remain governed by their original publishers; see
+[datasets/README.md](datasets/README.md).

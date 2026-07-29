@@ -19,6 +19,7 @@ datasets/Metadata/
 # Benchmark outputs can be regenerated, but curated result summaries are kept.
 results/*.tmp.*
 results/raw/
+results/results/results/
 
 # Local Kaggle artifact downloads; curated copies live under models/ and results/.
 callwhisper_lora_pilot_seed0_artifacts/

@@ -1,44 +1,61 @@
 # Datasets
 
-This repository does not redistribute raw datasets. Keep downloaded audio under `data/`, which is ignored by git, and commit only scripts, manifests, documentation, and derived aggregate results.
+CallWhisper-8k does not redistribute raw speech. Keep downloaded audio in local
+or mounted storage and commit only manifests, scripts, metadata audits, and
+aggregate results.
 
-## v1.0 Dataset Plan
+## Datasets Used
 
-| Dataset | Role | Status | License / Use Notes |
-|---|---|---|---|
-| OpenSLR SLR103 / MUCS Hindi | Primary real 8 kHz Hindi anchor | Investigate first | OpenSLR lists Hindi train/test speech and transcripts, with 8 kHz 16-bit audio. Follow the linked license terms and do not commit raw audio. |
-| Mozilla Common Voice Hindi | Clean speech for synthetic telephony degradation | Fallback / comparison slice | Mozilla Data Collective lists Hindi Common Voice releases under CC0. Confirm release version in the manifest. |
-| MUSAN | Week 2 noise overlays | Optional | Commonly documented as CC BY 4.0. Attribution is required if used. |
-| NOIZEUS | Tiny enhancement reference | Optional only | Do not block Week 1 or Week 2 on this. |
+| Dataset | Project role | Access and use notes |
+|---|---|---|
+| GramVaani GV Dev 5h | Initial real telephone-style Hindi benchmark and manual error review | Obtain from the upstream OpenSLR/GramVaani release. Academic and commercial terms may differ; follow the publisher's current terms. |
+| GramVaani GV Train 100h | LoRA pilot and serious Adalat adaptation | Raw audio is not committed. The serious split is recording-group-disjoint because released speaker IDs are unavailable. |
+| Vaani Benchmark V1.0 | 500-speaker paired, multi-reference telephone robustness benchmark | Gated Hugging Face access is required. ARTPARK's published training mixture includes Vaani, so absolute ranking claims need caution. |
+| LAHAJA | 132-speaker external paired replication | Gated Hugging Face access is required. The project uses one deterministic eligible utterance per speaker. |
+| FLEURS Hindi | Small cleaner-speech control | Used as a practical control, not as a pure channel-only comparison with GramVaani. |
 
-## Required Manifest Columns
+Upstream pages:
 
-Use CSV for the initial harness:
+- [GramVaani/OpenSLR SLR103](https://www.openslr.org/103/)
+- [Vaani Benchmark V1.0](https://huggingface.co/datasets/ARTPARK-IISc/Vaani-Benchmark-V1.0)
+- [LAHAJA](https://huggingface.co/datasets/ai4bharat/Lahaja)
+- [FLEURS](https://huggingface.co/datasets/google/fleurs)
+
+Always review the current upstream dataset card or license before downloading,
+publishing derived artifacts, or using data commercially.
+
+## Manifest Format
+
+The local evaluator uses CSV:
 
 ```csv
 audio_path,reference_text,slice,condition,language
-data/slr103/hindi/test/example.wav,नमस्ते दुनिया,slr103_hindi_test,raw_8khz,hi
+data/example.wav,reference transcript,example,original,hi
 ```
 
-Column meanings:
-
-- `audio_path`: local path to an audio file, relative to repo root or absolute.
+- `audio_path`: local path relative to the repository root, or an absolute path.
 - `reference_text`: ground-truth transcript.
-- `slice`: stable name for the dataset subset, for example `slr103_hindi_test_10`.
-- `condition`: audio condition, for example `raw_8khz`, `clean_16khz`, or `synthetic_telephony`.
-- `language`: BCP-47-ish language hint such as `hi` or `hi-en`.
+- `slice`: stable dataset subset name.
+- `condition`: audio condition such as `original` or `bandlimit_8k`.
+- `language`: language hint such as `hi`.
 
-## Source Links
+Fixed manifests under [`manifests/`](manifests/) preserve row selection, but
+they do not make the raw datasets redistributable.
 
-- OpenSLR SLR103: https://www.openslr.org/103/
-- OpenSLR SLR103 files mirror index: https://us.openslr.org/resources/103/
-- Common Voice Hindi dataset page: https://prod.datacollective.mozillafoundation.org/datasets/cmflnuzw5hbe47u0fvrugjyb6
-- MUSAN overview: https://audeering.github.io/datasets/datasets/musan.html
+## Paired Benchmark Conditions
 
-## Immediate Week 1 Decision
+The canonical paired benchmark holds speaker, utterance, content, and reference
+fixed across:
 
-Start with the smallest path to one WER number:
+1. `original`
+2. `bandlimit_8k`
+3. `bandlimit_8k_g711_alaw`
+4. `bandlimit_8k_g711_mulaw`
+5. `bandlimit_8k_gsm_fr`
 
-1. Try OpenSLR SLR103 Hindi test data first because it is already 8 kHz and includes transcripts.
-2. Build a 10-file manifest slice.
-3. If SLR103 download or parsing stalls, use a tiny Common Voice Hindi slice and record the fallback in `TRACKING.md`.
+Every codec condition applies the telephone bandlimit first. Outputs are
+returned to mono 16 kHz for Whisper inference and validated for format,
+duration, completeness, and codec support.
+
+See [`notebooks/README.md`](../notebooks/README.md) for the canonical CPU/GPU
+construction and evaluation flow.

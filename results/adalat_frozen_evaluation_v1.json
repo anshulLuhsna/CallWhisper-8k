@@ -1,0 +1,58 @@
+{
+  "artifact": "adalat_frozen_evaluation_v1",
+  "source": "notebooks/15_adalat_frozen_evaluation_colab.ipynb",
+  "verdict": "fail_external_generalization",
+  "vaani": {
+    "benchmark": "vaani",
+    "speakers": 500,
+    "verdict": "fail",
+    "base_original_wer": 0.1741098633237573,
+    "adapted_original_wer": 0.19929978118161926,
+    "original_relative_wer_regression": 0.14467829321663012,
+    "base_pooled_telephone_wer": 0.20221854160310335,
+    "adapted_pooled_telephone_wer": 0.22619178322829978,
+    "adapted_minus_base_pooled_wer": 0.02397324162519643,
+    "adapted_minus_base_pooled_wer_ci_95": [
+      0.015780623628837222,
+      0.03202722735272717
+    ],
+    "adapted_minus_base_channel_penalty": -0.0012166762326655256,
+    "adapted_minus_base_channel_penalty_ci_95": [
+      -0.0071299206648121356,
+      0.0047268724998244275
+    ],
+    "channel_sensitivity_conclusion": "inconclusive"
+  },
+  "lahaja": {
+    "benchmark": "lahaja",
+    "speakers": 132,
+    "verdict": "fail",
+    "base_original_wer": 0.18024691358024691,
+    "adapted_original_wer": 0.2,
+    "original_relative_wer_regression": 0.10958904109589046,
+    "base_pooled_telephone_wer": 0.21532921810699587,
+    "adapted_pooled_telephone_wer": 0.2189300411522634,
+    "adapted_minus_base_pooled_wer": 0.003600823045267515,
+    "adapted_minus_base_pooled_wer_ci_95": [
+      -0.01568955453268667,
+      0.022347526065741193
+    ],
+    "adapted_minus_base_channel_penalty": -0.01615226337448558,
+    "adapted_minus_base_channel_penalty_ci_95": [
+      -0.03209600013654235,
+      -0.00135971922208534
+    ],
+    "channel_sensitivity_conclusion": "statistically_supported_reduction"
+  },
+  "headline_artpark_gate": {
+    "verdict": "not_established",
+    "adapted_minus_artpark_pooled_wer": 0.07528411704049776,
+    "ci_95": [
+      0.06465929762692198,
+      0.08619783047266867
+    ]
+  },
+  "rule": "On both Vaani and LAHAJA: adapted pooled telephone WER must improve versus base with paired 95% CI entirely below zero, and original relative WER regression must be <=5%.",
+  "claim_boundary": "A pass supports frozen-benchmark generalization for these slices and transforms; it does not establish robustness for every phone call.",
+  "provenance_note": "Curated from the completed Notebook 15 output returned from the persistent Colab/Drive run. Raw prediction checkpoints remain in the experiment's Drive artifact directory."
+}
